@@ -2,34 +2,36 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 
 import GlobalStyle from 'style/global';
-// import { menuItems } from 'menus';
+import { menuItems } from 'menus';
 import NotFound from 'components/404';
-// import NewTrip from 'components/NewTrip';
-// import Trips from 'components/Trips';
-// import NavMenu from 'components/NavMenu'
+import NewTrip from 'components/NewTrip';
+import Trips from 'components/Trips';
+import NavMenu from 'components/NavMenu'
 
 const App = () => {
 
-  // const mapping = {
-  //   newtrip: NewTrip,
-  //   trips: Trips,
-  // }
+  const mapping = {
+    newtrip: NewTrip,
+    trips: Trips,
+  }
 
   return (
     <Container className="App">
       <GlobalStyle />
-      {/* <NavMenu /> */}
+      <NavMenu />
       <Main>
         <Switch>
-          {/* {menuItems.map((item, i) => (
-            <Route
+          {/* {menuItems.map((item, i) => {
+            console.log(mapping[item.path])
+           return  <Route
               key={i}
               path={`/${item.path}`}
               component={mapping[item.path]}
             />
-          ))} */}
+          })} */}
+          <Route path='/new-trip' component={NewTrip}/>
           <Route path="/404" component={NotFound} />
-          {/* <Route path="/" exact component={App} /> */}
+           {/* <Route path="/" exact component={App} /> */}
           <Route path="/" exact component={NotFound} />
           <Redirect to="/404" component={NotFound} />
         </Switch>

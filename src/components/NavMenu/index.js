@@ -14,11 +14,11 @@ import * as icon from 'assets/icons'
 const NavMenu = () => {
   return (
     <Nav>
-      <NavMenu>
+      <Navigation>
         <MenuItem><Link to="/"/>{icon.logo}</MenuItem>
         {/* {menuItems.map((item, i) => ( */}
           <MenuItem>
-            <NavLink to='/'>
+            <NavLink to='/new-trip'>
               New Trip {icon.plusIcon}  
             </NavLink>
           <MenuItem>
@@ -38,7 +38,7 @@ const NavMenu = () => {
           </MenuItem>
           </MenuItem>
         {/* ))} */}
-      </NavMenu>
+      </Navigation>
     </Nav>
   )
 }
@@ -51,12 +51,12 @@ const Nav = styled.nav`
   height: 100vh;
   background-color:var(--grey)
 `
-// const Menu = styled.ul`
+const Navigation = styled.ul`
 
-//   &:first-child{
+  &:first-child{
 
-//   }
-// `
+  }
+`
 
 const MenuItem = styled.li`
 
