@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import { Link, NavLink } from "react-router-dom"
-import {menuItems} from 'menus'
-import * as icon from 'assets/icons'
+import styled from "styled-components";
+import { Link, NavLink } from "react-router-dom";
+import { menuItems } from "menus";
+import * as icon from "assets/icons";
 // import * as Styled from './styles'
 
 // const iconMapping = {
@@ -15,49 +15,42 @@ const NavMenu = () => {
   return (
     <Nav>
       <Navigation>
-        <MenuItem><Link to="/"/>{icon.logo}</MenuItem>
+        <MenuItem>
+          <Link to="/" />
+          {icon.logo}
+        </MenuItem>
         {/* {menuItems.map((item, i) => ( */}
-          <MenuItem>
-            <NavLink to='/new-trip'>
-              New Trip {icon.plusIcon}  
-            </NavLink>
+        <MenuItem>
+          <NavLink to="/new-trip">New Trip {icon.plusIcon}</NavLink>
           <MenuItem>
             <NavLink to={`/${menuItems.path}`}>
               {icon.clockIcon} Your trips
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to='/'>
-            {icon.editIcon} Future feature
-            </NavLink>
+            <NavLink to="/">{icon.editIcon} Future feature</NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to='/'>
-            {icon.globeIcon} Future session
-            </NavLink>
+            <NavLink to="/">{icon.globeIcon} Future session</NavLink>
           </MenuItem>
-          </MenuItem>
+        </MenuItem>
         {/* ))} */}
       </Navigation>
     </Nav>
-  )
-}
+  );
+};
 
-export default NavMenu
+export default NavMenu;
 
 const Nav = styled.nav`
   font-size: 2rem;
   width: 240px;
   height: 100vh;
-  background-color:var(--grey)
-`
+  background-color: var(--grey);
+`;
 const Navigation = styled.ul`
-
-  &:first-child{
-
+  &:first-child {
   }
-`
+`;
 
-const MenuItem = styled.li`
-
-`
+const MenuItem = styled.li``;
