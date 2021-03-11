@@ -1,5 +1,3 @@
-import React from "react";
-
 import NewTrip from "components/NewTrip";
 import Trips from "components/Trips";
 export const menuItems = [

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
-import { globeIcon as GlobeIcon } from 'assets/icons';
-import { ReactComponent as Netherlands } from 'assets/flags/netherlands.svg';
-import TripsSidebar from './n';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import styled from "styled-components";
+import { globeIcon as GlobeIcon } from "assets/icons";
+import { ReactComponent as Netherlands } from "assets/flags/netherlands.svg";
+import TripsSidebar from "./n";
 
-import Select, { components } from 'react-select';
+import Select, { components } from "react-select";
+import { device } from "style/responsive";
 
 const NewTrip = () => {
   const [countries, setCountries] = useState([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [company, setCompany] = useState('');
-  const [city, setCity] = useState('');
-  const [street, setStreet] = useState('');
-  const [streetNumber, setStreetNumber] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [company, setCompany] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [streetNumber, setStreetNumber] = useState("");
+  const [zipCode, setZipCode] = useState("");
   const [testedCovid, setTestedCovid] = useState(null);
 
   useEffect(() => {
@@ -29,12 +30,12 @@ const NewTrip = () => {
 
   const fetchData = async () => {
     const { data } = await axios.get(
-      'https://task-devel.cleevio-vercel.vercel.app/api/country'
+      "https://task-devel.cleevio-vercel.vercel.app/api/country"
     );
     const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1));
     console.log(sortedData);
     setCountries(sortedData);
-    console.log('fetched', sortedData);
+    console.log("fetched", sortedData);
   };
 
   const CustomOption = ({ innerRef, innerProps, data }) => {
@@ -42,7 +43,7 @@ const NewTrip = () => {
     const Flag = flagsMapping[data.value];
     return (
       <SelectPropOption ref={innerRef} {...innerProps}>
-        {Flag && <Flag style={{ width: '15px', marginRight: '10px' }} />}
+        {Flag && <Flag style={{ width: "15px", marginRight: "10px" }} />}
         {data.label}
       </SelectPropOption>
     );
@@ -53,7 +54,7 @@ const NewTrip = () => {
     const Flag = flagsMapping[props.data.value];
     return (
       <components.SingleValue {...props}>
-        {Flag && <Flag style={{ width: '15px', marginRight: '10px' }} />}
+        {Flag && <Flag style={{ width: "15px", marginRight: "10px" }} />}
         {children}
       </components.SingleValue>
     );
@@ -85,7 +86,7 @@ const NewTrip = () => {
             <select name="countries">
               {/* TODO: cant insert globeIcon */}
               <option>
-                {' '}
+                {" "}
                 <GlobeIcon height="20px" /> Select Country
               </option>
               {countries.map((country) => {
@@ -161,12 +162,15 @@ const NewTrip = () => {
 export default NewTrip;
 
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 70% auto;
+  @media ${device.tablet} {
+    grid-template-columns: auto;
+  } ;
 `;
 const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  width: 100%;
+  margin: 0 auto;
 `;
 const Heading = styled.h1`
   padding: 2rem;
