@@ -1,19 +1,18 @@
-import { Switch, Route, Redirect } from 'react-router-dom'
-import styled from 'styled-components'
+import { Switch, Route, Redirect } from "react-router-dom";
+import styled from "styled-components";
 
-import GlobalStyle from 'style/global';
-import { menuItems } from 'menus';
-import NotFound from 'components/404';
-import NewTrip from 'components/NewTrip';
-import Trips from 'components/Trips';
-import NavMenu from 'components/NavMenu'
+import GlobalStyle from "style/global";
+import { menuItems } from "menus";
+import NotFound from "components/404";
+import NewTrip from "components/NewTrip";
+import Trips from "components/Trips";
+import NavMenu from "components/NavMenu";
 
 const App = () => {
-
-  const mapping = {
-    newtrip: NewTrip,
-    trips: Trips,
-  }
+  // const mapping = {
+  //   newtrip: NewTrip,
+  //   trips: Trips,
+  // }
 
   return (
     <Container className="App">
@@ -21,41 +20,41 @@ const App = () => {
       <NavMenu />
       <Main>
         <Switch>
-          {/* {menuItems.map((item, i) => {
-            console.log(mapping[item.path])
-           return  <Route
-              key={i}
-              path={`/${item.path}`}
-              component={mapping[item.path]}
-            />
-          })} */}
-          <Route path='/new-trip' component={NewTrip}/>
+          {menuItems.map((item, i) => {
+            console.log(item.path);
+            return (
+              <Route
+                key={i}
+                path={`/${item.path}`}
+                component={item.component}
+              />
+            );
+          })}
+          {/* <Route path="/new-trip" component={NewTrip} /> */}
           <Route path="/404" component={NotFound} />
-           {/* <Route path="/" exact component={App} /> */}
+          {/* <Route path="/" exact component={App} /> */}
           <Route path="/" exact component={NotFound} />
           <Redirect to="/404" component={NotFound} />
         </Switch>
-      </Main> it was not 
-      <SideBar>
-
-      </SideBar>
+      </Main>{" "}
+      it was not
+      <SideBar></SideBar>
     </Container>
   );
-}
+};
 
-export default App
+export default App;
 
 const Container = styled.div`
   display: flex;
   grid-template-columns: 240px 1fr 320px;
-`
+`;
 const Main = styled.main`
   padding: 40px;
   width: 100%;
-
-`
+`;
 const SideBar = styled.aside`
   height: 100vh;
-  border-left: 1px solid #F1F1F2;
+  border-left: 1px solid #f1f1f2;
   padding: 40px;
-`
+`;
