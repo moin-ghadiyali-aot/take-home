@@ -2,8 +2,6 @@ import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { menuItems } from "menus";
 import * as icon from "assets/icons";
-import { device } from "style/responsive";
-import { useState } from "react";
 // import * as Styled from './styles'
 
 // const iconMapping = {
@@ -14,70 +12,71 @@ import { useState } from "react";
 // }
 
 const NavMenu = () => {
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const Nav = styled.nav`
-    font-size: 2rem;
-    width: 240px;
-    height: 100vh;
-    background-color: var(--grey);
-    position: fixed;
-    left: 0;
-    z-index: 99999;
-    transition: left 0.5s;
-    @media ${device.tablet} {
-      ${({ toggleMenu }) => !toggleMenu && `left: -240px;`}
-    } ;
-  `;
-  const toggle = () => {
-    // console.log("----", toggleMenu);
-    setToggleMenu((toggleMenu) => !toggleMenu);
-  };
   return (
-    <Nav toggleMenu={toggleMenu}>
-      <Navigation>
-        <MobileButton onClick={toggle}>icon</MobileButton>
-
-        <MenuItem>
+    <Nav>
+      <Container>
+        <Logo>
           <Link to="/" />
           {icon.logo}
-        </MenuItem>
+        </Logo>
         {/* {menuItems.map((item, i) => ( */}
-        <MenuItem>
-          <NavLink to="/new-trip">New Trip {icon.plusIcon}</NavLink>
+        <MenuItems>
+          <NewTrip>
+            <StyledNavLink to="/new-trip">New Trip <Plus>{icon.plusIcon}</Plus></StyledNavLink>
+          </NewTrip>
           <MenuItem>
-            <NavLink to={`/${menuItems.path}`}>
+            <StyledNavLink to='trips'>
               {icon.clockIcon} Your trips
-            </NavLink>
+            </StyledNavLink>
           </MenuItem>
+          <DisabledMenuItem>
+            <StyledNavLink to="/">{icon.editIcon} Future feature</StyledNavLink>
+          </DisabledMenuItem>
           <MenuItem>
-            <NavLink to="/">{icon.editIcon} Future feature</NavLink>
+            <StyledNavLink to="/">{icon.globeIcon} Future section</StyledNavLink>
           </MenuItem>
-          <MenuItem>
-            <NavLink to="/">{icon.globeIcon} Future session</NavLink>
-          </MenuItem>
-        </MenuItem>
+        </MenuItems>
         {/* ))} */}
-      </Navigation>
+      </Container>
     </Nav>
   );
 };
 
 export default NavMenu;
 
-const MobileButton = styled.button`
-  display: none;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  right: -40px;
-  @media ${device.tablet} {
-    display: block;
-  }
-`;
-const Navigation = styled.ul`
-  position: relative;
-  &:first-child {
-  }
-`;
+const Nav = styled.nav`
+  font-size: 1.6rem;
+  width: 240px;
+  height: 100vh;
+  color: black;
+  background-color: var(--grey);
+`
+const Container = styled.div`
+ margin: 40px 20px 40px 30px ;
+`
+const Logo = styled.div`
+  margin-bottom: 30px;
+`
+const NewTrip = styled.div`
+  background-color: var(--accent);
+  font-weight: 600;
+  font-size: 1.4rem;
+  padding: 1.5rem;
+  border-radius: 5px;
+`
+const Plus = styled.span`
+  border-right: 2rem;
+`
+const MenuItems = styled.ul`
 
-const MenuItem = styled.li``;
+`
+const MenuItem = styled.li`
+  margin: 2rem 0;
+`
+const DisabledMenuItem = styled.li`
+  color: var(--light-grey)
+`
+const StyledNavLink = styled(NavLink)`
+      text-decoration:none;
+      color: black;
+`

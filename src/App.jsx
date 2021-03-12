@@ -23,7 +23,8 @@ const Routing = () => (
       <Redirect to="/404" component={NotFound} />
     </Switch>
   </Main>
-);
+)
+
 const App = () => {
   return (
     <Container className="App">
