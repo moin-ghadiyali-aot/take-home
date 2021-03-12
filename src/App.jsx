@@ -7,6 +7,7 @@ import NotFound from "components/404";
 import NewTrip from "components/NewTrip";
 import Trips from "components/Trips";
 import NavMenu from "components/NavMenu";
+import Sidebar from './components/Sidebar'
 
 const App = () => {
   // const mapping = {
@@ -36,9 +37,8 @@ const App = () => {
           <Route path="/" exact component={NotFound} />
           <Redirect to="/404" component={NotFound} />
         </Switch>
-      </Main>{" "}
-      it was not
-      <SideBar></SideBar>
+      </Main>
+      <Sidebar/>
     </Container>
   );
 };
@@ -52,9 +52,4 @@ const Container = styled.div`
 const Main = styled.main`
   padding: 40px;
   width: 100%;
-`;
-const SideBar = styled.aside`
-  height: 100vh;
-  border-left: 1px solid #f1f1f2;
-  padding: 40px;
 `;

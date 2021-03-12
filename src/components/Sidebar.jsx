@@ -1,7 +1,9 @@
 import styled from 'styled-components'
-const TripsSidebar = () => {
+
+const Sidebar = () => {
+
   return (
-    <Sidebar>
+    <Container>
       <Title></Title>
       <Card>
         <CountryHeading></CountryHeading>
@@ -14,13 +16,13 @@ const TripsSidebar = () => {
 
         <ViewTrip>View Trip</ViewTrip>
       </Card>
-    </Sidebar>
+    </Container>
   )
 }
 
-export default TripsSidebar
+export default Sidebar
 
-const Sidebar = styled.aside`
+const Container = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 2rem;

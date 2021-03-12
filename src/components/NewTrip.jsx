@@ -3,8 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { globeIcon as GlobeIcon } from "assets/icons";
-import { ReactComponent as Netherlands } from "assets/flags/netherlands.svg";
-import TripsSidebar from "./n";
+import Sidebar from "components/Sidebar"
 
 const NewTrip = () => {
   const [countries, setCountries] = useState([]);
@@ -136,7 +135,7 @@ const NewTrip = () => {
         </Form>
       </Main>
 
-      <TripsSidebar />
+      <Sidebar />
     </Container>
   );
 };

@@ -14,28 +14,30 @@ import * as icon from "assets/icons";
 const NavMenu = () => {
   return (
     <Nav>
-      <Navigation>
-        <MenuItem>
+      <Container>
+        <Logo>
           <Link to="/" />
           {icon.logo}
-        </MenuItem>
+        </Logo>
         {/* {menuItems.map((item, i) => ( */}
-        <MenuItem>
-          <NavLink to="/new-trip">New Trip {icon.plusIcon}</NavLink>
+        <MenuItems>
+          <NewTrip>
+            <StyledNavLink to="/new-trip">New Trip <Plus>{icon.plusIcon}</Plus></StyledNavLink>
+          </NewTrip>
           <MenuItem>
-            <NavLink to={`/${menuItems.path}`}>
+            <StyledNavLink to='trips'>
               {icon.clockIcon} Your trips
-            </NavLink>
+            </StyledNavLink>
           </MenuItem>
+          <DisabledMenuItem>
+            <StyledNavLink to="/">{icon.editIcon} Future feature</StyledNavLink>
+          </DisabledMenuItem>
           <MenuItem>
-            <NavLink to="/">{icon.editIcon} Future feature</NavLink>
+            <StyledNavLink to="/">{icon.globeIcon} Future section</StyledNavLink>
           </MenuItem>
-          <MenuItem>
-            <NavLink to="/">{icon.globeIcon} Future session</NavLink>
-          </MenuItem>
-        </MenuItem>
+        </MenuItems>
         {/* ))} */}
-      </Navigation>
+      </Container>
     </Nav>
   );
 };
@@ -43,14 +45,38 @@ const NavMenu = () => {
 export default NavMenu;
 
 const Nav = styled.nav`
-  font-size: 2rem;
+  font-size: 1.6rem;
   width: 240px;
   height: 100vh;
+  color: black;
   background-color: var(--grey);
-`;
-const Navigation = styled.ul`
-  &:first-child {
-  }
-`;
+`
+const Container = styled.div`
+ margin: 40px 20px 40px 30px ;
+`
+const Logo = styled.div`
+  margin-bottom: 30px;
+`
+const NewTrip = styled.div`
+  background-color: var(--accent);
+  font-weight: 600;
+  font-size: 1.4rem;
+  padding: 1.5rem;
+  border-radius: 5px;
+`
+const Plus = styled.span`
+  border-right: 2rem;
+`
+const MenuItems = styled.ul`
 
-const MenuItem = styled.li``;
+`
+const MenuItem = styled.li`
+  margin: 2rem 0;
+`
+const DisabledMenuItem = styled.li`
+  color: var(--light-grey)
+`
+const StyledNavLink = styled(NavLink)`
+      text-decoration:none;
+      color: black;
+`
