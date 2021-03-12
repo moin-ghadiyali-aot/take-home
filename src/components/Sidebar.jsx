@@ -24,8 +24,8 @@ export default Sidebar
 const Container = styled.aside`
   display: flex;
   flex-direction: column;
-  padding: 2rem;
-  border-left: 1px solid #eee;
+  gap: 2rem;
+  display: none;
 `
 const Title = styled.h1`
   padding: 2rem;

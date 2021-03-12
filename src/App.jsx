@@ -41,15 +41,17 @@ const Container = styled.div`
   display: flex;
   grid-template-columns: 240px 1fr;
 `
+
 const Main = styled.main`
   width: 100%;
   display: flex;
   justify-content: center;
-  @media ${device.tablet} {
-    margin-left: 0;
-    padding: 20px;
-  } ;
+
+  @media ${device.mobileL} {
+    padding: 0;
+  }
 `
+
 const SideBar = styled.aside`
   height: 100vh;
   border-left: 1px solid #f1f1f2;

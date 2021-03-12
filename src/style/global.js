@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
+import Arrow from '../assets/Arrow.svg'
+
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -56,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
       --dark-grey: #97999B;
       --grey: #F9F9FA;
       --light-grey: #D0D0CE;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
       font-size: 62.5%;
   }
 
@@ -77,14 +79,20 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .Dropdown-control {
-    font-size: 14px;
+    font-size: 1.4rem;
     border: 1px solid #eee;
-    padding: 12px 16px;
+    padding: 1.3rem 1.6rem;
     border-radius: 10px;
+    line-height: 2rem;
+
+    &:hover {
+      box-shadow: none;
+    }
   }
 
   .is-open .Dropdown-control {
     border: 1px solid #ccc;
+    border-radius: 10px 10px 0 0;
   }
 
   .Dropdown-arrow {
@@ -101,8 +109,12 @@ const GlobalStyle = createGlobalStyle`
 
   .Dropdown-menu {
     border-radius: 10px;
-    margin-top: 4px;
-    border: 1px solid #eee;
+    border: 1px solid #e4e4e5;
+    box-shadow: none;
+  }
+
+  .is-open .Dropdown-menu {
+    border-radius: 0 0 10px 10px;
   }
 
   /* width */
@@ -130,16 +142,22 @@ const GlobalStyle = createGlobalStyle`
     display: block;
   }
 
+  .Dropdown-option.is-selected {
+    background: var(--grey);
+  }
+
   .react-datepicker__input-container input {
-    padding: 12px 16px;
+    font-size: 1.4rem;
+    border: 1px solid #eee;
+    padding: 1.3rem 1.6rem;
+    border-radius: 10px;
+    line-height: 2rem;
     border-radius: 10px;
     border: none;
-    font-size: 14px;
     border: 1px solid #eee;
     outline: 0;
     width: 100%;
     display: block;
-    height: 42px;
 
     &:focus {
       border: 1px solid #ccc;
@@ -148,6 +166,22 @@ const GlobalStyle = createGlobalStyle`
 
   .Dropdown-option {
     font-size: 1.4rem;
+    line-height: 2rem;
+    padding: 1.3rem 1.4rem;
+
+    + .Dropdown-option {
+      border-top: 1px solid #e4e4e5;
+    }
+
+    &:hover {
+      background: #f9f9fa;
+    }
+  }
+
+  .Dropdown-arrow {
+    border: 0 !important;
+    width: 12px; height: 7px;
+    background: url(Arrow) no-repeat center;
   }
 `
 export default GlobalStyle

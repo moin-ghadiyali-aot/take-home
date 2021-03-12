@@ -1,12 +1,10 @@
 import styled from 'styled-components'
 import { Link, NavLink } from 'react-router-dom'
 //import { menuItems } from 'menus'
-import { menuItems } from 'menus'
 // import * as Styled from './styles'
+import { device } from '../../style/responsive'
 
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
-
+import { ReactComponent as Close } from '../../assets/Close.svg'
 import { ReactComponent as LogoIcon } from 'assets/Logo.svg'
 import { ReactComponent as Plus } from 'assets/Plus.svg'
 import { ReactComponent as ClockIcon } from 'assets/Clock.svg'
@@ -24,6 +22,11 @@ const NavMenu = () => {
   return (
     <Nav>
       <Container>
+        {window.matchMedia(device.mobileL) && (
+          <CloseMenu>
+            <Close width={12} height={12} />
+          </CloseMenu>
+        )}
         <Logo>
           <Link to="/">
             <LogoIcon width={120} />
@@ -33,7 +36,8 @@ const NavMenu = () => {
         <MenuItems>
           <NewTrip>
             <StyledNavLink to="/new-trip">
-              New Trip <Plus width={16} height={16} />
+              New Trip
+              <Plus width={16} height={16} />
             </StyledNavLink>
           </NewTrip>
           <MenuItem>
@@ -75,14 +79,52 @@ const Nav = styled.nav`
   height: 100vh;
   color: black;
   background-color: var(--grey);
+
+  @media ${device.mobileL} {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10999;
+    width: 100%;
+    display: none;
+
+    &.menu--active {
+      display: block;
+    }
+  }
+`
+
+const CloseMenu = styled.span`
+  width: 40px;
+  height: 40px;
+  background: #f1f1f2;
+  border-radius: 10px;
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  z-index: 10999;
+  align-items: center;
+  justify-content: center;
+  display: none;
+
+  @media ${device.mobileL} {
+    display: flex;
+  }
 `
 
 const Container = styled.div`
-  margin: 40px;
+  padding: 4rem;
 `
 
 const Logo = styled.div`
   margin-bottom: 30px;
+
+  @media ${device.mobileL} {
+    display: flex;
+    justify-content: center;
+  }
 `
 
 const NewTrip = styled.div`
@@ -90,12 +132,19 @@ const NewTrip = styled.div`
   display: flex;
   background-color: var(--accent);
   font-weight: 600;
-  font-size: 1.6rem;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 1.4rem 2rem;
+  border-radius: 10px;
+  line-height: 2rem;
+  margin-bottom: 3rem;
 
   svg {
     margin-left: auto;
+  }
+
+  a {
+    font-size: 1.4rem;
+    color: black;
+    font-weight: 600;
   }
 `
 
@@ -119,4 +168,5 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   font-size: 1.6rem;
   flex: 1;
+  color: #97999b;
 `
