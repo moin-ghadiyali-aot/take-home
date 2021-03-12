@@ -3,7 +3,8 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { globeIcon as GlobeIcon } from "assets/icons";
-import Sidebar from "components/Sidebar"
+import Sidebar from "components/Sidebar";
+import DatePicker from "components/common/DatePicker";
 
 const NewTrip = () => {
   const [countries, setCountries] = useState([]);
@@ -55,13 +56,11 @@ const NewTrip = () => {
             <select name="countries">
               {/* TODO: cant insert globeIcon */}
               <option>
+                {" "}
                 <img src={GlobeIcon} alt="" height="20px" /> Select Country
               </option>
               {countries.map((country) => (
-                <option value={country.label}>
-                  {flagsMapping[country.value]}
-                  {country.label}
-                </option>
+                <option value={country.label}>{country.label}</option>
               ))}
             </select>
           </FormGroup>
@@ -77,7 +76,9 @@ const NewTrip = () => {
             />
 
             <Label for="endDate">End date</Label>
-            <Input id="endDate" type="date" name="endDate" />
+            <DatePicker name="endDate" />
+
+            {/* <Input id="endDate" type="date" name="endDate" /> */}
           </FormGroup>
 
           <FormGroup>
