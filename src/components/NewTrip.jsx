@@ -128,14 +128,32 @@ const NewTrip = () => {
         </FormGroup>
 
         <FormGroup>
-
           <label for='tested-covid'>Have you been recently tested for <strong>COVID-19</strong></label>
-          {/* TODO: error "input a void element tag" */}
-          {/* <input id='tested-covid' type='radio'>Yes</input> */}
-          {/* <input id='tested-covid' type='radio'>No</input> */}
+          <RadioFormGroup>
+            {/* TODO: error "input a void element tag" */}
+            <Checkmark/>
+            <RadioLabel>
+              <RadioButton
+                id='yes'
+                name='testedCovid'
+                type='radio'
+                value='yes'
+              />
+              Yes
+            </RadioLabel>
+            <RadioLabel>
+              <RadioButton
+                type='radio'
+                id='no'
+                name='testedCovid'
+                value='no'
+                checked
+              />
+              No
+            </RadioLabel>
 
+          </RadioFormGroup>
         </FormGroup>
-
         <Button type='submit'>Save</Button>
 
       </Form>
@@ -175,15 +193,33 @@ const FormGroup = styled.div`
   padding: 1rem;
   border-radius: 5px;
 `
+
 const Label = styled.label`
   padding-bottom: .75rem;
 `
 const Input = styled.input`
   padding: .75rem;
-    border-radius: 5px;
-    border: none;
-    margin-bottom: 1.5rem;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 1.5rem;
 `
 const Button = styled.button`
 
+`
+const RadioFormGroup = styled.div`
+  /* display: flex;   */
+`
+const RadioLabel= styled.label`
+  display: inline;
+`
+const RadioButton = styled.input`
+
+`
+const Checkmark = styled.span`
+  width: 1.8rem;
+  height:1.8rem;
+  display: inline-block;
+  border: 2px solid black;
+  /* margin-left:2rem; */
+  border-radius: 50%
 `
