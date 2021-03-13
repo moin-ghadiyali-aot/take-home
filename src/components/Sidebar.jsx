@@ -1,20 +1,13 @@
 import styled from 'styled-components'
 
-const Sidebar = () => {
+import { device } from '../style/responsive'
+import SidebarHeading from './SidebarHeading'
+
+const Sidebar = ({ sidebarHeading, children }) => {
   return (
     <Container>
-      <Title></Title>
-      <Card>
-        <CountryHeading></CountryHeading>
-        <DetailsHeading></DetailsHeading>
-        <Company></Company>
-        <Address></Address>
-
-        <DateHeading></DateHeading>
-        <Date></Date>
-
-        <ViewTrip>View Trip</ViewTrip>
-      </Card>
+      <SidebarHeading title={sidebarHeading} />
+      {children}
     </Container>
   )
 }
@@ -24,25 +17,15 @@ export default Sidebar
 const Container = styled.aside`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  display: none;
-`
-const Title = styled.h1`
-  padding: 2rem;
-`
+  min-width: 320px;
+  border-left: 1px solid #f1f1f2;
+  padding: 3rem 4rem;
+  max-width: 340px;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: #63666a;
 
-const Card = styled.div`
-  background-color: var(--grey);
-`
-
-const CountryHeading = styled.h2``
-
-const DetailsHeading = styled.h3``
-
-const Company = styled.p``
-const Address = styled.p``
-const DateHeading = styled.h3``
-const Date = styled.p``
-const ViewTrip = styled.button`
-  border-radius: 5px;
+  @media ${device.laptop} {
+    display: none;
+  }
 `

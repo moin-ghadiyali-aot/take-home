@@ -8,6 +8,8 @@ import Heading from '../components/Heading'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
+import SidebarTripRow from '../components/SidebarTripRow'
+
 import { device } from '../style/responsive'
 
 import { globeIcon as GlobeIcon } from 'assets/icons'
@@ -171,7 +173,20 @@ const NewTrip = () => {
           </FormFooter>
         </Form>
       </Main>
-      <Sidebar />
+      <Sidebar sidebarHeading="Trips">
+        <SidebarTripRow
+          country="Austria"
+          company="Diamler AG"
+          address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
+          date="Jul 14 - Sep 20, 2019"
+        />
+        <SidebarTripRow
+          country="United Kingdom"
+          company="Diamler AG"
+          address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
+          date="Jul 14 - Sep 20, 2019"
+        />
+      </Sidebar>
     </Container>
   )
 }

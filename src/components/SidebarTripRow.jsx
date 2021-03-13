@@ -18,7 +18,7 @@ const FlagIcon = ({ flag }) => {
   }
 }
 
-const TripRow = ({ country, company, date, address }) => {
+const SidebarTripRow = ({ country, company, date, address }) => {
   return (
     <TripRowStyles>
       <FlagColumn>
@@ -27,8 +27,6 @@ const TripRow = ({ country, company, date, address }) => {
       </FlagColumn>
       <TripColumn>
         <TripRowInline>
-          <Country>{country}</Country>
-          <Separator />
           <TripDate>
             <MobileLabel>Date</MobileLabel>
             <strong>{date}</strong>
@@ -39,14 +37,10 @@ const TripRow = ({ country, company, date, address }) => {
             <MobileLabel>Company</MobileLabel>
             {company}
           </Company>
-          <Separator />
           <Address>{address}</Address>
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
-        <RemoveButton>
-          <RemoveIcon width={11} height={16} />
-        </RemoveButton>
         <ViewButton>
           <MobileLabel>View Trip</MobileLabel>
           <ArrowRight width={16} height={10} />
@@ -56,118 +50,76 @@ const TripRow = ({ country, company, date, address }) => {
   )
 }
 
+export default SidebarTripRow
+
 const TripRowStyles = styled.div`
   background: #f9f9fa;
   padding: 2rem;
-  display: flex;
+  display: block;
   align-items: center;
   font-size: 1.6rem;
   width: 100%;
   border-radius: 10px;
   margin-bottom: 2rem;
-
-  @media ${device.tablet} {
-    display: block;
-  }
 `
 
 const TripColumn = styled.div`
   margin-right: 2rem;
-
-  @media ${device.tablet} {
-    display: flex;
-    flex-direction: column-reverse;
-  }
+  display: flex;
+  flex-direction: column-reverse;
 `
 
 const TripRowInline = styled.div`
   display: flex;
-  margin-bottom: 1rem;
 
   &:last-child {
     margin: 0;
   }
 
-  @media ${device.tablet} {
-    margin-bottom: 0.5rem;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-  }
-`
-
-const Separator = styled.div`
-  width: 1px;
-  margin: 0 2rem;
-  height: 10px;
-  background: #e4e4e5;
-
-  @media ${device.tablet} {
-    display: none;
-  }
+  margin-bottom: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 `
 
 const FlagColumn = styled.div`
   display: block;
   margin-right: 2rem;
 
-  @media ${device.tablet} {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    > div {
-      margin-left: 2rem;
-      font-weight: 600;
-    }
-  }
-`
-
-const MobileCountry = styled.div`
-  display: none;
-
-  @media ${device.tablet} {
-    display: block;
-  }
-`
-
-const Country = styled.div`
-  font-weight: 600;
-
-  @media ${device.tablet} {
-    display: none;
-  }
-`
-
-const Company = styled.div`
-  font-size: 1.4rem;
-
-  @media ${device.tablet} {
+  > div {
+    margin-left: 2rem;
     font-weight: 600;
   }
 `
 
+const MobileCountry = styled.div`
+  display: block;
+`
+
+const Company = styled.div`
+  font-size: 1.4rem;
+  font-weight: 600;
+`
+
 const MobileLabel = styled.div`
-  display: none;
+  display: block;
 
-  @media ${device.tablet} {
-    display: block;
-
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    color: #63666a;
-    margin-bottom: 1rem;
-    font-weight: 400;
-  }
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: #63666a;
+  margin-bottom: 1rem;
+  font-weight: 400;
 `
 
 const TripDate = styled.div`
   font-size: 1.4rem;
   color: #97999b;
 
-  @media ${device.tablet} {
-    color: black;
-    order: 2;
-  }
+  color: black;
+  order: 2;
 `
 
 const Address = styled.div`
@@ -175,21 +127,17 @@ const Address = styled.div`
   color: #97999b;
   overflow: hidden;
 
-  @media ${device.tablet} {
-    color: black;
-    order: 1;
-    line-height: 1.5;
-    width: 100% !important;
-    white-space: inherit;
-    text-overflow: inherit;
-  }
+  color: black;
+  order: 1;
+  line-height: 1.5;
+  width: 100% !important;
+  white-space: inherit;
+  text-overflow: inherit;
 
-  @media ${device.laptop} {
-    width: 120px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1 1 auto;
-  }
+  width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
 `
 
 const ActionButtons = styled.div`
@@ -198,40 +146,25 @@ const ActionButtons = styled.div`
   align-items: center;
 `
 
-const RemoveButton = styled.div`
-  background: #fbebe9;
-  padding: 1.6rem 2rem;
-  border-radius: 10px;
-  margin-left: 2rem;
-
-  @media ${device.tablet} {
-    display: none;
-  }
-`
-
 const ViewButton = styled.div`
   background: #f1f1f2;
   padding: 1.6rem 2rem;
   border-radius: 10px;
   margin-left: 2rem;
 
-  @media ${device.tablet} {
-    display: flex;
+  display: flex;
+  margin: 0;
+  width: 100%;
+  align-items: center;
+  margin-top: 3rem;
+
+  > div {
     margin: 0;
-    width: 100%;
-    align-items: center;
-    margin-top: 3rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
 
-    > div {
-      margin: 0;
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-
-    > svg {
-      margin-left: auto;
-    }
+  > svg {
+    margin-left: auto;
   }
 `
-
-export default TripRow
