@@ -30,11 +30,11 @@ const HeadingStyled = styled.h1`
   display: flex;
   align-items: center;
   position: relative;
-  justify-content: center;
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     font-size: 1.4rem;
     text-align: center;
+    justify-content: center;
   }
 `
 
@@ -51,7 +51,7 @@ const OpenMenu = styled.span`
   top: 1.25rem;
   display: none;
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     display: flex;
   }
 

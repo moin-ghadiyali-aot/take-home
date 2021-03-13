@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom'
 // import * as Styled from './styles'
 import { device } from '../../style/responsive'
 import { MenuContext } from '../../contexts/MenuContext'
+import { menuItems } from 'menus'
 
 import { ReactComponent as Close } from '../../assets/Close.svg'
 import { ReactComponent as LogoIcon } from 'assets/Logo.svg'
@@ -26,7 +27,7 @@ const NavMenu = () => {
   return (
     <Nav className={`${menuCtx.isMenuOpen ? 'menu--active' : ''}`}>
       <Container>
-        {window.matchMedia(device.mobileL) && (
+        {window.matchMedia(device.tablet) && (
           <CloseMenu onClick={menuCtx.toggleMenu}>
             <Close width={12} height={12} />
           </CloseMenu>
@@ -45,7 +46,7 @@ const NavMenu = () => {
             </StyledNavLink>
           </NewTrip>
           <MenuItem>
-            <StyledNavLink to="/">
+            <StyledNavLink to={`/trips`}>
               <IconWrap>
                 <ClockIcon width={16} height={16} />
               </IconWrap>
@@ -84,7 +85,7 @@ const Nav = styled.nav`
   color: black;
   background-color: var(--grey);
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     position: fixed;
     left: 0;
     right: 0;
@@ -113,7 +114,7 @@ const CloseMenu = styled.span`
   justify-content: center;
   display: none;
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     display: flex;
   }
 `
@@ -125,7 +126,7 @@ const Container = styled.div`
 const Logo = styled.div`
   margin-bottom: 30px;
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     display: flex;
     justify-content: center;
   }
