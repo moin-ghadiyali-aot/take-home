@@ -3,25 +3,20 @@ import styled from 'styled-components'
 import MenuProvider from './contexts/MenuContext'
 
 import GlobalStyle from 'style/global'
-import { menuItems } from 'menus'
 import NotFound from 'pages/404'
 import NavMenu from 'components/NavMenu'
 import { device } from 'style/responsive'
 
+// Pages
+import NewTrip from 'pages/NewTrip'
+import Trips from 'pages/Trips'
+
 const Routing = () => (
   <Main>
     <Switch>
-      {menuItems.map((item, i) => {
-        console.log(item.path)
-        return (
-          <Route key={i} path={`/${item.path}`} component={item.component} />
-        )
-      })}
-      {/* <Route path="/new-trip" component={NewTrip} /> */}
-      <Route path="/404" component={NotFound} />
-      {/* <Route path="/" exact component={App} /> */}
-      <Route path="/" exact component={NotFound} />
-      <Redirect to="/404" component={NotFound} />
+      <Route path="/" exact component={Trips} />
+      <Route path="/new-trip" component={NewTrip} />
+      <Route to="*" component={NotFound} />
     </Switch>
   </Main>
 )

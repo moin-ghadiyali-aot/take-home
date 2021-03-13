@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Tips from 'pages/Tips'
 import Heading from '../components/Heading'
 import TripRow from '../components/TripRow'
 

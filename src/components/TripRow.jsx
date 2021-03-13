@@ -77,6 +77,7 @@ const TripColumn = styled.div`
   @media ${device.tablet} {
     display: flex;
     flex-direction: column-reverse;
+    margin-right: 0;
   }
 `
 
@@ -114,6 +115,7 @@ const FlagColumn = styled.div`
   @media ${device.tablet} {
     display: flex;
     align-items: center;
+    margin: 0;
 
     > div {
       margin-left: 2rem;
@@ -140,6 +142,7 @@ const Country = styled.div`
 
 const Company = styled.div`
   font-size: 1.4rem;
+  white-space: nowrap;
 
   @media ${device.tablet} {
     font-weight: 600;
@@ -174,6 +177,9 @@ const Address = styled.div`
   font-size: 1.4rem;
   color: #97999b;
   overflow: hidden;
+  width: 100% !important;
+  white-space: inherit;
+  text-overflow: inherit;
 
   @media ${device.tablet} {
     color: black;
@@ -182,13 +188,6 @@ const Address = styled.div`
     width: 100% !important;
     white-space: inherit;
     text-overflow: inherit;
-  }
-
-  @media ${device.laptop} {
-    width: 120px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1 1 auto;
   }
 `
 

@@ -30,6 +30,7 @@ const HeadingStyled = styled.h1`
   display: flex;
   align-items: center;
   position: relative;
+  min-height: 6.5rem;
 
   @media ${device.tablet} {
     font-size: 1.4rem;

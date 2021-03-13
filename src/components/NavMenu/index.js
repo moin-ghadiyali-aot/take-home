@@ -5,7 +5,6 @@ import { Link, NavLink } from 'react-router-dom'
 // import * as Styled from './styles'
 import { device } from '../../style/responsive'
 import { MenuContext } from '../../contexts/MenuContext'
-import { menuItems } from 'menus'
 
 import { ReactComponent as Close } from '../../assets/Close.svg'
 import { ReactComponent as LogoIcon } from 'assets/Logo.svg'
@@ -40,13 +39,13 @@ const NavMenu = () => {
         {/* {menuItems.map((item, i) => ( */}
         <MenuItems>
           <NewTrip>
-            <StyledNavLink to="/new-trip">
+            <StyledNavLink onClick={menuCtx.toggleMenu} to="/new-trip">
               New Trip
               <Plus width={16} height={16} />
             </StyledNavLink>
           </NewTrip>
           <MenuItem>
-            <StyledNavLink to={`/trips`}>
+            <StyledNavLink onClick={menuCtx.toggleMenu} to={`/`}>
               <IconWrap>
                 <ClockIcon width={16} height={16} />
               </IconWrap>
@@ -54,20 +53,20 @@ const NavMenu = () => {
             </StyledNavLink>
           </MenuItem>
           <MenuItem>
-            <StyledNavLink to="/">
+            <NonClickableLink onClick={menuCtx.toggleMenu}>
               <IconWrap>
                 <EditIcon width={16} height={16} />
               </IconWrap>
               Feature feature
-            </StyledNavLink>
+            </NonClickableLink>
           </MenuItem>
           <MenuItem>
-            <StyledNavLink to="/">
+            <NonClickableLink onClick={menuCtx.toggleMenu}>
               <IconWrap>
                 <GlobeIcon width={16} height={16} />
               </IconWrap>
               Future session
-            </StyledNavLink>
+            </NonClickableLink>
           </MenuItem>
         </MenuItems>
         {/* ))} */}
@@ -174,4 +173,15 @@ const StyledNavLink = styled(NavLink)`
   font-size: 1.6rem;
   flex: 1;
   color: #97999b;
+`
+
+const NonClickableLink = styled.span`
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  flex: 1;
+  color: #97999b;
+  opacity: 0.5;
 `
