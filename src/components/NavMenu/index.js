@@ -1,8 +1,10 @@
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link, NavLink } from 'react-router-dom'
 //import { menuItems } from 'menus'
 // import * as Styled from './styles'
 import { device } from '../../style/responsive'
+import { MenuContext } from '../../contexts/MenuContext'
 
 import { ReactComponent as Close } from '../../assets/Close.svg'
 import { ReactComponent as LogoIcon } from 'assets/Logo.svg'
@@ -19,11 +21,13 @@ import { ReactComponent as GlobeIcon } from 'assets/Globe.svg'
 // }
 
 const NavMenu = () => {
+  const menuCtx = useContext(MenuContext)
+
   return (
-    <Nav>
+    <Nav className={`${menuCtx.isMenuOpen ? 'menu--active' : ''}`}>
       <Container>
         {window.matchMedia(device.mobileL) && (
-          <CloseMenu>
+          <CloseMenu onClick={menuCtx.toggleMenu}>
             <Close width={12} height={12} />
           </CloseMenu>
         )}
@@ -75,7 +79,7 @@ export default NavMenu
 
 const Nav = styled.nav`
   font-size: 1.6rem;
-  width: 320px;
+  min-width: 260px;
   height: 100vh;
   color: black;
   background-color: var(--grey);

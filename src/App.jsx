@@ -1,5 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
+import MenuProvider from './contexts/MenuContext'
 
 import GlobalStyle from 'style/global'
 import { menuItems } from 'menus'
@@ -27,11 +28,13 @@ const Routing = () => (
 
 const App = () => {
   return (
-    <Container className="App">
-      <GlobalStyle />
-      <NavMenu />
-      <Routing />
-    </Container>
+    <MenuProvider>
+      <Container className="App">
+        <GlobalStyle />
+        <NavMenu />
+        <Routing />
+      </Container>
+    </MenuProvider>
   )
 }
 

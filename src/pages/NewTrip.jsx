@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
+import Heading from '../components/Heading'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -44,19 +45,10 @@ const NewTrip = () => {
     console.log('fetched', sortedData)
   }
 
-  const defaultOption = countries[0]
-
   return (
     <Container>
       <Main>
-        <Heading>
-          {window.matchMedia('(max-width: 600px)') ? (
-            <OpenMenu>
-              <span />
-            </OpenMenu>
-          ) : null}
-          New trip
-        </Heading>
+        <Heading title="New trip" />
 
         <Form>
           <FormContent>
@@ -201,70 +193,6 @@ const Main = styled.main`
   align-items: center;
 `
 
-const Heading = styled.h1`
-  padding: 2.5rem 3rem;
-  border-bottom: 1px solid var(--grey);
-  width: 100%;
-  font-size: 2.5rem;
-  border-bottom: 1px solid #f1f1f2;
-  display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: center;
-
-  @media ${device.mobileL} {
-    font-size: 1.4rem;
-    text-align: center;
-  }
-`
-
-const OpenMenu = styled.span`
-  width: 40px;
-  height: 40px;
-  background: #f1f1f2;
-  border-radius: 10px;
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 2rem;
-  top: 1.25rem;
-  display: none;
-
-  @media ${device.mobileL} {
-    display: flex;
-  }
-
-  > span {
-    height: 1px;
-    width: 12px;
-    background: black;
-    position: relative;
-  }
-
-  > span:before {
-    content: '';
-    height: 1px;
-    width: 12px;
-    background: black;
-    position: absolute;
-    top: -4px;
-    left: 0;
-    right: 0;
-  }
-
-  > span:after {
-    content: '';
-    height: 1px;
-    width: 12px;
-    background: black;
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    right: 0;
-  }
-`
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -308,7 +236,7 @@ const InnerForm = styled.div`
   max-width: 500px;
   padding: 5rem 0;
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     padding: 2rem;
   }
 `
@@ -362,7 +290,7 @@ const LabelQuestion = styled.label`
     font-weight: 600;
   }
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     font-size: 1.2rem;
   }
 `
