@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import {api} from 'configs/httpService'
+import {api} from 'services/httpService'
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import { device } from 'style/responsive'
@@ -31,6 +31,7 @@ const NewTrip = () => {
     const { data } = await api.get('/country')
     const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1))
     setCountries(sortedData)
+    console.log(sortedData)
   }
 
   return (

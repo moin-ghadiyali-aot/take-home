@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 
-import { device } from '../style/responsive'
-import { MenuContext } from '../contexts/MenuContext'
+import { device } from 'style/responsive'
+import { MenuContext } from 'contexts/MenuContext'
 
 const Heading = ({ title }) => {
   const menuCtx = useContext(MenuContext)

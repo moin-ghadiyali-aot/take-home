@@ -10,6 +10,7 @@ import { device } from 'style/responsive'
 // Pages
 import NewTrip from 'pages/NewTrip'
 import Trips from 'pages/Trips'
+import TripProvider from 'contexts/TripContext'
 
 const Routing = () => (
   <Main>
@@ -26,8 +27,10 @@ const App = () => {
     <MenuProvider>
       <Container className="App">
         <GlobalStyle />
-        <NavMenu />
-        <Routing />
+        <TripProvider>
+          <NavMenu />
+          <Routing />
+        </TripProvider>
       </Container>
     </MenuProvider>
   )

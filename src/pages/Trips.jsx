@@ -1,35 +1,39 @@
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
+import { TripContext } from 'contexts/TripContext'
 
-import {api} from 'configs/httpService'
+import {api} from 'services/httpService'
 import Heading from 'components/Heading'
 import TripRow from 'components/TripRow'
 import Sidebar from 'components/Sidebar'
 
 const Trips = () => {
 
-  const [trips, setTrips] = useState([])
+  const {trips} = useContext(TripContext)
 
-  useEffect(() => {
-    const fetchData = async () => {
-    const {data} = await api.get('/trip')
-    console.log('fetched trips', data)
-    setTrips(data)
-  }
-    fetchData()
-  }, [])
+  // const [trips, setTrips] = useState([])
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //   const {data} = await api.get('/trip')
+  //   console.log('fetched trips', data)
+  //   setTrips(data)
+  // }
+  //   fetchData()
+  // }, [])
 
   return (
     <Container>
       <Main>
         <Heading title="Your trips" />
         <AllTrips>
-          {trips.map(trip => (
+          {(trips || []).map(trip => (
             <TripRow
               key={trip.id}
               country={trip.address.country}
               company={trip.company}
+              id={trip.id}
               address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
               date={`${moment(trip.start_date).format('D MMM')} - ${moment(trip.end_date).format('D MMM, YYYY')}`}
             />
