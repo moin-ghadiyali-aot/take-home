@@ -10,6 +10,7 @@ import { device } from 'style/responsive'
 // Pages
 import NewTrip from 'pages/NewTrip'
 import Trips from 'pages/Trips'
+import TripProvider from 'contexts/TripContext'
 
 import DatePickerLeft from './assets/DatePickerLeft.svg'
 import DatePickerRight from './assets/DatePickerRight.svg'
@@ -61,8 +62,10 @@ const App = () => {
           rightArrow={DatePickerRight}
           flags={flags}
         />
-        <NavMenu />
-        <Routing />
+        <TripProvider>
+          <NavMenu />
+          <Routing />
+        </TripProvider>
       </Container>
     </MenuProvider>
   )

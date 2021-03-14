@@ -1,28 +1,61 @@
+import { useContext } from "react";
 import styled from 'styled-components'
+import {TripContext} from 'contexts/TripContext'
 
-import { ReactComponent as RemoveIcon } from '../assets/Remove.svg'
-import { ReactComponent as ArrowRight } from '../assets/ArrowRight.svg'
+import { ReactComponent as RemoveIcon } from 'assets/Remove.svg'
+import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
+import { ReactComponent as AustriaFlag } from 'assets/flags/austria.svg'
+import { ReactComponent as ChinaFlag } from 'assets/flags/china.svg'
+import { ReactComponent as FranceFlag } from 'assets/flags/france.svg'
+import { ReactComponent as GreeceFlag } from 'assets/flags/greece.svg'
+import { ReactComponent as ItalyFlag } from 'assets/flags/italy.svg'
+import { ReactComponent as NetherlandsFlag } from 'assets/flags/netherlands.svg'
+import { ReactComponent as PortugalFlag } from 'assets/flags/portugal.svg'
+import { ReactComponent as SpainFlag } from 'assets/flags/spain.svg'
+import { ReactComponent as SlovakiaFlag } from 'assets/flags/slovakia.svg'
+import { ReactComponent as SwedenFlag } from 'assets/flags/sweden.svg'
+import { ReactComponent as UnitedKingdomFlag } from 'assets/flags/united-kingdom.svg'
 
-import { ReactComponent as AustriaFlag } from '../assets/flags/austria.svg'
-import { ReactComponent as UnitedKingdomFlag } from '../assets/flags/united-kingdom.svg'
-
-import { device } from '../style/responsive'
+import { device } from 'style/responsive'
 
 const FlagIcon = ({ flag }) => {
-  if (flag === 'Austria') {
-    return <AustriaFlag width={40} height={40} />
-  } else if (flag === 'United Kingdom') {
-    return <UnitedKingdomFlag width={40} height={40} />
-  } else {
-    return null
+  switch (flag) {
+    case 'Austria':
+      return <AustriaFlag width={40} height={40}/>
+    case 'China':
+      return <ChinaFlag width={40} height={40} />
+    case 'France':
+      return <FranceFlag width={40} height={40} />
+    case 'Greece':
+      return <GreeceFlag width={40} height={40} />
+    case 'Italy':
+      return <ItalyFlag width={40} height={40} />
+    case 'Netherlands':
+      return <NetherlandsFlag width={40} height={40} />
+    case 'Portugal':
+      return <PortugalFlag width={40} height={40} />
+    case 'Slovakia':
+      return <SlovakiaFlag width={40} height={40} />
+    case 'Spain':
+      return <SpainFlag width={40} height={40} />
+    case 'Sweden':
+      return <SwedenFlag width={40} height={40} />
+    case 'United Kingdom':
+      return <UnitedKingdomFlag width={40} height={40} />
+    default:
+      return null
+    }
   }
-}
 
-const TripRow = ({ country, company, date, address }) => {
-  return (
+  
+  const TripRow = ({ country, company, date, id, address }) => {
+
+    const {removeTrip} = useContext(TripContext)
+
+    return (
     <TripRowStyles>
       <FlagColumn>
-        <FlagIcon width={40} height={40} flag={country} />
+        <FlagIcon flag={country} />
         <MobileCountry>{country}</MobileCountry>
       </FlagColumn>
       <TripColumn>
@@ -44,7 +77,7 @@ const TripRow = ({ country, company, date, address }) => {
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
-        <RemoveButton>
+        <RemoveButton onClick={()=>removeTrip(id)}>
           <RemoveIcon width={11} height={16} />
         </RemoveButton>
         <ViewButton>
@@ -197,22 +230,24 @@ const ActionButtons = styled.div`
   align-items: center;
 `
 
-const RemoveButton = styled.div`
+const RemoveButton = styled.button`
   background: #fbebe9;
   padding: 1.6rem 2rem;
   border-radius: 10px;
   margin-left: 2rem;
+  cursor: pointer;  
 
   @media ${device.tablet} {
     display: none;
   }
 `
 
-const ViewButton = styled.div`
+const ViewButton = styled.button`
   background: #f1f1f2;
   padding: 1.6rem 2rem;
   border-radius: 10px;
   margin-left: 2rem;
+  cursor: pointer;
 
   @media ${device.tablet} {
     display: flex;

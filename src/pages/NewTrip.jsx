@@ -5,7 +5,8 @@ import DatePicker from 'react-datepicker'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { api } from 'configs/httpService'
+import {api} from 'services/httpService'
+import {TripContext} from 'contexts/TripContext'
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import { device } from 'style/responsive'
@@ -13,6 +14,7 @@ import Sidebar from 'components/Sidebar'
 import { ReactComponent as Check } from 'assets/Check.svg'
 
 const NewTrip = () => {
+
   const [countries, setCountries] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -23,7 +25,7 @@ const NewTrip = () => {
   const [zipCode, setZipCode] = useState('')
   const [testedCovid, setTestedCovid] = useState(false)
 
-  const [selectedCountry, setSelectedCountry] = useState()
+  const {addTrip} = useContext(TripContext)
 
   useEffect(() => {
     fetchData()
@@ -45,12 +47,14 @@ const NewTrip = () => {
     setCountries(countriesData)
   }
 
+  const [selectedCountry, setSelectedCountry] = useState() 
+
   return (
     <Container>
       <Main>
         <Heading title="New trip" />
 
-        <Form>
+        <Form onSubmit={e => addTrip(e)}>
           <FormContent>
             <InnerForm>
               <FormGroup>
