@@ -64,7 +64,7 @@ const FlagIcon = ({ flag }) => {
           <Separator />
           <TripDate>
             <MobileLabel>Date</MobileLabel>
-            <strong>{date}</strong>
+            <strong><div class="innerWrapper">{date}</div></strong>
           </TripDate>
         </TripRowInline>
         <TripRowInline>
@@ -73,7 +73,7 @@ const FlagIcon = ({ flag }) => {
             {company}
           </Company>
           <Separator />
-          <Address>{address}</Address>
+          <Address><div class="innerWrapper">{address}</div></Address>
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
@@ -106,6 +106,8 @@ const TripRowStyles = styled.div`
 
 const TripColumn = styled.div`
   margin-right: 2rem;
+  min-width: 0;
+  width: 100%;
 
   @media ${device.tablet} {
     display: flex;
@@ -135,6 +137,8 @@ const Separator = styled.div`
   margin: 0 2rem;
   height: 10px;
   background: #e4e4e5;
+  position: relative;
+  top: 2px;
 
   @media ${device.tablet} {
     display: none;
@@ -167,6 +171,7 @@ const MobileCountry = styled.div`
 
 const Country = styled.div`
   font-weight: 600;
+  white-space: nowrap;
 
   @media ${device.tablet} {
     display: none;
@@ -176,6 +181,7 @@ const Country = styled.div`
 const Company = styled.div`
   font-size: 1.4rem;
   white-space: nowrap;
+
 
   @media ${device.tablet} {
     font-weight: 600;
@@ -200,6 +206,26 @@ const TripDate = styled.div`
   font-size: 1.4rem;
   color: #97999b;
 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-width: 0;
+  position: relative;
+  height: 16px;
+  width: 100%;
+
+  > div.innerWrapper {
+    display: inline-block;
+    position: absolute;
+    right: 0; 
+    left: 0;
+    top: 0;
+    bottom: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   @media ${device.tablet} {
     color: black;
     order: 2;
@@ -209,10 +235,25 @@ const TripDate = styled.div`
 const Address = styled.div`
   font-size: 1.4rem;
   color: #97999b;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
-  width: 100% !important;
-  white-space: inherit;
-  text-overflow: inherit;
+  min-width: 0;
+  position: relative;
+  height: 16px;
+  width: 100%;
+
+  > div {
+    display: inline-block;
+    position: absolute;
+    right: 0; 
+    left: 0;
+    top: 0;
+    bottom: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 
   @media ${device.tablet} {
     color: black;
