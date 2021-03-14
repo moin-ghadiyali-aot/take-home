@@ -4,7 +4,6 @@ import {api} from 'services/httpService'
 export const TripContext = createContext()
 
 const TripProvider = ({children}) => {
-
   const [trips, setTrips] = useState([])
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const TripProvider = ({children}) => {
     const originalTrips = trips
     // const updatedTrips = [...trips, ]
     // setTrips(updatedTrips)
-    console.log('form event', e);
+    console.log('form event', event);
 
     try {
       await api.post('/trip')

@@ -43,7 +43,6 @@ const NewTrip = () => {
         className: `flag-${data.value}`,
       })
     })
-    console.log(sortedData)
     setCountries(countriesData)
   }
 
@@ -59,9 +58,11 @@ const NewTrip = () => {
             <InnerForm>
               <FormGroup>
                 <Label htmlFor="countries">Where do you want to go</Label>
+                <input type="hidden" name="country" id="country" defaultValue={selectedCountry} />
                 <Dropdown
                   className={selectedCountry}
-                  id="countries"
+                  id="country"
+                  name="country"
                   options={countries}
                   placeholder="Select country"
                   onChange={data => {
@@ -78,9 +79,10 @@ const NewTrip = () => {
                     <DatePicker
                       selected={startDate}
                       onChange={date => setStartDate(date)}
+                      id="startDate"
+                      name="startDate"
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
-                      locale="en-GB"
                       selectsStart
                       startDate={startDate}
                       endDate={endDate}
@@ -94,9 +96,10 @@ const NewTrip = () => {
                     <DatePicker
                       selected={endDate}
                       onChange={date => setEndDate(date)}
+                      id="endDate"
+                      name="endDate"
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
-                      locale="en-GB"
                       selectsEnd
                       startDate={startDate}
                       endDate={endDate}
