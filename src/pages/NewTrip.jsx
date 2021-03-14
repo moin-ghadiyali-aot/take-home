@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import {api} from 'configs/httpService'
+import { api } from 'configs/httpService'
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import { device } from 'style/responsive'
@@ -23,6 +23,8 @@ const NewTrip = () => {
   const [zipCode, setZipCode] = useState('')
   const [testedCovid, setTestedCovid] = useState(false)
 
+  const [selectedCountry, setSelectedCountry] = useState()
+
   useEffect(() => {
     fetchData()
   }, [])
@@ -30,7 +32,17 @@ const NewTrip = () => {
   const fetchData = async () => {
     const { data } = await api.get('/country')
     const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1))
-    setCountries(sortedData)
+
+    const countriesData = []
+    sortedData.forEach(data => {
+      countriesData.push({
+        value: data.value,
+        label: data.label,
+        className: `flag-${data.value}`,
+      })
+    })
+    console.log(sortedData)
+    setCountries(countriesData)
   }
 
   return (
@@ -44,29 +56,49 @@ const NewTrip = () => {
               <FormGroup>
                 <Label htmlFor="countries">Where do you want to go</Label>
                 <Dropdown
+                  className={selectedCountry}
                   id="countries"
                   options={countries}
                   placeholder="Select country"
+                  onChange={data => {
+                    console.log(data)
+                    setSelectedCountry(`flag-${data.value}`)
+                  }}
                 />
               </FormGroup>
 
               <FormGroup>
                 <FormInnerGroup>
                   <Label htmlFor="startDate">Start date</Label>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={date => setStartDate(date)}
-                    placeholderText="dd. mm. year"
-                  />
+                  <DatePickerWrap>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={date => setStartDate(date)}
+                      placeholderText="dd. mm. year"
+                      showPopperArrow={false}
+                      locale="en-GB"
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                    />
+                  </DatePickerWrap>
                 </FormInnerGroup>
 
                 <FormInnerGroup>
                   <Label htmlFor="endDate">End date</Label>
-                  <DatePicker
-                    selected={endDate}
-                    onChange={date => setEndDate(date)}
-                    placeholderText="dd. mm. year"
-                  />
+                  <DatePickerWrap>
+                    <DatePicker
+                      selected={endDate}
+                      onChange={date => setEndDate(date)}
+                      placeholderText="dd. mm. year"
+                      showPopperArrow={false}
+                      locale="en-GB"
+                      selectsEnd
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={startDate}
+                    />
+                  </DatePickerWrap>
                 </FormInnerGroup>
               </FormGroup>
 
@@ -226,6 +258,12 @@ const FormContent = styled.div`
   }
 `
 
+const DatePickerWrap = styled.div`
+  position: relative;
+  flex: 1;
+  width: 100%;
+`
+
 const InnerForm = styled.div`
   width: 100%;
   flex: 1;
@@ -309,6 +347,10 @@ const Input = styled.input`
 
   &:focus {
     border: 1px solid #ccc;
+  }
+
+  &.react-datepicker-ignore-onclickoutside {
+    border-radius: 10px 10px 0 0 !important;
   }
 `
 

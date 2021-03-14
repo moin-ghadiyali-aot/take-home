@@ -11,6 +11,37 @@ import { device } from 'style/responsive'
 import NewTrip from 'pages/NewTrip'
 import Trips from 'pages/Trips'
 
+import DatePickerLeft from './assets/DatePickerLeft.svg'
+import DatePickerRight from './assets/DatePickerRight.svg'
+
+import GlobeIcon from './assets/Globe.svg'
+import AustriaFlag from './assets/flags/austria.svg'
+import ChinaFlag from './assets/flags/china.svg'
+import FranceFlag from './assets/flags/france.svg'
+import GreeceFlag from './assets/flags/greece.svg'
+import ItalyFlag from './assets/flags/italy.svg'
+import NetherlandsFlag from './assets/flags/netherlands.svg'
+import PortgualFlag from './assets/flags/portugal.svg'
+import SlovakiaFlag from './assets/flags/slovakia.svg'
+import SpainFlag from './assets/flags/spain.svg'
+import SweedenFlag from './assets/flags/spain.svg'
+import UnitedKingdomFlag from './assets/flags/united-kingdom.svg'
+
+const flags = {
+  globe: GlobeIcon,
+  at: AustriaFlag,
+  cn: ChinaFlag,
+  fr: FranceFlag,
+  gr: GreeceFlag,
+  it: ItalyFlag,
+  aw: NetherlandsFlag,
+  pt: PortgualFlag,
+  sk: SlovakiaFlag,
+  es: SpainFlag,
+  se: SweedenFlag,
+  uk: UnitedKingdomFlag,
+}
+
 const Routing = () => (
   <Main>
     <Switch>
@@ -25,7 +56,11 @@ const App = () => {
   return (
     <MenuProvider>
       <Container className="App">
-        <GlobalStyle />
+        <GlobalStyle
+          leftArrow={DatePickerLeft}
+          rightArrow={DatePickerRight}
+          flags={flags}
+        />
         <NavMenu />
         <Routing />
       </Container>
