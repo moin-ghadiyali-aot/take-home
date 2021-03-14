@@ -47,6 +47,7 @@ const NewTrip = () => {
   }
 
   const [selectedCountry, setSelectedCountry] = useState() 
+  const [countryHiddenField, setCountryHiddenField] = useState()
 
   return (
     <Container>
@@ -58,7 +59,7 @@ const NewTrip = () => {
             <InnerForm>
               <FormGroup>
                 <Label htmlFor="countries">Where do you want to go</Label>
-                <input type="hidden" name="country" id="country" defaultValue={selectedCountry} />
+                <input type="hidden" name="country" id="country" defaultValue={countryHiddenField} />
                 <Dropdown
                   className={selectedCountry}
                   id="country"
@@ -67,6 +68,7 @@ const NewTrip = () => {
                   placeholder="Select country"
                   onChange={data => {
                     console.log(data)
+                    setCountryHiddenField(data.value)
                     setSelectedCountry(`flag-${data.value}`)
                   }}
                 />
