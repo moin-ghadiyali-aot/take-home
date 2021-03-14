@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import moment from 'moment'
 import { TripContext } from 'contexts/TripContext'
 
-import {api} from 'services/httpService'
 import Heading from 'components/Heading'
 import TripRow from 'components/TripRow'
 import Sidebar from 'components/Sidebar'
@@ -11,17 +10,6 @@ import Sidebar from 'components/Sidebar'
 const Trips = () => {
 
   const {trips} = useContext(TripContext)
-
-  // const [trips, setTrips] = useState([])
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //   const {data} = await api.get('/trip')
-  //   console.log('fetched trips', data)
-  //   setTrips(data)
-  // }
-  //   fetchData()
-  // }, [])
 
   return (
     <Container>

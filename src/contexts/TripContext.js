@@ -16,7 +16,19 @@ const TripProvider = ({children}) => {
     fetchData()
   }, [])
 
-  const addTrip = () => {
+  const addTrip = async event => {
+    event.preventDefault()
+    const originalTrips = trips
+    // const updatedTrips = [...trips, ]
+    // setTrips(updatedTrips)
+    console.log('form event', e);
+
+    try {
+      await api.post('/trip')
+    } catch (error) {
+      alert('Something went wrong while adding trip')
+      setTrips(originalTrips)
+    }
 
   }
 

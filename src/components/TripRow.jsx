@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import styled from 'styled-components'
-import {api} from 'services/httpService'
 import {TripContext} from 'contexts/TripContext'
 
 import { ReactComponent as RemoveIcon } from 'assets/Remove.svg'
