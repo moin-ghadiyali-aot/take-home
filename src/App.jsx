@@ -15,7 +15,7 @@ import TripProvider from 'contexts/TripContext'
 import DatePickerLeft from './assets/DatePickerLeft.svg'
 import DatePickerRight from './assets/DatePickerRight.svg'
 
-import GlobeIcon from './assets/Globe.svg'
+import GlobeIcon from './assets/DropdownGlobe.svg'
 import AustriaFlag from './assets/flags/austria.svg'
 import ChinaFlag from './assets/flags/china.svg'
 import FranceFlag from './assets/flags/france.svg'
