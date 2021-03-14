@@ -1,21 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react'
-import axios from 'axios'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
-import Heading from '../components/Heading'
-
 import DatePicker from 'react-datepicker'
+import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import SidebarTripRow from '../components/SidebarTripRow'
-
-import { device } from '../style/responsive'
-
-import { globeIcon as GlobeIcon } from 'assets/icons'
-import { ReactComponent as Netherlands } from 'assets/flags/netherlands.svg'
-import { ReactComponent as Check } from 'assets/Check.svg'
+import {api} from 'configs/httpService'
+import Heading from 'components/Heading'
+import SidebarTripRow from 'components/SidebarTripRow'
+import { device } from 'style/responsive'
 import Sidebar from 'components/Sidebar'
+import { ReactComponent as Check } from 'assets/Check.svg'
 
 const NewTrip = () => {
   const [countries, setCountries] = useState([])
@@ -32,19 +27,10 @@ const NewTrip = () => {
     fetchData()
   }, [])
 
-  //  TODO: cant insert flags
-  const flagsMapping = {
-    aw: Netherlands,
-  }
-
   const fetchData = async () => {
-    const { data } = await axios.get(
-      'https://task-devel.cleevio-vercel.vercel.app/api/country',
-    )
+    const { data } = await api.get('/country')
     const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1))
-    console.log(data)
     setCountries(sortedData)
-    console.log('fetched', sortedData)
   }
 
   return (
@@ -65,7 +51,6 @@ const NewTrip = () => {
               </FormGroup>
 
               <FormGroup>
-                {/* TODO: change placeholder on date picker and style it */}
                 <FormInnerGroup>
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePicker
@@ -158,9 +143,6 @@ const NewTrip = () => {
                     <span>No</span>
                   </RadioButton>
                 </RadioButtonGroup>
-                {/* TODO: error "input a void element tag" */}
-                {/* <input id='tested-covid' type='radio'>Yes</input> */}
-                {/* <input id='tested-covid' type='radio'>No</input> */}
               </FormGroup>
             </InnerForm>
           </FormContent>

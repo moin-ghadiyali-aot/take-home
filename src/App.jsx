@@ -14,8 +14,8 @@ import Trips from 'pages/Trips'
 const Routing = () => (
   <Main>
     <Switch>
-      <Route path="/" exact component={Trips} />
       <Route path="/new-trip" component={NewTrip} />
+      <Route path="/" exact component={Trips} />
       <Route to="*" component={NotFound} />
     </Switch>
   </Main>

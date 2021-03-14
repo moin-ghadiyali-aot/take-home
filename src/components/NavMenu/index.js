@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link, NavLink } from 'react-router-dom'
-//import { menuItems } from 'menus'
-// import * as Styled from './styles'
 import { device } from '../../style/responsive'
 import { MenuContext } from '../../contexts/MenuContext'
 
@@ -13,14 +11,8 @@ import { ReactComponent as ClockIcon } from 'assets/Clock.svg'
 import { ReactComponent as EditIcon } from 'assets/Edit.svg'
 import { ReactComponent as GlobeIcon } from 'assets/Globe.svg'
 
-// const iconMapping = {
-//   plusIcon: icon.plusIcon,
-//   clockIcon: icon.clockIcon,
-//   editIcon: icon.editIcon,
-//   globeIcon: icon.globeIcon,
-// }
-
 const NavMenu = () => {
+
   const menuCtx = useContext(MenuContext)
 
   return (
@@ -36,7 +28,6 @@ const NavMenu = () => {
             <LogoIcon width={120} />
           </Link>
         </Logo>
-        {/* {menuItems.map((item, i) => ( */}
         <MenuItems>
           <NewTrip>
             <StyledNavLink onClick={menuCtx.toggleMenu} to="/new-trip">
@@ -69,7 +60,6 @@ const NavMenu = () => {
             </NonClickableLink>
           </MenuItem>
         </MenuItems>
-        {/* ))} */}
       </Container>
     </Nav>
   )

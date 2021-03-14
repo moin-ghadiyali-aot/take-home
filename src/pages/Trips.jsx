@@ -1,21 +1,40 @@
+import {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import Heading from '../components/Heading'
-import TripRow from '../components/TripRow'
+import moment from 'moment'
 
+import {api} from 'configs/httpService'
+import Heading from 'components/Heading'
+import TripRow from 'components/TripRow'
 import Sidebar from 'components/Sidebar'
 
 const Trips = () => {
+
+  const [trips, setTrips] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+    const {data} = await api.get('/trip')
+    console.log('fetched trips', data)
+    setTrips(data)
+  }
+    fetchData()
+  }, [])
+
   return (
     <Container>
       <Main>
         <Heading title="Your trips" />
         <AllTrips>
-          <TripRow
-            country="Austria"
-            company="Diamler AG"
-            address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
-            date="Jul 14 - Sep 20, 2019"
-          />
+          {trips.map(trip => (
+            <TripRow
+              key={trip.id}
+              country={trip.address.country}
+              company={trip.company}
+              address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
+              date={`${moment(trip.start_date).format('D MMM')} - ${moment(trip.end_date).format('D MMM, YYYY')}`}
+            />
+          ))}
+
           <TripRow
             country="United Kingdom"
             company="Diamler AG"
