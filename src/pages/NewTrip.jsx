@@ -67,7 +67,6 @@ const NewTrip = () => {
                   options={countries}
                   placeholder="Select country"
                   onChange={data => {
-                    console.log(data)
                     setCountryHiddenField(data.value)
                     setSelectedCountry(`flag-${data.value}`)
                   }}

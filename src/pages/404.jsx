@@ -30,11 +30,13 @@ const Main = styled.main`
 `
 
 const NotFoundStyled = styled.div`
-  display: flex;
+  display: flex;                                      
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 7rem;
   height: 100%;
+  color: var(--dark-grey);
+  transform: translateY(-5%);
 `
 
 export default NotFound

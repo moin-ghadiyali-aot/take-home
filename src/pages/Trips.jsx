@@ -1,8 +1,9 @@
-import {useContext, useEffect, useState} from 'react'
+import {useContext} from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
-import { TripContext } from 'contexts/TripContext'
+import {motion} from 'framer-motion'
 
+import { TripContext } from 'contexts/TripContext'
 import Heading from 'components/Heading'
 import TripRow from 'components/TripRow'
 import Sidebar from 'components/Sidebar'
@@ -18,6 +19,8 @@ const Trips = () => {
         <AllTrips>
           {(trips || []).map(trip => (
             <TripRow
+              as={motion.div}
+              initial={{y: -250}}
               key={trip.id}
               country={trip.address.country}
               company={trip.company}

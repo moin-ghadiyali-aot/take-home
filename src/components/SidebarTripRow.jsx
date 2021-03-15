@@ -1,22 +1,46 @@
 import styled from 'styled-components'
 
-import { ReactComponent as RemoveIcon } from '../assets/Remove.svg'
-import { ReactComponent as ArrowRight } from '../assets/ArrowRight.svg'
-
-import { ReactComponent as AustriaFlag } from '../assets/flags/austria.svg'
-import { ReactComponent as UnitedKingdomFlag } from '../assets/flags/united-kingdom.svg'
-
-import { device } from '../style/responsive'
+import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
+import { ReactComponent as AustriaFlag } from 'assets/flags/austria.svg'
+import { ReactComponent as ChinaFlag } from 'assets/flags/china.svg'
+import { ReactComponent as FranceFlag } from 'assets/flags/france.svg'
+import { ReactComponent as GreeceFlag } from 'assets/flags/greece.svg'
+import { ReactComponent as ItalyFlag } from 'assets/flags/italy.svg'
+import { ReactComponent as NetherlandsFlag } from 'assets/flags/netherlands.svg'
+import { ReactComponent as PortugalFlag } from 'assets/flags/portugal.svg'
+import { ReactComponent as SpainFlag } from 'assets/flags/spain.svg'
+import { ReactComponent as SlovakiaFlag } from 'assets/flags/slovakia.svg'
+import { ReactComponent as SwedenFlag } from 'assets/flags/sweden.svg'
+import { ReactComponent as UnitedKingdomFlag } from 'assets/flags/united-kingdom.svg'
 
 const FlagIcon = ({ flag }) => {
-  if (flag === 'Austria') {
-    return <AustriaFlag width={40} height={40} />
-  } else if (flag === 'United Kingdom') {
-    return <UnitedKingdomFlag width={40} height={40} />
-  } else {
-    return null
+  switch (flag) {
+    case 'Austria':
+      return <AustriaFlag width={40} height={40}/>
+    case 'China':
+      return <ChinaFlag width={40} height={40} />
+    case 'France':
+      return <FranceFlag width={40} height={40} />
+    case 'Greece':
+      return <GreeceFlag width={40} height={40} />
+    case 'Italy':
+      return <ItalyFlag width={40} height={40} />
+    case 'Netherlands':
+      return <NetherlandsFlag width={40} height={40} />
+    case 'Portugal':
+      return <PortugalFlag width={40} height={40} />
+    case 'Slovakia':
+      return <SlovakiaFlag width={40} height={40} />
+    case 'Spain':
+      return <SpainFlag width={40} height={40} />
+    case 'Sweden':
+      return <SwedenFlag width={40} height={40} />
+    case 'United Kingdom':
+      return <UnitedKingdomFlag width={40} height={40} />
+    default:
+      return null
+    }
   }
-}
 
 const SidebarTripRow = ({ country, company, date, address }) => {
   return (

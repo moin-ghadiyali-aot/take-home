@@ -64,7 +64,7 @@ const FlagIcon = ({ flag }) => {
           <Separator />
           <TripDate>
             <MobileLabel>Date</MobileLabel>
-            <strong><div class="innerWrapper">{date}</div></strong>
+            <strong><div className="innerWrapper">{date}</div></strong>
           </TripDate>
         </TripRowInline>
         <TripRowInline>
@@ -73,7 +73,7 @@ const FlagIcon = ({ flag }) => {
             {company}
           </Company>
           <Separator />
-          <Address><div class="innerWrapper">{address}</div></Address>
+          <Address><div className="innerWrapper">{address}</div></Address>
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
