@@ -21,7 +21,8 @@ const NewTrip = () => {
     console.log(state.form)
 
     try {
-      const response = await api.post('/trips', {})
+      const response = await api.post('/trips', state.form)
+      console.log('response', response);
       dispatch({ type: 'ADD_TRIP', payload: response.data })
     } catch (e) {
       console.error(e)
@@ -39,6 +40,7 @@ const NewTrip = () => {
               <FormGroup>
                 <Label htmlFor="countries">Where do you want to go</Label>
                 <Dropdown
+                  required
                   className={state.selectedCountry}
                   id="country"
                   name="country"
@@ -62,6 +64,7 @@ const NewTrip = () => {
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
+                    required
                       selected={state.form.startDate}
                       onChange={date => {
                         dispatch({
@@ -84,6 +87,7 @@ const NewTrip = () => {
                   <Label htmlFor="endDate">End date</Label>
                   <DatePickerWrap>
                     <DatePicker
+                      required
                       selected={state.form.endDate}
                       onChange={date => {
                         dispatch({
@@ -108,6 +112,7 @@ const NewTrip = () => {
                 <FormInnerGroup>
                   <Label htmlFor="company">Company name</Label>
                   <Input
+                    required
                     id="company"
                     name="company"
                     placeholder="Type here..."
@@ -124,6 +129,7 @@ const NewTrip = () => {
                 <FormInnerGroup>
                   <Label htmlFor="city">City</Label>
                   <Input
+                    required
                     id="city"
                     name="city"
                     placeholder="Type here..."
@@ -140,6 +146,7 @@ const NewTrip = () => {
                 <FormInnerGroup>
                   <Label htmlFor="street">Street</Label>
                   <Input
+                    required
                     id="street"
                     name="street"
                     placeholder="Type here..."
@@ -156,6 +163,7 @@ const NewTrip = () => {
                 <FormInnerGroup>
                   <Label htmlFor="streetNumber">Street number</Label>
                   <Input
+                    required
                     id="streetNumber"
                     name="streetNumber"
                     placeholder="Type here..."
@@ -172,6 +180,7 @@ const NewTrip = () => {
                 <FormInnerGroup>
                   <Label htmlFor="zipCode">Zip code</Label>
                   <Input
+                    required
                     id="zipCode"
                     name="zipCode"
                     placeholder="Type here..."
@@ -193,6 +202,7 @@ const NewTrip = () => {
                 <RadioButtonGroup>
                   <RadioButton>
                     <input
+                      required
                       type="radio"
                       name="testedCovid"
                       id="yes"
@@ -209,6 +219,7 @@ const NewTrip = () => {
                   </RadioButton>
                   <RadioButton>
                     <input
+                      required
                       type="radio"
                       name="testedCovid"
                       id="no"
@@ -450,13 +461,12 @@ const RadioButton = styled.label`
     position: absolute;
     left: 3px;
     top: 3px;
-    opacity: 0;
-    visibility: hidden;
+    transform: scale(0);
+    transition: transform 0.15s;
   }
 
   > input:checked ~ div:before {
-    opacity: 1;
-    visibility: visible;
+    transform: scale(1)
   }
 `
 

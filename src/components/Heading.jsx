@@ -3,12 +3,13 @@ import styled from 'styled-components'
 
 import { device } from 'style/responsive'
 import { MenuContext } from 'contexts/MenuContext'
+import {motion} from 'framer-motion'
 
 const Heading = ({ title }) => {
   const menuCtx = useContext(MenuContext)
 
   return (
-    <HeadingStyled>
+    <HeadingStyled as={motion.h1} initial={{y: -200}}>
       {window.matchMedia('(max-width: 600px)') ? (
         <OpenMenu onClick={menuCtx.toggleMenu}>
           <span />
