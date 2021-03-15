@@ -10,23 +10,24 @@ import { device } from 'style/responsive'
 // Pages
 import NewTrip from 'pages/NewTrip'
 import Trips from 'pages/Trips'
+import EditTrip from 'pages/EditTrip'
 import TripProvider from 'contexts/TripContext'
 
 import DatePickerLeft from './assets/DatePickerLeft.svg'
 import DatePickerRight from './assets/DatePickerRight.svg'
 
-import GlobeIcon from './assets/DropdownGlobe.svg'
-import AustriaFlag from './assets/flags/austria.svg'
-import ChinaFlag from './assets/flags/china.svg'
-import FranceFlag from './assets/flags/france.svg'
-import GreeceFlag from './assets/flags/greece.svg'
-import ItalyFlag from './assets/flags/italy.svg'
-import NetherlandsFlag from './assets/flags/netherlands.svg'
-import PortgualFlag from './assets/flags/portugal.svg'
-import SlovakiaFlag from './assets/flags/slovakia.svg'
-import SpainFlag from './assets/flags/spain.svg'
-import SweedenFlag from './assets/flags/spain.svg'
-import UnitedKingdomFlag from './assets/flags/united-kingdom.svg'
+import GlobeIcon from 'assets/DropdownGlobe.svg'
+import AustriaFlag from 'assets/flags/austria.svg'
+import ChinaFlag from 'assets/flags/china.svg'
+import FranceFlag from 'assets/flags/france.svg'
+import GreeceFlag from 'assets/flags/greece.svg'
+import ItalyFlag from 'assets/flags/italy.svg'
+import NetherlandsFlag from 'assets/flags/netherlands.svg'
+import PortgualFlag from 'assets/flags/portugal.svg'
+import SlovakiaFlag from 'assets/flags/slovakia.svg'
+import SpainFlag from 'assets/flags/spain.svg'
+import SweedenFlag from 'assets/flags/spain.svg'
+import UnitedKingdomFlag from 'assets/flags/united-kingdom.svg'
 
 const flags = {
   globe: GlobeIcon,
@@ -48,6 +49,7 @@ const Routing = () => (
     <Switch>
       <Route path="/new-trip" component={NewTrip} />
       <Route path="/" exact component={Trips} />
+      <Route path="/edit-trip" component={EditTrip}/>
       <Route to="*" component={NotFound} />
     </Switch>
   </Main>

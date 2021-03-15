@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link, NavLink } from 'react-router-dom'
-import { device } from '../../style/responsive'
-import { MenuContext } from '../../contexts/MenuContext'
+import { device } from 'style/responsive'
+import { MenuContext } from 'contexts/MenuContext'
 
-import { ReactComponent as Close } from '../../assets/Close.svg'
+import { ReactComponent as Close } from 'assets/Close.svg'
 import { ReactComponent as LogoIcon } from 'assets/Logo.svg'
 import { ReactComponent as Plus } from 'assets/Plus.svg'
 import { ReactComponent as ClockIcon } from 'assets/Clock.svg'

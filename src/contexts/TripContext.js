@@ -36,6 +36,12 @@ const reducer = (state, action) => {
         countries: action.payload,
         selectedCountry: state.selectedCountry,
       }
+    case 'REMOVE_TRIP':
+      return {
+        trips: state.trips.filter(trip => trip.id !== action.payload),
+        form: { ...state.form },
+        countries: [...state.countries],
+      }
     case 'SET_SELECTED_COUNTRY':
       return {
         trips: [...state.trips],

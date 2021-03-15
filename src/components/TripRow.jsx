@@ -1,21 +1,37 @@
 import { useContext, lazy } from 'react'
 import styled from 'styled-components'
-
+import {useHistory} from 'react-router-dom'
+import {api} from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
 import { ReactComponent as RemoveIcon } from 'assets/Remove.svg'
 import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
 import { device } from 'style/responsive'
 
-const FlagIcon = ({ flag }) => lazy(() => import(`assets/flags/${flag}.svg`))
+// const FlagIcon = ({ flag }) => lazy(() => import(`assets/flags/${flag}.svg`))
 
 const TripRow = ({ country, company, date, id, address }) => {
-  const { removeTrip } = useContext(TripContext)
+
   const [state, dispatch] = useContext(TripContext)
+  const history = useHistory()
+
+  let flag = country.toLowerCase() // Austria to austria
+  flag = flag.split(' ') // united kingdom to united-kingdom
+  flag = flag.join('-')
+  const image = require('assets/flags/' + flag + '.svg').default
+
+  const removeTrip = async id => {
+    try {
+      await api.delete(`/trip/${id}`)
+      dispatch({ type: 'REMOVE_TRIP', payload: id  })
+    } catch (error) {
+      alert('Something went wrong while deleting trip')
+    }
+  }
 
   return (
     <TripRowStyles>
       <FlagColumn>
-        <FlagIcon flag={country} />
+        <img src={image} width={32} height={32} alt={country} />
         <MobileCountry>{country}</MobileCountry>
       </FlagColumn>
       <TripColumn>
@@ -41,10 +57,10 @@ const TripRow = ({ country, company, date, id, address }) => {
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
-        <RemoveButton onClick={dispatch({ type: 'REMOVE_TRIP', payload: id })}>
+        <RemoveButton onClick={()=>removeTrip(id)}>
           <RemoveIcon width={11} height={16} />
         </RemoveButton>
-        <ViewButton>
+        <ViewButton onClick={history.push()}>
           <MobileLabel>View Trip</MobileLabel>
           <ArrowRight width={16} height={10} />
         </ViewButton>
