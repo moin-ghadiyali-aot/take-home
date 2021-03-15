@@ -73,7 +73,7 @@ const FlagIcon = ({ flag }) => {
             {company}
           </Company>
           <Separator />
-          <Address>{address}</Address>
+          <Address><span>{address}</span></Address>
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
@@ -106,6 +106,7 @@ const TripRowStyles = styled.div`
 
 const TripColumn = styled.div`
   margin-right: 2rem;
+  flex: 1;
 
   @media ${device.tablet} {
     display: flex;
@@ -117,6 +118,7 @@ const TripColumn = styled.div`
 const TripRowInline = styled.div`
   display: flex;
   margin-bottom: 1rem;
+  flex: 1;
 
   &:last-child {
     margin: 0;
@@ -209,10 +211,12 @@ const TripDate = styled.div`
 const Address = styled.div`
   font-size: 1.4rem;
   color: #97999b;
-  overflow: hidden;
   width: 100% !important;
-  white-space: inherit;
-  text-overflow: inherit;
+  min-width: 0;
+  display: flex;
+
+  > span {
+  }
 
   @media ${device.tablet} {
     color: black;

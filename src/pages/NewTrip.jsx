@@ -5,8 +5,9 @@ import DatePicker from 'react-datepicker'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import {api} from 'services/httpService'
-import {TripContext} from 'contexts/TripContext'
+import { api } from 'services/httpService'
+import { TripContext } from 'contexts/TripContext'
+
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import { device } from 'style/responsive'
@@ -14,62 +15,55 @@ import Sidebar from 'components/Sidebar'
 import { ReactComponent as Check } from 'assets/Check.svg'
 
 const NewTrip = () => {
+  // THIS IS THE MAIN STATE WHICH HOLD ALL TRIPS, FORM DATA AND COUNTRIES FETCHED FROM API (state.trips, state.form, state.countries)
+  const [state, dispatch] = useContext(TripContext)
 
-  const [countries, setCountries] = useState([])
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [company, setCompany] = useState('')
-  const [city, setCity] = useState('')
-  const [street, setStreet] = useState('')
-  const [streetNumber, setStreetNumber] = useState('')
-  const [zipCode, setZipCode] = useState('')
-  const [testedCovid, setTestedCovid] = useState(false)
+  // DO YOUR API CALL HERE
+  const addNewTrip = () => {
+    console.log(state.form)
 
-  const {addTrip} = useContext(TripContext)
+    /* Now here you can do api call to post the form */
+    // try {
+    /* first you do api call */
+    // const response = await axios.post('/trips', {})
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+    /* if api finished successfully and new trip was saved
+        you can dispatch command to append that new trip to current list
+        dispatch command will trigger reducer action called ADD_TRIP and append
+        the new trip to current trip list
+      */
+    // dispatch({ type: 'ADD_TRIP', payload: response.data })
 
-  const fetchData = async () => {
-    const { data } = await api.get('/country')
-    const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1))
-
-    const countriesData = []
-    sortedData.forEach(data => {
-      countriesData.push({
-        value: data.value,
-        label: data.label,
-        className: `flag-${data.value}`,
-      })
-    })
-    setCountries(countriesData)
+    // } catch (e) {
+    /* handle error here...*/
+    // }
   }
-
-  const [selectedCountry, setSelectedCountry] = useState() 
-  const [countryHiddenField, setCountryHiddenField] = useState()
 
   return (
     <Container>
       <Main>
         <Heading title="New trip" />
 
-        <Form onSubmit={e => addTrip(e)}>
+        <Form>
           <FormContent>
             <InnerForm>
               <FormGroup>
                 <Label htmlFor="countries">Where do you want to go</Label>
-                <input type="hidden" name="country" id="country" defaultValue={countryHiddenField} />
                 <Dropdown
-                  className={selectedCountry}
+                  className={state.selectedCountry}
                   id="country"
                   name="country"
-                  options={countries}
+                  options={state.countries}
                   placeholder="Select country"
                   onChange={data => {
-                    console.log(data)
-                    setCountryHiddenField(data.value)
-                    setSelectedCountry(`flag-${data.value}`)
+                    dispatch({
+                      type: 'SET_FORM',
+                      payload: { key: 'country', value: data.value },
+                    })
+                    dispatch({
+                      type: 'SET_SELECTED_COUNTRY',
+                      payload: data.value,
+                    })
                   }}
                 />
               </FormGroup>
@@ -79,15 +73,20 @@ const NewTrip = () => {
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
-                      selected={startDate}
-                      onChange={date => setStartDate(date)}
+                      selected={state.form.startDate}
+                      onChange={date => {
+                        dispatch({
+                          type: 'SET_FORM',
+                          payload: { key: 'startDate', value: date },
+                        })
+                      }}
                       id="startDate"
                       name="startDate"
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsStart
-                      startDate={startDate}
-                      endDate={endDate}
+                      startDate={state.form.startDate}
+                      endDate={state.form.endDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -96,16 +95,21 @@ const NewTrip = () => {
                   <Label htmlFor="endDate">End date</Label>
                   <DatePickerWrap>
                     <DatePicker
-                      selected={endDate}
-                      onChange={date => setEndDate(date)}
+                      selected={state.form.endDate}
+                      onChange={date => {
+                        dispatch({
+                          type: 'SET_FORM',
+                          payload: { key: 'endDate', value: date },
+                        })
+                      }}
                       id="endDate"
                       name="endDate"
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsEnd
-                      startDate={startDate}
-                      endDate={endDate}
-                      minDate={startDate}
+                      startDate={state.form.startDate}
+                      endDate={state.form.EndDate}
+                      minDate={state.form.startDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -118,8 +122,13 @@ const NewTrip = () => {
                     id="company"
                     name="company"
                     placeholder="Type here..."
-                    onChange={e => setCompany(e.target.value)}
-                    value={company}
+                    onChange={e => {
+                      dispatch({
+                        type: 'SET_FORM',
+                        payload: { key: 'company', value: e.target.value },
+                      })
+                    }}
+                    value={state.form.company}
                   />
                 </FormInnerGroup>
 
@@ -129,8 +138,13 @@ const NewTrip = () => {
                     id="city"
                     name="city"
                     placeholder="Type here..."
-                    onChange={e => setCity(e.target.value)}
-                    value={city}
+                    onChange={e => {
+                      dispatch({
+                        type: 'SET_FORM',
+                        payload: { key: 'city', value: e.target.value },
+                      })
+                    }}
+                    value={state.form.city}
                   />
                 </FormInnerGroup>
 
@@ -140,8 +154,13 @@ const NewTrip = () => {
                     id="street"
                     name="street"
                     placeholder="Type here..."
-                    onChange={e => setStreet(e.target.value)}
-                    value={street}
+                    onChange={e => {
+                      dispatch({
+                        type: 'SET_FORM',
+                        payload: { key: 'street', value: e.target.value },
+                      })
+                    }}
+                    value={state.form.street}
                   />
                 </FormInnerGroup>
 
@@ -151,8 +170,13 @@ const NewTrip = () => {
                     id="streetNumber"
                     name="streetNumber"
                     placeholder="Type here..."
-                    onChange={e => setStreetNumber(e.target.value)}
-                    value={streetNumber}
+                    onChange={e => {
+                      dispatch({
+                        type: 'SET_FORM',
+                        payload: { key: 'streetNumber', value: e.target.value },
+                      })
+                    }}
+                    value={state.form.streetNumber}
                   />
                 </FormInnerGroup>
 
@@ -162,8 +186,13 @@ const NewTrip = () => {
                     id="zipCode"
                     name="zipCode"
                     placeholder="Type here..."
-                    onChange={e => setZipCode(e.target.value)}
-                    value={zipCode}
+                    onChange={e => {
+                      dispatch({
+                        type: 'SET_FORM',
+                        payload: { key: 'zipCode', value: e.target.value },
+                      })
+                    }}
+                    value={state.form.zipCode}
                   />
                 </FormInnerGroup>
               </FormGroup>
@@ -174,12 +203,34 @@ const NewTrip = () => {
                 </LabelQuestion>
                 <RadioButtonGroup>
                   <RadioButton>
-                    <input type="radio" name="testedCovid" id="yes" value="0" />
+                    <input
+                      type="radio"
+                      name="testedCovid"
+                      id="yes"
+                      value="0"
+                      onChange={() => {
+                        dispatch({
+                          type: 'SET_FORM',
+                          payload: { key: 'testedCovid', value: true },
+                        })
+                      }}
+                    />
                     <div />
                     <span>Yes</span>
                   </RadioButton>
                   <RadioButton>
-                    <input type="radio" name="testedCovid" id="no" value="1" />
+                    <input
+                      type="radio"
+                      name="testedCovid"
+                      id="no"
+                      value="1"
+                      onChange={() => {
+                        dispatch({
+                          type: 'SET_FORM',
+                          payload: { key: 'testedCovid', value: false },
+                        })
+                      }}
+                    />
                     <div />
                     <span>No</span>
                   </RadioButton>
@@ -189,7 +240,7 @@ const NewTrip = () => {
           </FormContent>
 
           <FormFooter>
-            <Button type="submit">
+            <Button type="button" onClick={addNewTrip}>
               Save
               <Check width={16} height={12} />
             </Button>
