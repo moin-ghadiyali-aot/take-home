@@ -5,38 +5,27 @@ import DatePicker from 'react-datepicker'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-//import { api } from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
-
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import { device } from 'style/responsive'
 import Sidebar from 'components/Sidebar'
 import { ReactComponent as Check } from 'assets/Check.svg'
+import {api} from 'services/httpService'
 
 const NewTrip = () => {
-  // THIS IS THE MAIN STATE WHICH HOLD ALL TRIPS, FORM DATA AND COUNTRIES FETCHED FROM API (state.trips, state.form, state.countries)
+
   const [state, dispatch] = useContext(TripContext)
 
-  // DO YOUR API CALL HERE
-  const addNewTrip = () => {
+  const addNewTrip = async () => {
     console.log(state.form)
 
-    /* Now here you can do api call to post the form */
-    // try {
-    /* first you do api call */
-    // const response = await axios.post('/trips', {})
-
-    /* if api finished successfully and new trip was saved
-        you can dispatch command to append that new trip to current list
-        dispatch command will trigger reducer action called ADD_TRIP and append
-        the new trip to current trip list
-      */
-    // dispatch({ type: 'ADD_TRIP', payload: response.data })
-
-    // } catch (e) {
-    /* handle error here...*/
-    // }
+    try {
+      const response = await api.post('/trips', {})
+      dispatch({ type: 'ADD_TRIP', payload: response.data })
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -457,7 +446,7 @@ const RadioButton = styled.label`
     width: 8px;
     height: 8px;
     border-radius: 10px;
-    background: #f8d964;
+    background: black;
     position: absolute;
     left: 3px;
     top: 3px;
