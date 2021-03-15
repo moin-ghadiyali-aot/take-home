@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import MenuProvider from './contexts/MenuContext'
 
@@ -86,10 +86,4 @@ const Main = styled.main`
   @media ${device.mobileL} {
     padding: 0;
   }
-`
-
-const SideBar = styled.aside`
-  height: 100vh;
-  border-left: 1px solid #f1f1f2;
-  padding: 40px;
 `

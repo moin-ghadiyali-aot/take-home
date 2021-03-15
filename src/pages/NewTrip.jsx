@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { api } from 'services/httpService'
+//import { api } from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
 
 import Heading from 'components/Heading'

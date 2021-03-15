@@ -9,7 +9,7 @@ import TripRow from 'components/TripRow'
 import Sidebar from 'components/Sidebar'
 
 const Trips = () => {
-  const [state, dispatch] = useContext(TripContext)
+  const [state] = useContext(TripContext)
 
   return (
     <Container>
