@@ -48,7 +48,7 @@ const NavMenu = () => {
               <IconWrap>
                 <EditIcon width={16} height={16} />
               </IconWrap>
-              Feature feature
+              Future feature
             </NonClickableLink>
           </MenuItem>
           <MenuItem>
@@ -56,7 +56,7 @@ const NavMenu = () => {
               <IconWrap>
                 <GlobeIcon width={16} height={16} />
               </IconWrap>
-              Future session
+              Future section
             </NonClickableLink>
           </MenuItem>
         </MenuItems>
@@ -80,7 +80,7 @@ const Nav = styled.nav`
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 10999;
+    z-index: 99999;
     width: 100%;
     display: none;
 
@@ -98,7 +98,7 @@ const CloseMenu = styled.span`
   position: absolute;
   left: 40px;
   top: 40px;
-  z-index: 10999;
+  z-index: 99999;
   align-items: center;
   justify-content: center;
   display: none;

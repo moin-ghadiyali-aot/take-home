@@ -174,7 +174,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &:hover {
-      background: #f9f9fa;
+      background: var(--grey)
     }
   }
 
@@ -280,12 +280,12 @@ const GlobalStyle = createGlobalStyle`
     width: 4rem;
     height: 4rem;
     border-radius: 10px;
-    background: #F9F9FA;
+    background: var(--grey);
     border: 0 !important;
     outline: 0 !important;
 
     &:hover {
-      background-color: #f0f0f1;
+      background-color: var(--grey);
     }
 
     @media ${device.mobileL} {
@@ -295,12 +295,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .react-datepicker__navigation--previous {
-    background: #F9F9FA url(${props => props.leftArrow}) no-repeat center;
+    background: var(--grey) url(${props => props.leftArrow}) no-repeat center;
     background-size: 12px
   }
 
   .react-datepicker__navigation--next {
-    background: #F9F9FA url(${props => props.rightArrow}) no-repeat center;
+    background: var(--grey) url(${props => props.rightArrow}) no-repeat center;
     background-size: 12px
   }
 

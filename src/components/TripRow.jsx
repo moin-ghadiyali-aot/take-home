@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext } from 'react'
 import styled from 'styled-components'
-import {TripContext} from 'contexts/TripContext'
+import { TripContext } from 'contexts/TripContext'
 
 import { ReactComponent as RemoveIcon } from 'assets/Remove.svg'
 import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
@@ -21,7 +21,7 @@ import { device } from 'style/responsive'
 const FlagIcon = ({ flag }) => {
   switch (flag) {
     case 'Austria':
-      return <AustriaFlag width={40} height={40}/>
+      return <AustriaFlag width={40} height={40} />
     case 'China':
       return <ChinaFlag width={40} height={40} />
     case 'France':
@@ -44,15 +44,13 @@ const FlagIcon = ({ flag }) => {
       return <UnitedKingdomFlag width={40} height={40} />
     default:
       return null
-    }
   }
+}
 
-  
-  const TripRow = ({ country, company, date, id, address }) => {
+const TripRow = ({ country, company, date, id, address }) => {
+  const { removeTrip } = useContext(TripContext)
 
-    const {removeTrip} = useContext(TripContext)
-
-    return (
+  return (
     <TripRowStyles>
       <FlagColumn>
         <FlagIcon flag={country} />
@@ -64,7 +62,9 @@ const FlagIcon = ({ flag }) => {
           <Separator />
           <TripDate>
             <MobileLabel>Date</MobileLabel>
-            <strong>{date}</strong>
+            <strong>
+              <div className="innerWrapper">{date}</div>
+            </strong>
           </TripDate>
         </TripRowInline>
         <TripRowInline>
@@ -73,11 +73,13 @@ const FlagIcon = ({ flag }) => {
             {company}
           </Company>
           <Separator />
-          <Address><span>{address}</span></Address>
+          <Address>
+            <div className="innerWrapper">{address}</div>
+          </Address>
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
-        <RemoveButton onClick={()=>removeTrip(id)}>
+        <RemoveButton onClick={() => removeTrip(id)}>
           <RemoveIcon width={11} height={16} />
         </RemoveButton>
         <ViewButton>
@@ -106,7 +108,8 @@ const TripRowStyles = styled.div`
 
 const TripColumn = styled.div`
   margin-right: 2rem;
-  flex: 1;
+  min-width: 0;
+  width: 100%;
 
   @media ${device.tablet} {
     display: flex;
@@ -137,6 +140,8 @@ const Separator = styled.div`
   margin: 0 2rem;
   height: 10px;
   background: #e4e4e5;
+  position: relative;
+  top: 2px;
 
   @media ${device.tablet} {
     display: none;
@@ -169,6 +174,7 @@ const MobileCountry = styled.div`
 
 const Country = styled.div`
   font-weight: 600;
+  white-space: nowrap;
 
   @media ${device.tablet} {
     display: none;
@@ -202,6 +208,26 @@ const TripDate = styled.div`
   font-size: 1.4rem;
   color: #97999b;
 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-width: 0;
+  position: relative;
+  height: 16px;
+  width: 100%;
+
+  > div.innerWrapper {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   @media ${device.tablet} {
     color: black;
     order: 2;
@@ -211,11 +237,24 @@ const TripDate = styled.div`
 const Address = styled.div`
   font-size: 1.4rem;
   color: #97999b;
-  width: 100% !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   min-width: 0;
-  display: flex;
+  position: relative;
+  height: 16px;
+  width: 100%;
 
-  > span {
+  > div {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   @media ${device.tablet} {
@@ -239,7 +278,7 @@ const RemoveButton = styled.button`
   padding: 1.6rem 2rem;
   border-radius: 10px;
   margin-left: 2rem;
-  cursor: pointer;  
+  cursor: pointer;
 
   @media ${device.tablet} {
     display: none;
