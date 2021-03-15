@@ -48,8 +48,8 @@ const Routing = () => (
   <Main>
     <Switch>
       <Route path="/new-trip" component={NewTrip} />
-      <Route path="/" exact component={Trips} />
       <Route path="/edit-trip" component={EditTrip}/>
+      <Route path="/" exact component={Trips} />
       <Route to="*" component={NotFound} />
     </Switch>
   </Main>

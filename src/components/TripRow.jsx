@@ -60,7 +60,7 @@ const TripRow = ({ country, company, date, id, address }) => {
         <RemoveButton onClick={()=>removeTrip(id)}>
           <RemoveIcon width={11} height={16} />
         </RemoveButton>
-        <ViewButton onClick={history.push()}>
+        <ViewButton onClick={history.push('/edit-trip')}>
           <MobileLabel>View Trip</MobileLabel>
           <ArrowRight width={16} height={10} />
         </ViewButton>
