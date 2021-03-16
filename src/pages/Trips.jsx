@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 import { motion } from 'framer-motion'
-import Loader from "react-loader-spinner"
+import Loader from 'react-loader-spinner'
 
 import { TripContext } from 'contexts/TripContext'
 import Heading from 'components/Heading'
@@ -10,40 +10,37 @@ import TripRow from 'components/TripRow'
 import Sidebar from 'components/Sidebar'
 
 const Trips = () => {
-
   const [state] = useContext(TripContext)
-  const [tips] = useState ([`Company was established back in the year 2007 by 3 friends who were fascinated by the web and mobile technologies and product design. Today, Cleevio is lead by its own CEO, David Bezdeka, and is working on projects for clients and companies around the world. With this work he helps with the product itself, starting startups or understanding how to mangage and deliver a large-scale solution. Cleevio's people come from a diverse environment, but they work like a well-coordinated team at work.During development, they use new technologies and libraries, alway striving to uplevel. They work side-by-side with clients as a partner and they are their digital expert. They advise and influence the design and strategy of the project. They are looking for bold clients who are leaders in their field and have innovative, creative ideas. They are attracted to projects which utilize new technologies`])
+  const [tips] = useState([
+    `Company was established back in the year 2007 by 3 friends who were fascinated by the web and mobile technologies and product design. Today, Cleevio is lead by its own CEO, David Bezdeka, and is working on projects for clients and companies around the world. With this work he helps with the product itself, starting startups or understanding how to mangage and deliver a large-scale solution. Cleevio's people come from a diverse environment, but they work like a well-coordinated team at work.During development, they use new technologies and libraries, alway striving to uplevel. They work side-by-side with clients as a partner and they are their digital expert. They advise and influence the design and strategy of the project. They are looking for bold clients who are leaders in their field and have innovative, creative ideas. They are attracted to projects which utilize new technologies`,
+  ])
 
   return (
     <Container>
       <Main>
         <Heading title="Your trips" />
         <AllTrips>
-
-          {state.trips.length > 0
-            ? 
+          {state.trips.length > 0 ? (
             state.trips.map(trip => (
-            <TripRow
-              as={motion.div}
-              initial={{ y: -250 }}
-              key={trip.id}
-              country={trip.address.country}
-              company={trip.company}
-              id={trip.id}
-              address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
-              date={`${moment(trip.start_date).format('D MMM')} - ${moment(
-                trip.end_date,
-              ).format('D MMM, YYYY')}`}
-            />
-          ))
-            :
-            <StyledLoader type="BallTriangle" color='var(--accent)'/> }
-
+              <TripRow
+                as={motion.div}
+                initial={{ y: -250 }}
+                key={trip.id}
+                country={trip.address.country}
+                company={trip.company}
+                id={trip.id}
+                address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
+                date={`${moment(trip.start_date).format('D MMM')} - ${moment(
+                  trip.end_date,
+                ).format('D MMM, YYYY')}`}
+              />
+            ))
+          ) : (
+            <StyledLoader type="BallTriangle" color="var(--accent)" />
+          )}
         </AllTrips>
       </Main>
-      <Sidebar sidebarHeading="Tips & tricks">
-        {getRandom(tips)}
-      </Sidebar>
+      <Sidebar sidebarHeading="Tips & tricks">{getRandom(tips)}</Sidebar>
     </Container>
   )
 }

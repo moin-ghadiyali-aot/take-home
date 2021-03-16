@@ -9,20 +9,18 @@ import SidebarTripRow from 'components/SidebarTripRow'
 import Sidebar from 'components/Sidebar'
 
 import { TripContext } from 'contexts/TripContext'
-import {api} from 'services/httpService'
+import { api } from 'services/httpService'
 
 import { device } from 'style/responsive'
 import { ReactComponent as Check } from 'assets/Check.svg'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-
 const EditTrip = () => {
-
   const [trip, setTrip] = useState({})
 
   const [state, dispatch] = useContext(TripContext)
-  const {id} = useParams()
+  const { id } = useParams()
 
   const editTrip = async () => {
     try {
@@ -269,9 +267,7 @@ const EditTrip = () => {
           </FormFooter>
         </Form>
       </Main>
-      <Sidebar sidebarHeading="Trips">
-        
-      </Sidebar>
+      <Sidebar sidebarHeading="Trips"></Sidebar>
     </Container>
   )
 }
@@ -413,7 +409,7 @@ const Input = styled.input`
   line-height: 2rem;
 
   &::placeholder {
-    color: #76787B;
+    color: #76787b;
   }
 
   &:focus {

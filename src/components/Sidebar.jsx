@@ -1,14 +1,13 @@
 import styled from 'styled-components'
-import {useContext} from 'react'
+import { useContext } from 'react'
 import moment from 'moment'
 import {TripContext} from 'contexts/TripContext'
 import SidebarHeading from 'components/SidebarHeading'
 import { device } from 'style/responsive'
-import Loader from "react-loader-spinner"
+import Loader from 'react-loader-spinner'
 import SidebarTripRow from 'components/SidebarTripRow'
 
 const Sidebar = ({ sidebarHeading, children }) => {
-
   const [state, dispatch] = useContext(TripContext)
   console.log('sidebar state', state)
 

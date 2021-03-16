@@ -20,7 +20,6 @@ const initialState = {
   selectedCountry: '',
 }
 
-
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_TRIPS':
@@ -28,6 +27,21 @@ const reducer = (state, action) => {
         trips: action.payload,
         form: { ...state.form },
         countries: [...state.countries],
+        selectedCountry: state.selectedCountry,
+      }
+    case 'ADD_TRIP':
+      return {
+        trips: [...action.payload, action.payload],
+        form: { ...state.form },
+        countries: [...state.countries],
+        selectedCountry: state.selectedCountry,
+      }
+    case 'REMOVE_TRIP':
+      return {
+        trips: state.trips.filter(trip => trip.id !== action.payload),
+        form: { ...state.form },
+        countries: [...state.countries],
+        selectedCountry: state.selectedCountry,
       }
     case 'SET_COUNTRIES':
       return {
@@ -36,24 +50,12 @@ const reducer = (state, action) => {
         countries: action.payload,
         selectedCountry: state.selectedCountry,
       }
-    case 'REMOVE_TRIP':
-      return {
-        trips: state.trips.filter(trip => trip.id !== action.payload),
-        form: { ...state.form },
-        countries: [...state.countries],
-      }
     case 'SET_SELECTED_COUNTRY':
       return {
         trips: [...state.trips],
         form: { ...state.form },
         countries: [...state.countries],
         selectedCountry: `flag-${action.payload}`,
-      }
-    case 'ADD_TRIP':
-      return {
-        trips: [...state.trips, action.payload],
-        form: { ...state.form },
-        countries: [...state.countries],
       }
     case 'SET_FORM':
       return {
@@ -64,8 +66,8 @@ const reducer = (state, action) => {
         },
         countries: [...state.countries],
       }
-      default:
-        throw new Error('Unhandled action')
+    default:
+      throw new Error('Unhandled action')
   }
 }
 
