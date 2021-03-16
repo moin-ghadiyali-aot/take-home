@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
 import {useParams} from 'react-router-dom'
-
+import {moment} from 'moment'
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import Sidebar from 'components/Sidebar'
@@ -33,21 +33,20 @@ const EditTrip = () => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('id param', id)
-  //   const fetchTrip = async () => {
-  //     const {data} = await api.get(`/trip/${id}`)
-  //     console.log('fetched trip data', data)
-  //     setTrip(data)
-  //   }
-  //   fetchTrip()
-  // }, []);
-
   useEffect(() => {
-    const trip = state.trips.find(trip => trip.id === id)
-    setTrip(trip)
-    // console.log(trip.address.street)
-  }, [state.trips, id]);
+    console.log('id param', id)
+    const fetchTrip = async () => {
+      const {data} = await api.get(`/trip/${id}`)
+      console.log('fetched trip data', data)
+      setTrip(data)
+    }
+    fetchTrip()
+  }, []);
+
+  // useEffect(() => {
+  //   const trip = state.trips.find(trip => trip.id === id)
+  //   setTrip(trip)
+  // }, [state.trips, id]);
 
   return (
     <Container>
@@ -64,6 +63,7 @@ const EditTrip = () => {
                   className={state.selectedCountry}
                   id="country"
                   name="country"
+
                   options={state.countries}
                   placeholder={trip?.address?.country || 'Select country'}
                   onChange={data => {
@@ -84,8 +84,9 @@ const EditTrip = () => {
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
+
                       required
-                      selected={state.form.startDate}
+                      selected={moment(trip?.start_date).locale('en-US')}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
@@ -94,10 +95,11 @@ const EditTrip = () => {
                       }}
                       id="startDate"
                       name="startDate"
-                      placeholder={trip?.start_date || 'dd. mm. year'}
+                      locale="en-GB"
+                      // placeholder={trip?.start_date || 'dd. mm. year'}
                       showPopperArrow={false}
                       selectsStart
-                      startDate={state.form.startDate}
+                      startDate={trip?.start_date}
                       endDate={state.form.endDate}
                     />
                   </DatePickerWrap>

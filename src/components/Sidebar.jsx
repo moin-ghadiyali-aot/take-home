@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {useContext} from 'react'
 import moment from 'moment'
-import TripContext from 'contexts/TripContext'
+import {TripContext} from 'contexts/TripContext'
 import SidebarHeading from 'components/SidebarHeading'
 import { device } from 'style/responsive'
 import Loader from "react-loader-spinner"
@@ -12,7 +12,22 @@ const Sidebar = ({ sidebarHeading, children }) => {
   const [state, dispatch] = useContext(TripContext)
   console.log('sidebar state', state)
 
-  return null
+  return <Container>
+  <SidebarHeading title={sidebarHeading} />
+  {state.trips.length > 0 
+      ?
+      state.trips.map(trip => (
+      <SidebarTripRow
+        key={trip.id}
+        country={trip.address.country}
+        company={trip.company_name}
+        address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
+        date={`${moment(trip.start_date).format('D MMM')} - ${moment(trip.end_date).format('D MMM, YYYY')}`}
+        id={trip.id}
+    /> 
+    ))
+      :
+      <StyledLoader type="BallTriangle" color='var(--accent)'/>}    </Container>
   }
 export default Sidebar
 

@@ -51,7 +51,7 @@ const reducer = (state, action) => {
       }
     case 'ADD_TRIP':
       return {
-        trips: [...action.payload, action.payload],
+        trips: [...state.trips, action.payload],
         form: { ...state.form },
         countries: [...state.countries],
       }
