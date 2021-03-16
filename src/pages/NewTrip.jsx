@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import Loader from "react-loader-spinner"
+import Loader from 'react-loader-spinner'
 
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import Sidebar from 'components/Sidebar'
 
-import {api} from 'services/httpService'
+import { api } from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
 
 import { device } from 'style/responsive'
@@ -17,16 +17,13 @@ import { ReactComponent as Check } from 'assets/Check.svg'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-
 const NewTrip = () => {
-
   const [state, dispatch] = useContext(TripContext)
 
   const addNewTrip = async () => {
-
     try {
       const response = await api.post('/trips', state.form)
-      console.log('response', response);
+      console.log('response', response)
       dispatch({ type: 'ADD_TRIP', payload: response.data })
     } catch (e) {
       console.error(e)
@@ -68,7 +65,7 @@ const NewTrip = () => {
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
-                    required
+                      required
                       selected={state.form.startDate}
                       onChange={date => {
                         dispatch({
@@ -251,17 +248,12 @@ const NewTrip = () => {
           </FormFooter>
         </Form>
       </Main>
-      <Sidebar sidebarHeading="Trips">
-        
-          
-      </Sidebar>
+      <Sidebar sidebarHeading="Trips"></Sidebar>
     </Container>
   )
 }
 
 export default NewTrip
-
-
 
 const Container = styled.div`
   display: flex;
@@ -462,7 +454,7 @@ const RadioButton = styled.label`
   }
 
   > input:checked ~ div:before {
-    transform: scale(1)
+    transform: scale(1);
   }
 `
 

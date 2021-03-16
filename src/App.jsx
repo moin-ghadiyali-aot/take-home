@@ -46,7 +46,7 @@ const Routing = () => (
   <Main>
     <Switch>
       <Route path="/new-trip" component={NewTrip} />
-      <Route path="/edit-trip/:id" component={EditTrip}/>
+      <Route path="/edit-trip/:id" component={EditTrip} />
       <Route path="/" exact component={Trips} />
       <Route to="*" component={NotFound} />
     </Switch>
@@ -58,11 +58,11 @@ const App = () => {
     <MenuProvider>
       <Container className="App">
         <TripProvider>
-        <GlobalStyle
-          leftArrow={DatePickerLeft}
-          rightArrow={DatePickerRight}
-          flags={flags}
-        />
+          <GlobalStyle
+            leftArrow={DatePickerLeft}
+            rightArrow={DatePickerRight}
+            flags={flags}
+          />
           <NavMenu />
           <Routing />
         </TripProvider>
