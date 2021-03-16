@@ -25,15 +25,12 @@ const EditTrip = () => {
   const {id} = useParams()
 
   const editTrip = async () => {
-    console.log('form state', state.form)
-    console.log('state', state)
-
-    // try {
-    //   const response = await api.put('/trips', {})
-    //   dispatch({ type: 'EDIT_TRIP', payload: response.data })
-    // } catch (e) {
-    //   console.error(e)
-    // }
+    try {
+      const response = await api.put('/trips', state.form)
+      dispatch({ type: 'EDIT_TRIP', payload: response.data })
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   // useEffect(() => {

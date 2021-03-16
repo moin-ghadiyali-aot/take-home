@@ -2,23 +2,26 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
+
+import Heading from 'components/Heading'
+import SidebarTripRow from 'components/SidebarTripRow'
+import Sidebar from 'components/Sidebar'
+
+import {api} from 'services/httpService'
+import { TripContext } from 'contexts/TripContext'
+
+import { device } from 'style/responsive'
+import { ReactComponent as Check } from 'assets/Check.svg'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { TripContext } from 'contexts/TripContext'
-import Heading from 'components/Heading'
-import SidebarTripRow from 'components/SidebarTripRow'
-import { device } from 'style/responsive'
-import Sidebar from 'components/Sidebar'
-import { ReactComponent as Check } from 'assets/Check.svg'
-import {api} from 'services/httpService'
 
 const NewTrip = () => {
 
   const [state, dispatch] = useContext(TripContext)
 
   const addNewTrip = async () => {
-    console.log(state.form)
 
     try {
       const response = await api.post('/trips', state.form)
@@ -248,18 +251,15 @@ const NewTrip = () => {
         </Form>
       </Main>
       <Sidebar sidebarHeading="Trips">
-        <SidebarTripRow
-          country="Austria"
-          company="Diamler AG"
-          address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
-          date="Jul 14 - Sep 20, 2019"
-        />
-        <SidebarTripRow
-          country="United Kingdom"
-          company="Diamler AG"
-          address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
-          date="Jul 14 - Sep 20, 2019"
-        />
+        {state.trips.map(trip => (
+          <SidebarTripRow
+            country={trip.address.country}
+            company={trip.company_name}
+            address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
+            date={`${moment(trip.start_date).format('D MMM')} - ${moment(trip.end_date).format('D MMM, YYYY')}`}
+            id={trip.id}
+        /> 
+        ))}
       </Sidebar>
     </Container>
   )
