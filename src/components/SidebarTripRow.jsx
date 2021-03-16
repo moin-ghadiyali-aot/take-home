@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {useHistory} from 'react-router-dom'
 
 import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
 import { ReactComponent as AustriaFlag } from 'assets/flags/austria.svg'
@@ -43,6 +44,9 @@ const FlagIcon = ({ flag }) => {
   }
 
 const SidebarTripRow = ({ country, company, date, address }) => {
+
+  const history = useHistory()
+
   return (
     <TripRowStyles>
       <FlagColumn>
@@ -65,7 +69,7 @@ const SidebarTripRow = ({ country, company, date, address }) => {
         </TripRowInline>
       </TripColumn>
       <ActionButtons>
-        <ViewButton>
+        <ViewButton onClick={()=>history.push('/edit-trip')}>
           <MobileLabel>View Trip</MobileLabel>
           <ArrowRight width={16} height={10} />
         </ViewButton>
@@ -181,6 +185,7 @@ const ViewButton = styled.div`
   width: 100%;
   align-items: center;
   margin-top: 3rem;
+  cursor: pointer;
 
   > div {
     margin: 0;

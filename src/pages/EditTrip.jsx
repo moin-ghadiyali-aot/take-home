@@ -1,37 +1,61 @@
-import React, { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
+import {useParams} from 'react-router-dom'
+
+import Heading from 'components/Heading'
+import SidebarTripRow from 'components/SidebarTripRow'
+import Sidebar from 'components/Sidebar'
+
+import { TripContext } from 'contexts/TripContext'
+import {api} from 'services/httpService'
+
+import { device } from 'style/responsive'
+import { ReactComponent as Check } from 'assets/Check.svg'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { TripContext } from 'contexts/TripContext'
-import Heading from 'components/Heading'
-import SidebarTripRow from 'components/SidebarTripRow'
-import { device } from 'style/responsive'
-import Sidebar from 'components/Sidebar'
-import { ReactComponent as Check } from 'assets/Check.svg'
-import {api} from 'services/httpService'
 
 const EditTrip = () => {
 
+  const [trip, setTrip] = useState({})
+
   const [state, dispatch] = useContext(TripContext)
+  const {id} = useParams()
 
   const editTrip = async () => {
-    console.log(state.form)
+    console.log('form state', state.form)
+    console.log('state', state)
 
-    try {
-      const response = await api.post('/trips', {})
-      dispatch({ type: 'ADD_TRIP', payload: response.data })
-    } catch (e) {
-      console.error(e)
-    }
+    // try {
+    //   const response = await api.put('/trips', {})
+    //   dispatch({ type: 'EDIT_TRIP', payload: response.data })
+    // } catch (e) {
+    //   console.error(e)
+    // }
   }
+
+  // useEffect(() => {
+  //   console.log('id param', id)
+  //   const fetchTrip = async () => {
+  //     const {data} = await api.get(`/trip/${id}`)
+  //     console.log('fetched trip data', data)
+  //     setTrip(data)
+  //   }
+  //   fetchTrip()
+  // }, []);
+
+  useEffect(() => {
+    const trip = state.trips.find(trip => trip.id === id)
+    setTrip(trip)
+    // console.log(trip.address.street)
+  }, []);
 
   return (
     <Container>
       <Main>
-        <Heading title="New trip" />
+        <Heading title="Edit trip" />
 
         <Form>
           <FormContent>
@@ -44,7 +68,7 @@ const EditTrip = () => {
                   id="country"
                   name="country"
                   options={state.countries}
-                  placeholder="Select country"
+                  placeholder={trip?.address?.country || 'Select country'}
                   onChange={data => {
                     dispatch({
                       type: 'SET_FORM',
@@ -73,7 +97,7 @@ const EditTrip = () => {
                       }}
                       id="startDate"
                       name="startDate"
-                      placeholderText="dd. mm. year"
+                      placeholder={trip?.start_date || 'dd. mm. year'}
                       showPopperArrow={false}
                       selectsStart
                       startDate={state.form.startDate}
@@ -114,7 +138,7 @@ const EditTrip = () => {
                     required
                     id="company"
                     name="company"
-                    placeholder="Type here..."
+                    placeholder={trip?.company_name || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
@@ -131,7 +155,7 @@ const EditTrip = () => {
                     required
                     id="city"
                     name="city"
-                    placeholder="Type here..."
+                    placeholder={trip?.address?.city || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
@@ -148,7 +172,7 @@ const EditTrip = () => {
                     required
                     id="street"
                     name="street"
-                    placeholder="Type here..."
+                    placeholder={trip?.address?.street || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
@@ -165,7 +189,7 @@ const EditTrip = () => {
                     required
                     id="streetNumber"
                     name="streetNumber"
-                    placeholder="Type here..."
+                    placeholder={trip?.address?.street_num || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
@@ -182,7 +206,7 @@ const EditTrip = () => {
                     required
                     id="zipCode"
                     name="zipCode"
-                    placeholder="Type here..."
+                    placeholder={trip?.address?.zip || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
@@ -401,7 +425,7 @@ const Input = styled.input`
   line-height: 2rem;
 
   &::placeholder {
-    color: #d0d0ce;
+    color: #76787B;
   }
 
   &:focus {

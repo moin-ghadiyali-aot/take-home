@@ -1,13 +1,15 @@
+import {useState} from 'react'
 import styled from 'styled-components'
 
-import { device } from '../style/responsive'
-import SidebarHeading from './SidebarHeading'
+import { device } from 'style/responsive'
+import SidebarHeading from 'components/SidebarHeading'
 
 const Sidebar = ({ sidebarHeading, children }) => {
+
   return (
     <Container>
       <SidebarHeading title={sidebarHeading} />
-      {children}
+        {children}
     </Container>
   )
 }

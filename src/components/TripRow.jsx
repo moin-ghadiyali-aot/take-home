@@ -1,21 +1,19 @@
-import { useContext, lazy } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
-import {useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+
 import {api} from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
 import { ReactComponent as RemoveIcon } from 'assets/Remove.svg'
 import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
 import { device } from 'style/responsive'
 
-// const FlagIcon = ({ flag }) => lazy(() => import(`assets/flags/${flag}.svg`))
-
 const TripRow = ({ country, company, date, id, address }) => {
 
-  const [state, dispatch] = useContext(TripContext)
-  const history = useHistory()
+  const {dispatch} = useContext(TripContext)
 
-  let flag = country.toLowerCase() // Austria to austria
-  flag = flag.split(' ') // united kingdom to united-kingdom
+  let flag = country.toLowerCase()
+  flag = flag.split(' ')
   flag = flag.join('-')
   const image = require('assets/flags/' + flag + '.svg').default
 
@@ -60,10 +58,12 @@ const TripRow = ({ country, company, date, id, address }) => {
         <RemoveButton onClick={()=>removeTrip(id)}>
           <RemoveIcon width={11} height={16} />
         </RemoveButton>
-        <ViewButton onClick={()=>history.push('/edit-trip')}>
-          <MobileLabel>View Trip</MobileLabel>
-          <ArrowRight width={16} height={10} />
-        </ViewButton>
+        <Link to={`/edit-trip/${id}`}>
+          <ViewButton>
+            <MobileLabel>View Trip</MobileLabel>
+            <ArrowRight width={16} height={10} />
+          </ViewButton>
+        </Link>
       </ActionButtons>
     </TripRowStyles>
   )

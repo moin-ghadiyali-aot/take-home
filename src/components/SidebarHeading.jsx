@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
-const SidebarHeading = ({ title }) => {
-  return <SidebarHeadingStyled>{title}</SidebarHeadingStyled>
-}
+const SidebarHeading = ({ title }) => <SidebarHeadingStyled>{title}</SidebarHeadingStyled>
 
 const SidebarHeadingStyled = styled.div`
   font-size: 2.4rem;
