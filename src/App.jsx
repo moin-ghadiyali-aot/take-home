@@ -57,12 +57,12 @@ const App = () => {
   return (
     <MenuProvider>
       <Container className="App">
+        <TripProvider>
         <GlobalStyle
           leftArrow={DatePickerLeft}
           rightArrow={DatePickerRight}
           flags={flags}
         />
-        <TripProvider>
           <NavMenu />
           <Routing />
         </TripProvider>

@@ -252,20 +252,7 @@ const NewTrip = () => {
         </Form>
       </Main>
       <Sidebar sidebarHeading="Trips">
-        {state.trips.length > 0 
-          ?
-          state.trips.map(trip => (
-          <SidebarTripRow
-            key={trip.id}
-            country={trip.address.country}
-            company={trip.company_name}
-            address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
-            date={`${moment(trip.start_date).format('D MMM')} - ${moment(trip.end_date).format('D MMM, YYYY')}`}
-            id={trip.id}
-        /> 
-        ))
-          :
-          <StyledLoader type="BallTriangle" color='var(--accent)'/>}
+        
           
       </Sidebar>
     </Container>
@@ -274,11 +261,7 @@ const NewTrip = () => {
 
 export default NewTrip
 
-const StyledLoader = styled(Loader)`
-  display: flex;
-  justify-content: center;
-  margin: 50px;
-`
+
 
 const Container = styled.div`
   display: flex;

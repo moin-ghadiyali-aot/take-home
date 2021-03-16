@@ -246,7 +246,7 @@ const GlobalStyle = createGlobalStyle`
 
   .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected,
   .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
-    background: green !important;
+    background: black !important;
     border-radius: 10px;
     color: white;
 

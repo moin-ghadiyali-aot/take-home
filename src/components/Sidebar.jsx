@@ -1,19 +1,26 @@
 import styled from 'styled-components'
-
+import {useContext} from 'react'
+import moment from 'moment'
+import TripContext from 'contexts/TripContext'
 import SidebarHeading from 'components/SidebarHeading'
 import { device } from 'style/responsive'
+import Loader from "react-loader-spinner"
+import SidebarTripRow from 'components/SidebarTripRow'
 
 const Sidebar = ({ sidebarHeading, children }) => {
 
-  return (
-    <Container>
-      <SidebarHeading title={sidebarHeading} />
-        {children}
-    </Container>
-  )
-}
+  const [state, dispatch] = useContext(TripContext)
+  console.log('sidebar state', state)
 
+  return null
+  }
 export default Sidebar
+
+const StyledLoader = styled(Loader)`
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+`
 
 const Container = styled.aside`
   display: flex;
