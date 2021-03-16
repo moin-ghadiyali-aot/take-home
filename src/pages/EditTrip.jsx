@@ -47,7 +47,7 @@ const EditTrip = () => {
     const trip = state.trips.find(trip => trip.id === id)
     setTrip(trip)
     // console.log(trip.address.street)
-  }, []);
+  }, [state.trips, id]);
 
   return (
     <Container>
@@ -268,18 +268,7 @@ const EditTrip = () => {
         </Form>
       </Main>
       <Sidebar sidebarHeading="Trips">
-        <SidebarTripRow
-          country="Austria"
-          company="Diamler AG"
-          address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
-          date="Jul 14 - Sep 20, 2019"
-        />
-        <SidebarTripRow
-          country="United Kingdom"
-          company="Diamler AG"
-          address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
-          date="Jul 14 - Sep 20, 2019"
-        />
+        
       </Sidebar>
     </Container>
   )

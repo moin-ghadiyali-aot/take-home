@@ -1,21 +1,19 @@
 import { Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
-import MenuProvider from './contexts/MenuContext'
 
-import GlobalStyle from 'style/global'
-import NotFound from 'pages/404'
 import NavMenu from 'components/NavMenu'
-import { device } from 'style/responsive'
+import MenuProvider from 'contexts/MenuContext'
+import TripProvider from 'contexts/TripContext'
 
-// Pages
+import NotFound from 'pages/404'
 import NewTrip from 'pages/NewTrip'
 import Trips from 'pages/Trips'
 import EditTrip from 'pages/EditTrip'
-import TripProvider from 'contexts/TripContext'
 
-import DatePickerLeft from './assets/DatePickerLeft.svg'
-import DatePickerRight from './assets/DatePickerRight.svg'
-
+import { device } from 'style/responsive'
+import GlobalStyle from 'style/global'
+import DatePickerLeft from 'assets/DatePickerLeft.svg'
+import DatePickerRight from 'assets/DatePickerRight.svg'
 import GlobeIcon from 'assets/DropdownGlobe.svg'
 import AustriaFlag from 'assets/flags/austria.svg'
 import ChinaFlag from 'assets/flags/china.svg'

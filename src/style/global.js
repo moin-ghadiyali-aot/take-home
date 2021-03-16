@@ -208,6 +208,7 @@ const GlobalStyle = createGlobalStyle`
 
   .react-datepicker__header .react-datepicker__day-name {
     font-size: 1.2rem !important;
+    text-transform: capitalize;
     margin-bottom: 0 !important;
     color: #A7A8AA;
     font-weight: 400;
@@ -238,12 +239,14 @@ const GlobalStyle = createGlobalStyle`
     color: #A7A8AA;
   }
 
-  .react-datepicker__day:hover, .react-datepicker__month-text:hover, .react-datepicker__quarter-text:hover, .react-datepicker__year-text:hover {
+  .react-datepicker__day:hover, .react-datepicker__month-text:hover, .react-datepicker__quarter-text:hover,
+  .react-datepicker__year-text:hover {
     border-radius: 10px;
   }
 
-  .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
-    background: black !important;
+  .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected,
+  .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
+    background: green !important;
     border-radius: 10px;
     color: white;
 

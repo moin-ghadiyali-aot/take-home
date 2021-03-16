@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 import { motion } from 'framer-motion'
+import Loader from "react-loader-spinner"
 
 import { TripContext } from 'contexts/TripContext'
 import Heading from 'components/Heading'
@@ -18,7 +19,10 @@ const Trips = () => {
       <Main>
         <Heading title="Your trips" />
         <AllTrips>
-          {(state.trips || []).map(trip => (
+
+          {state.trips.length > 0
+            ? 
+            state.trips.map(trip => (
             <TripRow
               as={motion.div}
               initial={{ y: -250 }}
@@ -31,14 +35,10 @@ const Trips = () => {
                 trip.end_date,
               ).format('D MMM, YYYY')}`}
             />
-          ))}
+          ))
+            :
+            <StyledLoader type="BallTriangle" color='var(--accent)'/> }
 
-          <TripRow
-            country="United Kingdom"
-            company="Diamler AG"
-            address="Mercedes-Benz Plant Berlin' Daimlerstraße 143, 12277 Berlin"
-            date="Jul 14 - Sep 20, 2019"
-          />
         </AllTrips>
       </Main>
       <Sidebar sidebarHeading="Tips & tricks">
@@ -51,6 +51,12 @@ const Trips = () => {
 export default Trips
 
 const getRandom = array => array[Math.floor(Math.random() * array.length)]
+
+const StyledLoader = styled(Loader)`
+  display: flex;
+  justify-content: center;
+  margin: 150px;
+`
 
 const Container = styled.div`
   display: flex;
