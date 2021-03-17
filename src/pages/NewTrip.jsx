@@ -20,6 +20,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 const NewTrip = () => {
 
   const [state, dispatch] = useContext(TripContext)
+  console.log('form data', state.form)
 
   const addNewTrip = async () => {
     try {
@@ -29,6 +30,16 @@ const NewTrip = () => {
       console.error(e)
     }
   }
+
+  const startDate =
+    state.form.start_date !== ''
+      ? moment(state.form.start_date, 'YYYY-MM-DD').format('DD. MM. YYYY')
+      : ''
+
+  const endDate =
+    state.form.end_date !== ''
+      ? moment(state.form.end_date, 'YYYY-MM-DD').format('DD. MM. YYYY')
+      : ''
 
   return (
     <Container>
@@ -79,7 +90,7 @@ const NewTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      selected={state.form.start_date}
+                      selected={startDate}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
@@ -93,8 +104,8 @@ const NewTrip = () => {
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsStart
-                      startDate={state.form.start_date}
-                      endDate={state.form.end_date}
+                      startDate={startDate}
+                      endDate={endDate}
                     />
                   </DatePickerWrap>
 
@@ -106,7 +117,7 @@ const NewTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      selected={state.form.end_date}
+                      // selected={state.form.end_date}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
@@ -120,9 +131,9 @@ const NewTrip = () => {
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsEnd
-                      startDate={state.form.start_date}
-                      endDate={state.form.end_date}
-                      minDate={state.form.start_date}
+                      // startDate={state.form.start_date}
+                      // endDate={state.form.end_date}
+                      // minDate={state.form.start_date}
                     />
                   </DatePickerWrap>
 
