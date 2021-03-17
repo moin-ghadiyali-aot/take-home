@@ -1,15 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Heading from '../components/Heading'
-
 const NotFound = () => {
   return (
     <Container>
+
       <Main>
-        <Heading title="" />
         <NotFoundStyled>Page not found</NotFoundStyled>
       </Main>
+      
     </Container>
   )
 }

@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
+
 import Heading from 'components/Heading'
-import SidebarTripRow from 'components/SidebarTripRow'
 import Sidebar from 'components/Sidebar'
 
 import { TripContext } from 'contexts/TripContext'
@@ -30,14 +30,12 @@ const EditTrip = () => {
   }
 
   useEffect(() => {
-    console.log('id param', id)
     const fetchTrip = async () => {
       const { data } = await api.get(`/trip/${id}`)
-
       dispatch({ type: 'SET_FORM', payload: data })
     }
     fetchTrip()
-  }, [])
+  }, [id, dispatch])
 
   const startDate =
     state.form.start_date !== ''
@@ -48,11 +46,6 @@ const EditTrip = () => {
     state.form.end_date !== ''
       ? moment(state.form.end_date, 'YYYY-MM-DD').toDate()
       : ''
-
-  // useEffect(() => {
-  //   const trip = state.trips.find(trip => trip.id === id)
-  //   setTrip(trip)
-  // }, [state.trips, id]);
 
   return (
     <Container>
@@ -107,7 +100,6 @@ const EditTrip = () => {
                       }}
                       id="startDate"
                       name="startDate"
-                      // placeholder={trip?.start_date || 'dd. mm. year'}
                       showPopperArrow={false}
                       selectsStart
                       startDate={startDate}

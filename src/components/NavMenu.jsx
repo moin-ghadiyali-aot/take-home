@@ -17,6 +17,7 @@ const NavMenu = () => {
 
   return (
     <Nav className={`${menuCtx.isMenuOpen ? 'menu--active' : ''}`}>
+    
       <Container>
         {window.matchMedia(device.tablet) && (
           <CloseMenu onClick={menuCtx.toggleMenu}>
@@ -28,39 +29,59 @@ const NavMenu = () => {
             <LogoIcon width={120} />
           </Link>
         </Logo>
+
         <MenuItems>
+
           <NewTrip>
+
             <StyledNavLink onClick={menuCtx.toggleMenu} to="/new-trip">
               New Trip
               <Plus width={16} height={16} />
             </StyledNavLink>
+
           </NewTrip>
+
           <MenuItem>
+          
             <StyledNavLink onClick={menuCtx.toggleMenu} to={`/`}>
+            
               <IconWrap>
                 <ClockIcon width={16} height={16} />
               </IconWrap>
               Your trips
+
             </StyledNavLink>
+
           </MenuItem>
+
           <MenuItem>
+
             <NonClickableLink onClick={menuCtx.toggleMenu}>
               <IconWrap>
                 <EditIcon width={16} height={16} />
               </IconWrap>
               Future feature
             </NonClickableLink>
+
           </MenuItem>
+
           <MenuItem>
+
             <NonClickableLink onClick={menuCtx.toggleMenu}>
+
               <IconWrap>
                 <GlobeIcon width={16} height={16} />
               </IconWrap>
               Future section
+
             </NonClickableLink>
+
           </MenuItem>
+
         </MenuItems>
+
       </Container>
+
     </Nav>
   )
 }

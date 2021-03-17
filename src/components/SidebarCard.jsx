@@ -43,42 +43,60 @@ const FlagIcon = ({ flag }) => {
     }
   }
 
-const SidebarTripRow = ({ country, company, date, address, id }) => {
+const SidebarCard = ({ country, company, date, address, id }) => {
 
   return (
     <TripRowStyles>
+
       <FlagColumn>
+
         <FlagIcon width={40} height={40} flag={country} />
         <MobileCountry>{country}</MobileCountry>
+
       </FlagColumn>
+
       <TripColumn>
+
         <TripRowInline>
+
           <TripDate>
             <MobileLabel>Date</MobileLabel>
             <strong>{date}</strong>
           </TripDate>
+
         </TripRowInline>
+
         <TripRowInline>
+
           <Company>
             <MobileLabel>Company</MobileLabel>
             {company}
           </Company>
+          
           <Address>{address}</Address>
+
         </TripRowInline>
+
       </TripColumn>
+
       <ActionButtons>
+      
       <Link to={`/edit-trip/${id}`}>
+
         <ViewButton>
           <MobileLabel>View Trip</MobileLabel>
           <ArrowRight width={16} height={10} />
         </ViewButton>
+      
       </Link>
+      
       </ActionButtons>
+      
     </TripRowStyles>
   )
 }
 
-export default SidebarTripRow
+export default SidebarCard
 
 const TripRowStyles = styled.div`
   background: #f9f9fa;

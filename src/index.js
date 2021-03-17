@@ -6,5 +6,4 @@ ReactDOM.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById('root'),
-)
+  document.getElementById('root'))

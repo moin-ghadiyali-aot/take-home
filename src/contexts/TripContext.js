@@ -61,7 +61,6 @@ const reducer = (state, action) => {
         selectedCountry: `flag-${action.payload}`,
       }
     case 'SET_FORM':
-      console.log(action.payload)
       return {
         trips: [...state.trips],
         form: {

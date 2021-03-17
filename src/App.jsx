@@ -44,12 +44,14 @@ const flags = {
 
 const Routing = () => (
   <Main>
+
     <Switch>
       <Route path="/new-trip" component={NewTrip} />
       <Route path="/edit-trip/:id" component={EditTrip} />
       <Route path="/" exact component={Trips} />
       <Route to="*" component={NotFound} />
     </Switch>
+
   </Main>
 )
 

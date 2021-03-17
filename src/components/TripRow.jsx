@@ -12,9 +12,7 @@ const TripRow = ({ country, company, date, id, address }) => {
 
   const {dispatch} = useContext(TripContext)
 
-  let flag = country.toLowerCase()
-  flag = flag.split(' ')
-  flag = flag.join('-')
+  const flag = country.toLowerCase().split(' ').join('-')
   const image = require('assets/flags/' + flag + '.svg').default
 
   const removeTrip = async id => {
@@ -28,43 +26,65 @@ const TripRow = ({ country, company, date, id, address }) => {
 
   return (
     <TripRowStyles>
+
       <FlagColumn>
         <img src={image} width={32} height={32} alt={country} />
         <MobileCountry>{country}</MobileCountry>
       </FlagColumn>
+
       <TripColumn>
+
         <TripRowInline>
+          
           <Country>{country}</Country>
+          
           <Separator />
+          
           <TripDate>
+          
             <MobileLabel>Date</MobileLabel>
             <strong>
               <div className="innerWrapper">{date}</div>
             </strong>
+          
           </TripDate>
+
         </TripRowInline>
+
         <TripRowInline>
+
           <Company>
             <MobileLabel>Company</MobileLabel>
             {company}
           </Company>
+
           <Separator />
+
           <Address>
             <div className="innerWrapper">{address}</div>
           </Address>
+
         </TripRowInline>
+
       </TripColumn>
+
       <ActionButtons>
+
         <RemoveButton onClick={()=>removeTrip(id)}>
           <RemoveIcon width={11} height={16} />
         </RemoveButton>
+
         <Link to={`/edit-trip/${id}`}>
+        
           <ViewButton>
             <MobileLabel>View Trip</MobileLabel>
             <ArrowRight width={16} height={10} />
           </ViewButton>
+
         </Link>
+
       </ActionButtons>
+      
     </TripRowStyles>
   )
 }

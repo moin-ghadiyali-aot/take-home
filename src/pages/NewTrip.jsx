@@ -6,7 +6,7 @@ import moment from 'moment'
 import Loader from 'react-loader-spinner'
 
 import Heading from 'components/Heading'
-import SidebarTripRow from 'components/SidebarTripRow'
+import SidebarCard from 'components/SidebarCard'
 import Sidebar from 'components/Sidebar'
 
 import { api } from 'services/httpService'
@@ -18,13 +18,13 @@ import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const NewTrip = () => {
+
   const [state, dispatch] = useContext(TripContext)
 
   const addNewTrip = async () => {
     try {
-      const response = await api.post('/trips', state.form)
-      console.log('response', response)
-      dispatch({ type: 'ADD_TRIP', payload: response.data })
+      await api.post('/trips', state.form)
+      dispatch({ type: 'ADD_TRIP', payload: state.form })
     } catch (e) {
       console.error(e)
     }
@@ -32,13 +32,19 @@ const NewTrip = () => {
 
   return (
     <Container>
+
       <Main>
+
         <Heading title="New trip" />
 
         <Form>
+
           <FormContent>
+
             <InnerForm>
+
               <FormGroup>
+
                 <Label htmlFor="countries">Where do you want to go</Label>
                 <Dropdown
                   required
@@ -62,10 +68,13 @@ const NewTrip = () => {
                     })
                   }}
                 />
+
               </FormGroup>
 
               <FormGroup>
+
                 <FormInnerGroup>
+
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
@@ -88,9 +97,11 @@ const NewTrip = () => {
                       endDate={state.form.end_date}
                     />
                   </DatePickerWrap>
+
                 </FormInnerGroup>
 
                 <FormInnerGroup>
+
                   <Label htmlFor="endDate">End date</Label>
                   <DatePickerWrap>
                     <DatePicker
@@ -114,10 +125,13 @@ const NewTrip = () => {
                       minDate={state.form.start_date}
                     />
                   </DatePickerWrap>
+
                 </FormInnerGroup>
+                
               </FormGroup>
 
               <FormGroup>
+
                 <FormInnerGroup>
                   <Label htmlFor="company">Company name</Label>
                   <Input
@@ -220,13 +234,17 @@ const NewTrip = () => {
                     value={state.form.address.zip}
                   />
                 </FormInnerGroup>
+
               </FormGroup>
 
               <FormGroup>
+
                 <LabelQuestion>
                   Have you been recently tested for <strong>COVID-19</strong>
                 </LabelQuestion>
+
                 <RadioButtonGroup>
+
                   <RadioButton>
                     <input
                       required
@@ -246,6 +264,7 @@ const NewTrip = () => {
                     <div />
                     <span>Yes</span>
                   </RadioButton>
+
                   <RadioButton>
                     <input
                       required
@@ -265,9 +284,13 @@ const NewTrip = () => {
                     <div />
                     <span>No</span>
                   </RadioButton>
+
                 </RadioButtonGroup>
+
               </FormGroup>
+
             </InnerForm>
+
           </FormContent>
 
           <FormFooter>
@@ -278,12 +301,35 @@ const NewTrip = () => {
           </FormFooter>
         </Form>
       </Main>
-      <Sidebar sidebarHeading="Trips"></Sidebar>
+      <Sidebar sidebarHeading="Trips">
+      {state.trips.length > 0 ? (
+        state.trips.map(trip => (
+          <SidebarCard
+            key={trip.id}
+            country={trip.address.country}
+            company={trip.company_name}
+            address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
+            date={`${moment(trip.start_date).format('D MMM')} - ${moment(
+              trip.end_date,
+            ).format('D MMM, YYYY')}`}
+            id={trip.id}
+          />
+        ))
+      ) : (
+        <StyledLoader type="BallTriangle" color="var(--accent)" />
+      )}
+      </Sidebar>
     </Container>
   )
 }
 
 export default NewTrip
+
+const StyledLoader = styled(Loader)`
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+`
 
 const Container = styled.div`
   display: flex;
