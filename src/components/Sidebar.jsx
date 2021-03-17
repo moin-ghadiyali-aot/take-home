@@ -8,13 +8,14 @@ import Loader from 'react-loader-spinner'
 import SidebarTripRow from 'components/SidebarTripRow'
 
 const Sidebar = ({ sidebarHeading, children }) => {
+
   const [state, dispatch] = useContext(TripContext)
-  console.log('sidebar state', state)
 
   return <Container>
-  <SidebarHeading title={sidebarHeading} />
-  {state.trips.length > 0 
-      ?
+  
+    <SidebarHeading title={sidebarHeading} />
+      {state.trips.length > 0 
+        ?
       state.trips.map(trip => (
       <SidebarTripRow
         key={trip.id}
@@ -26,7 +27,9 @@ const Sidebar = ({ sidebarHeading, children }) => {
     /> 
     ))
       :
-      <StyledLoader type="BallTriangle" color='var(--accent)'/>}    </Container>
+      <StyledLoader type="BallTriangle" color='var(--accent)'/>}
+
+    </Container>
   }
 export default Sidebar
 

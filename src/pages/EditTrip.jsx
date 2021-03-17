@@ -20,6 +20,7 @@ const EditTrip = () => {
   const [trip, setTrip] = useState({})
 
   const [state, dispatch] = useContext(TripContext)
+  console.log('state trips', state.trips)
   const { id } = useParams()
 
   const editTrip = async () => {
@@ -267,7 +268,7 @@ const EditTrip = () => {
           </FormFooter>
         </Form>
       </Main>
-      <Sidebar sidebarHeading="Trips"></Sidebar>
+      <Sidebar sidebarHeading="Trips" trips={state.trips}></Sidebar>
     </Container>
   )
 }
