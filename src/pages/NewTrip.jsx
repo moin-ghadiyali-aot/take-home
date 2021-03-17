@@ -43,7 +43,7 @@ const NewTrip = () => {
 
   return (
     <Container>
-
+{/*  */}
       <Main>
 
         <Heading title="New trip" />
