@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
-import {useParams} from 'react-router-dom'
-import {moment} from 'moment'
+import { useParams } from 'react-router-dom'
+import moment from 'moment'
 import Heading from 'components/Heading'
 import SidebarTripRow from 'components/SidebarTripRow'
 import Sidebar from 'components/Sidebar'
@@ -17,8 +17,6 @@ import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const EditTrip = () => {
-  const [trip, setTrip] = useState({})
-
   const [state, dispatch] = useContext(TripContext)
   const { id } = useParams()
 
@@ -34,12 +32,22 @@ const EditTrip = () => {
   useEffect(() => {
     console.log('id param', id)
     const fetchTrip = async () => {
-      const {data} = await api.get(`/trip/${id}`)
-      console.log('fetched trip data', data)
-      setTrip(data)
+      const { data } = await api.get(`/trip/${id}`)
+
+      dispatch({ type: 'SET_FORM', payload: data })
     }
     fetchTrip()
-  }, []);
+  }, [])
+
+  const startDate =
+    state.form.start_date !== ''
+      ? moment(state.form.start_date, 'YYYY-MM-DD').toDate()
+      : ''
+
+  const endDate =
+    state.form.end_date !== ''
+      ? moment(state.form.end_date, 'YYYY-MM-DD').toDate()
+      : ''
 
   // useEffect(() => {
   //   const trip = state.trips.find(trip => trip.id === id)
@@ -61,13 +69,17 @@ const EditTrip = () => {
                   className={state.selectedCountry}
                   id="country"
                   name="country"
-
                   options={state.countries}
-                  placeholder={trip?.address?.country || 'Select country'}
+                  placeholder={state.form.address.country || 'Select country'}
+                  value={state.form.address.country}
                   onChange={data => {
                     dispatch({
                       type: 'SET_FORM',
-                      payload: { key: 'country', value: data.value },
+                      payload: {
+                        address: {
+                          country: data.value,
+                        },
+                      },
                     })
                     dispatch({
                       type: 'SET_SELECTED_COUNTRY',
@@ -82,23 +94,24 @@ const EditTrip = () => {
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
-
                       required
-                      selected={moment(trip?.start_date).locale('en-US')}
+                      selected={startDate}
+                      excludeTimes
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'startDate', value: date },
+                          payload: {
+                            start_date: date,
+                          },
                         })
                       }}
                       id="startDate"
                       name="startDate"
-                      locale="en-GB"
                       // placeholder={trip?.start_date || 'dd. mm. year'}
                       showPopperArrow={false}
                       selectsStart
-                      startDate={trip?.start_date}
-                      endDate={state.form.endDate}
+                      startDate={startDate}
+                      endDate={endDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -108,11 +121,17 @@ const EditTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      selected={state.form.endDate}
+                      selected={
+                        state.form.start_date !== ''
+                          ? moment(state.form.start_date, 'YYYY-MM-DD').toDate()
+                          : ''
+                      }
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'endDate', value: date },
+                          payload: {
+                            end_date: date,
+                          },
                         })
                       }}
                       id="endDate"
@@ -120,9 +139,9 @@ const EditTrip = () => {
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsEnd
-                      startDate={state.form.startDate}
-                      endDate={state.form.EndDate}
-                      minDate={state.form.startDate}
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={startDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -135,14 +154,16 @@ const EditTrip = () => {
                     required
                     id="company"
                     name="company"
-                    placeholder={trip?.company_name || 'Type here ...'}
+                    placeholder={state.form.company_name || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'company', value: e.target.value },
+                        payload: {
+                          company_name: e.target.value,
+                        },
                       })
                     }}
-                    value={state.form.company}
+                    value={state.form.company_name}
                   />
                 </FormInnerGroup>
 
@@ -152,14 +173,18 @@ const EditTrip = () => {
                     required
                     id="city"
                     name="city"
-                    placeholder={trip?.address?.city || 'Type here ...'}
+                    placeholder={state.form.address.city || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'city', value: e.target.value },
+                        payload: {
+                          address: {
+                            city: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.city}
+                    value={state.form.address.city}
                   />
                 </FormInnerGroup>
 
@@ -169,14 +194,18 @@ const EditTrip = () => {
                     required
                     id="street"
                     name="street"
-                    placeholder={trip?.address?.street || 'Type here ...'}
+                    placeholder={state.form.address.street || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'street', value: e.target.value },
+                        payload: {
+                          address: {
+                            street: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.street}
+                    value={state.form.address.street}
                   />
                 </FormInnerGroup>
 
@@ -186,14 +215,20 @@ const EditTrip = () => {
                     required
                     id="streetNumber"
                     name="streetNumber"
-                    placeholder={trip?.address?.street_num || 'Type here ...'}
+                    placeholder={
+                      state.form.address.street_num || 'Type here ...'
+                    }
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'streetNumber', value: e.target.value },
+                        payload: {
+                          address: {
+                            street_num: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.streetNumber}
+                    value={state.form.address.street_num}
                   />
                 </FormInnerGroup>
 
@@ -203,14 +238,18 @@ const EditTrip = () => {
                     required
                     id="zipCode"
                     name="zipCode"
-                    placeholder={trip?.address?.zip || 'Type here ...'}
+                    placeholder={state.form.address.zip || 'Type here ...'}
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'zipCode', value: e.target.value },
+                        payload: {
+                          address: {
+                            zip: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.zipCode}
+                    value={state.form.address.zip}
                   />
                 </FormInnerGroup>
               </FormGroup>
@@ -230,9 +269,12 @@ const EditTrip = () => {
                       onChange={() => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'testedCovid', value: true },
+                          payload: {
+                            covid: true,
+                          },
                         })
                       }}
+                      checked={state.form.covid === true}
                     />
                     <div />
                     <span>Yes</span>
@@ -247,9 +289,12 @@ const EditTrip = () => {
                       onChange={() => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'testedCovid', value: false },
+                          payload: {
+                            covid: false,
+                          },
                         })
                       }}
+                      checked={state.form.covid === false}
                     />
                     <div />
                     <span>No</span>

@@ -6,15 +6,18 @@ export const TripContext = createContext()
 const initialState = {
   trips: [],
   form: {
-    country: '',
-    startDate: '',
-    endDate: '',
-    company: '',
-    city: '',
-    street: '',
-    streetNumber: '',
-    zipCode: '',
-    testedCovid: false,
+    address: {
+      city: '',
+      country: '',
+      street: '',
+      street_num: '',
+      zip: '',
+    },
+    company_name: '',
+    covid: null,
+    covid_test_date: '',
+    end_date: '',
+    start_date: '',
   },
   countries: [],
   selectedCountry: '',
@@ -58,13 +61,19 @@ const reducer = (state, action) => {
         selectedCountry: `flag-${action.payload}`,
       }
     case 'SET_FORM':
+      console.log(action.payload)
       return {
         trips: [...state.trips],
         form: {
           ...state.form,
-          [action.payload.key]: action.payload.value,
+          ...action.payload,
+          address: {
+            ...state.form.address,
+            ...action.payload.address,
+          },
         },
         countries: [...state.countries],
+        selectedCountry: state.selectedCountry,
       }
     default:
       throw new Error('Unhandled action')
