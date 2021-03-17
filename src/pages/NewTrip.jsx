@@ -50,7 +50,11 @@ const NewTrip = () => {
                   onChange={data => {
                     dispatch({
                       type: 'SET_FORM',
-                      payload: { key: 'country', value: data.value },
+                      payload: {
+                        address: {
+                          country: data.value,
+                        },
+                      },
                     })
                     dispatch({
                       type: 'SET_SELECTED_COUNTRY',
@@ -66,11 +70,13 @@ const NewTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      selected={state.form.startDate}
+                      selected={state.form.start_date}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'startDate', value: date },
+                          payload: {
+                            start_date: date,
+                          },
                         })
                       }}
                       id="startDate"
@@ -78,8 +84,8 @@ const NewTrip = () => {
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsStart
-                      startDate={state.form.startDate}
-                      endDate={state.form.endDate}
+                      startDate={state.form.start_date}
+                      endDate={state.form.end_date}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -89,11 +95,13 @@ const NewTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      selected={state.form.endDate}
+                      selected={state.form.end_date}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'endDate', value: date },
+                          payload: {
+                            end_date: date,
+                          },
                         })
                       }}
                       id="endDate"
@@ -101,9 +109,9 @@ const NewTrip = () => {
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsEnd
-                      startDate={state.form.startDate}
-                      endDate={state.form.EndDate}
-                      minDate={state.form.startDate}
+                      startDate={state.form.start_date}
+                      endDate={state.form.end_date}
+                      minDate={state.form.start_date}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -120,10 +128,12 @@ const NewTrip = () => {
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'company', value: e.target.value },
+                        payload: {
+                          company_name: e.target.value,
+                        },
                       })
                     }}
-                    value={state.form.company}
+                    value={state.form.company_name}
                   />
                 </FormInnerGroup>
 
@@ -137,10 +147,14 @@ const NewTrip = () => {
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'city', value: e.target.value },
+                        payload: {
+                          address: {
+                            city: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.city}
+                    value={state.form.address.city}
                   />
                 </FormInnerGroup>
 
@@ -154,10 +168,14 @@ const NewTrip = () => {
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'street', value: e.target.value },
+                        payload: {
+                          address: {
+                            street: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.street}
+                    value={state.form.address.street}
                   />
                 </FormInnerGroup>
 
@@ -171,10 +189,14 @@ const NewTrip = () => {
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'streetNumber', value: e.target.value },
+                        payload: {
+                          address: {
+                            street_num: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.streetNumber}
+                    value={state.form.address.street_num}
                   />
                 </FormInnerGroup>
 
@@ -188,10 +210,14 @@ const NewTrip = () => {
                     onChange={e => {
                       dispatch({
                         type: 'SET_FORM',
-                        payload: { key: 'zipCode', value: e.target.value },
+                        payload: {
+                          address: {
+                            zip: e.target.value,
+                          },
+                        },
                       })
                     }}
-                    value={state.form.zipCode}
+                    value={state.form.address.zip}
                   />
                 </FormInnerGroup>
               </FormGroup>
@@ -211,7 +237,9 @@ const NewTrip = () => {
                       onChange={() => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'testedCovid', value: true },
+                          payload: {
+                            covid: true,
+                          },
                         })
                       }}
                     />
@@ -228,7 +256,9 @@ const NewTrip = () => {
                       onChange={() => {
                         dispatch({
                           type: 'SET_FORM',
-                          payload: { key: 'testedCovid', value: false },
+                          payload: {
+                            covid: false,
+                          },
                         })
                       }}
                     />
