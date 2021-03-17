@@ -514,13 +514,12 @@ const RadioButton = styled.label`
     position: absolute;
     left: 3px;
     top: 3px;
-    opacity: 0;
-    visibility: hidden;
+    transform: scale(0);
+    transition: transform 0.15s;
   }
 
   > input:checked ~ div:before {
-    opacity: 1;
-    visibility: visible;
+    transform: scale(1);
   }
 `
 
