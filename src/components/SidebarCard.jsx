@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import { ReactComponent as ArrowRight } from 'assets/ArrowRight.svg'
 import { ReactComponent as AustriaFlag } from 'assets/flags/austria.svg'
 import { ReactComponent as ChinaFlag } from 'assets/flags/china.svg'
-import { ReactComponent as FranceFlag } from 'assets/flags/france.svg'
+import { ReactComponent as FranceFlag } from 'assets/flags/fr.svg'
 import { ReactComponent as GreeceFlag } from 'assets/flags/greece.svg'
 import { ReactComponent as ItalyFlag } from 'assets/flags/italy.svg'
 import { ReactComponent as NetherlandsFlag } from 'assets/flags/netherlands.svg'
@@ -81,7 +81,7 @@ const SidebarCard = ({ country, company, date, address, id }) => {
 
       <ActionButtons>
       
-      <Link to={`/edit-trip/${id}`}>
+      <Link to={`/view-trip/${id}`}>
 
         <ViewButton>
           <MobileLabel>View Trip</MobileLabel>

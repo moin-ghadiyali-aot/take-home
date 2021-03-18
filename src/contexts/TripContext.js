@@ -34,14 +34,14 @@ const reducer = (state, action) => {
       }
     case 'ADD_TRIP':
       return {
-        trips: [...action.payload, action.payload],
+        trips: [...state.trips, action.payload],
         form: { ...state.form },
         countries: [...state.countries],
         selectedCountry: state.selectedCountry,
       }
     case 'REMOVE_TRIP':
       return {
-        trips: state.trips.filter(trip => trip.id !== action.payload),
+        trips: [state.trips.filter(trip => trip.id !== action.payload)],
         form: { ...state.form },
         countries: [...state.countries],
         selectedCountry: state.selectedCountry,
@@ -82,11 +82,13 @@ const reducer = (state, action) => {
 const TripProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  const fetchData = async () => {
+    const { data } = await api.get('/trip')
+    debugger
+    dispatch({ type: 'SET_TRIPS', payload: data })
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await api.get('/trip')
-      dispatch({ type: 'SET_TRIPS', payload: data })
-    }
     fetchData()
     fetchCountries()
   }, [])

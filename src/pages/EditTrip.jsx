@@ -22,7 +22,15 @@ const EditTrip = () => {
 
   const editTrip = async () => {
     try {
-      const response = await api.put('/trips', state.form)
+      const response = await api.put(`/trip/${id}`, state.form, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers':
+            'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+          'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',
+        },
+      });
       dispatch({ type: 'EDIT_TRIP', payload: response.data })
     } catch (e) {
       console.error(e)
@@ -88,7 +96,9 @@ const EditTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      selected={startDate}
+                      selected={moment(state.form.start_date, 'YYYY-MM-DD')
+                        .add('1', 'day')
+                        .toDate()}
                       excludeTimes
                       onChange={date => {
                         dispatch({
@@ -102,8 +112,11 @@ const EditTrip = () => {
                       name="startDate"
                       showPopperArrow={false}
                       selectsStart
-                      startDate={startDate}
-                      endDate={endDate}
+                      dateFormat='dd. MM. yyyy'
+                      value={startDate}
+                      minDate={moment().toDate()}
+                      // startDate={startDate}
+                      // endDate={endDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -114,8 +127,10 @@ const EditTrip = () => {
                     <DatePicker
                       required
                       selected={
-                        state.form.start_date !== ''
-                          ? moment(state.form.start_date, 'YYYY-MM-DD').toDate()
+                        state.form.end_date !== ''
+                          ? moment(state.form.end_date, 'YYYY-MM-DD')
+                              .add('1', 'day')
+                              .toDate()
                           : ''
                       }
                       onChange={date => {
@@ -128,12 +143,14 @@ const EditTrip = () => {
                       }}
                       id="endDate"
                       name="endDate"
+                      dateFormat='dd. MM. yyyy'
                       placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsEnd
-                      startDate={startDate}
-                      endDate={endDate}
-                      minDate={startDate}
+                      value={endDate}
+                      // startDate={startDate}
+                      // endDate={endDate}
+                      // minDate={startDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -230,6 +247,7 @@ const EditTrip = () => {
                     required
                     id="zipCode"
                     name="zipCode"
+                    type="number"
                     placeholder={state.form.address.zip || 'Type here ...'}
                     onChange={e => {
                       dispatch({

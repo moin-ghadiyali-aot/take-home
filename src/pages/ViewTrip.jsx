@@ -1,56 +1,47 @@
-import React, { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
+import { useParams } from 'react-router-dom'
 import moment from 'moment'
-import Loader from 'react-loader-spinner'
-import { withRouter, useHistory } from 'react-router-dom'
+
 import Heading from 'components/Heading'
-import SidebarCard from 'components/SidebarCard'
 import Sidebar from 'components/Sidebar'
 
-import { api } from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
+import { api } from 'services/httpService'
 
 import { device } from 'style/responsive'
 import { ReactComponent as Check } from 'assets/Check.svg'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
 
-const NewTrip = () => {
+const ViewTrip = () => {
   const [state, dispatch] = useContext(TripContext)
-  console.log('form data', state.form)
+  const { id } = useParams()
 
-  const addNewTrip = async () => {
-    try {
-      await api.post('/trip', state.form, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      })
-      // let history = new useHistory();
-      // history.push('/')
-      dispatch({ type: 'ADD_TRIP', payload: state.form })
-    } catch (e) {
-      console.error(e)
+  useEffect(() => {
+    const fetchTrip = async () => {
+      const { data } = await api.get(`/trip/${id}`)
+      dispatch({ type: 'SET_FORM', payload: data })
     }
-  }
+    fetchTrip()
+  }, [id, dispatch])
 
   const startDate =
     state.form.start_date !== ''
-      ? moment(state.form.start_date, 'YYYY-MM-DD').format('DD. MM. YYYY')
+      ? moment(state.form.start_date, 'YYYY-MM-DD').toDate()
       : ''
 
   const endDate =
     state.form.end_date !== ''
-      ? moment(state.form.end_date, 'YYYY-MM-DD').format('DD. MM. YYYY')
+      ? moment(state.form.end_date, 'YYYY-MM-DD').toDate()
       : ''
 
   return (
     <Container>
-      {/*  */}
       <Main>
-        <Heading title="New trip" />
+        <Heading title="View trip" />
 
         <Form>
           <FormContent>
@@ -63,21 +54,9 @@ const NewTrip = () => {
                   id="country"
                   name="country"
                   options={state.countries}
-                  placeholder="Select country"
-                  onChange={data => {
-                    dispatch({
-                      type: 'SET_FORM',
-                      payload: {
-                        address: {
-                          country: data.value,
-                        },
-                      },
-                    })
-                    dispatch({
-                      type: 'SET_SELECTED_COUNTRY',
-                      payload: data.value,
-                    })
-                  }}
+                  placeholder={state.form.address.country || 'Select country'}
+                  value={state.form.address.country}
+                  disabled
                 />
               </FormGroup>
 
@@ -87,27 +66,18 @@ const NewTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      // selected={startDate}
-                      onChange={date => {
-                        dispatch({
-                          type: 'SET_FORM',
-                          payload: {
-                            start_date: date,
-                          },
-                        })
-                      }}
-                      date
+                      selected={moment(state.form.start_date, 'YYYY-MM-DD')
+                        .add('1', 'day')
+                        .toDate()}
+                      excludeTimes
                       id="startDate"
                       name="startDate"
-                      placeholderText="dd. mm. year"
                       showPopperArrow={false}
                       selectsStart
-                      showMonthYearDropdown
-                      dateFormat='dd. MM. yyyy'
-                      minDate={moment().toDate()}
-                      // startDate={startDate}
-                      // endDate={endDate}
                       value={startDate}
+                      minDate={moment().toDate()}
+                      dateFormat='dd. MM. yyyy'
+                      disabled
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -117,30 +87,21 @@ const NewTrip = () => {
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      // selected={state.form.end_date}
-                      onChange={date => {
-                        dispatch({
-                          type: 'SET_FORM',
-                          payload: {
-                            end_date: date,
-                          },
-                        })
-                      }}
+                      selected={
+                        state.form.end_date !== ''
+                          ? moment(state.form.end_date, 'YYYY-MM-DD')
+                              .add('1', 'day')
+                              .toDate()
+                          : ''
+                      }
                       id="endDate"
                       name="endDate"
                       placeholderText="dd. mm. year"
                       dateFormat='dd. MM. yyyy'
-                      minDate={moment().toDate()}
-                      // showMonthDropdown
-                      // showYearDropdown
-                      // showMonthYearDropdown
-                      showTwoColumnMonthYearPicker
                       showPopperArrow={false}
-                      // selectsEnd
+                      selectsEnd
                       value={endDate}
-                      // startDate={state.form.start_date}
-                      // endDate={state.form.end_date}
-                      // minDate={state.form.start_date}
+                      disabled
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
@@ -153,16 +114,9 @@ const NewTrip = () => {
                     required
                     id="company"
                     name="company"
-                    placeholder="Type here..."
-                    onChange={e => {
-                      dispatch({
-                        type: 'SET_FORM',
-                        payload: {
-                          company_name: e.target.value,
-                        },
-                      })
-                    }}
+                    placeholder={state.form.company_name || 'Type here ...'}
                     value={state.form.company_name}
+                    disabled
                   />
                 </FormInnerGroup>
 
@@ -172,18 +126,9 @@ const NewTrip = () => {
                     required
                     id="city"
                     name="city"
-                    placeholder="Type here..."
-                    onChange={e => {
-                      dispatch({
-                        type: 'SET_FORM',
-                        payload: {
-                          address: {
-                            city: e.target.value,
-                          },
-                        },
-                      })
-                    }}
+                    placeholder={state.form.address.city || 'Type here ...'}
                     value={state.form.address.city}
+                    disabled
                   />
                 </FormInnerGroup>
 
@@ -193,61 +138,35 @@ const NewTrip = () => {
                     required
                     id="street"
                     name="street"
-                    placeholder="Type here..."
-                    onChange={e => {
-                      dispatch({
-                        type: 'SET_FORM',
-                        payload: {
-                          address: {
-                            street: e.target.value,
-                          },
-                        },
-                      })
-                    }}
+                    placeholder={state.form.address.street || 'Type here ...'}
                     value={state.form.address.street}
+                    disabled
                   />
                 </FormInnerGroup>
 
                 <FormInnerGroup>
-                  <Label htmlFor="streetNumber">Street Number</Label>
+                  <Label htmlFor="streetNumber">Street number</Label>
                   <Input
                     required
                     id="streetNumber"
                     name="streetNumber"
-                    placeholder="Type here..."
-                    onChange={e => {
-                      dispatch({
-                        type: 'SET_FORM',
-                        payload: {
-                          address: {
-                            street_num: Number(e.target.value),
-                          },
-                        },
-                      })
-                    }}
+                    placeholder={
+                      state.form.address.street_num || 'Type here ...'
+                    }
                     value={state.form.address.street_num}
+                    disabled
                   />
                 </FormInnerGroup>
 
                 <FormInnerGroup>
                   <Label htmlFor="zipCode">Zip code</Label>
                   <Input
-                    required={true}
+                    required
                     id="zipCode"
                     name="zipCode"
-                    placeholder="Type here..."
-                    type="number"
-                    onChange={e => {
-                      dispatch({
-                        type: 'SET_FORM',
-                        payload: {
-                          address: {
-                            zip: e.target.value,
-                          },
-                        },
-                      })
-                    }}
+                    placeholder={state.form.address.zip || 'Type here ...'}
                     value={state.form.address.zip}
+                    disabled
                   />
                 </FormInnerGroup>
               </FormGroup>
@@ -256,7 +175,6 @@ const NewTrip = () => {
                 <LabelQuestion>
                   Have you been recently tested for <strong>COVID-19</strong>
                 </LabelQuestion>
-
                 <RadioButtonGroup>
                   <RadioButton>
                     <input
@@ -265,19 +183,12 @@ const NewTrip = () => {
                       name="testedCovid"
                       id="yes"
                       value="0"
-                      onChange={() => {
-                        dispatch({
-                          type: 'SET_FORM',
-                          payload: {
-                            covid: true,
-                          },
-                        })
-                      }}
+                      checked={state.form.covid === true}
+                      disabled
                     />
                     <div />
                     <span>Yes</span>
                   </RadioButton>
-
                   <RadioButton>
                     <input
                       required
@@ -285,60 +196,47 @@ const NewTrip = () => {
                       name="testedCovid"
                       id="no"
                       value="1"
-                      onChange={() => {
-                        dispatch({
-                          type: 'SET_FORM',
-                          payload: {
-                            covid: false,
-                          },
-                        })
-                      }}
+                      checked={state.form.covid === false}
+                      disabled
                     />
                     <div />
                     <span>No</span>
                   </RadioButton>
                 </RadioButtonGroup>
               </FormGroup>
+              <FormInnerGroup>
+                  <Label htmlFor="endDate">Date of receiving test results:</Label>
+                  <DatePickerWrap>
+                    <DatePicker
+                      required
+                      selected={
+                        state.form.end_date !== ''
+                          ? moment(state.form.end_date, 'YYYY-MM-DD')
+                              .add('1', 'day')
+                              .toDate()
+                          : ''
+                      }
+                      id="endDate"
+                      name="endDate"
+                      placeholderText="dd. mm. year"
+                      dateFormat='dd. MM. yyyy'
+                      showPopperArrow={false}
+                      selectsEnd
+                      value={endDate}
+                      disabled
+                    />
+                  </DatePickerWrap>
+                </FormInnerGroup>
             </InnerForm>
           </FormContent>
-
-          <FormFooter>
-            <Button type="button" onClick={addNewTrip}>
-              Save
-              <Check width={16} height={12} />
-            </Button>
-          </FormFooter>
         </Form>
       </Main>
-      <Sidebar sidebarHeading="Trips">
-        {state.trips.length > 0 ? (
-          state.trips.map(trip => (
-            <SidebarCard
-              key={trip.id}
-              country={trip.address.country}
-              company={trip.company_name}
-              address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
-              date={`${moment(trip.start_date).format('D MMM')} - ${moment(
-                trip.end_date,
-              ).format('D MMM, YYYY')}`}
-              id={trip.id}
-            />
-          ))
-        ) : (
-          <StyledLoader type="BallTriangle" color="var(--accent)" />
-        )}
-      </Sidebar>
+      <Sidebar sidebarHeading="Trips"></Sidebar>
     </Container>
   )
 }
 
-export default NewTrip
-
-const StyledLoader = styled(Loader)`
-  display: flex;
-  justify-content: center;
-  margin: 50px;
-`
+export default ViewTrip
 
 const Container = styled.div`
   display: flex;
@@ -475,7 +373,7 @@ const Input = styled.input`
   line-height: 2rem;
 
   &::placeholder {
-    color: #d0d0ce;
+    color: #76787b;
   }
 
   &:focus {
@@ -534,12 +432,13 @@ const RadioButton = styled.label`
     position: absolute;
     left: 3px;
     top: 3px;
-    transform: scale(0);
-    transition: transform 0.15s;
+    opacity: 0;
+    visibility: hidden;
   }
 
   > input:checked ~ div:before {
-    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
   }
 `
 

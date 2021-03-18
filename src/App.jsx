@@ -9,6 +9,7 @@ import NotFound from 'pages/404'
 import NewTrip from 'pages/NewTrip'
 import Trips from 'pages/Trips'
 import EditTrip from 'pages/EditTrip'
+import ViewTrip from 'pages/ViewTrip'
 
 import { device } from 'style/responsive'
 import GlobalStyle from 'style/global'
@@ -17,7 +18,7 @@ import DatePickerRight from 'assets/DatePickerRight.svg'
 import GlobeIcon from 'assets/DropdownGlobe.svg'
 import AustriaFlag from 'assets/flags/austria.svg'
 import ChinaFlag from 'assets/flags/china.svg'
-import FranceFlag from 'assets/flags/france.svg'
+import FranceFlag from 'assets/flags/fr.svg'
 import GreeceFlag from 'assets/flags/greece.svg'
 import ItalyFlag from 'assets/flags/italy.svg'
 import NetherlandsFlag from 'assets/flags/netherlands.svg'
@@ -48,6 +49,7 @@ const Routing = () => (
     <Switch>
       <Route path="/new-trip" component={NewTrip} />
       <Route path="/edit-trip/:id" component={EditTrip} />
+      <Route path="/view-trip/:id" component={ViewTrip} />
       <Route path="/" exact component={Trips} />
       <Route to="*" component={NotFound} />
     </Switch>
