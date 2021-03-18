@@ -25,6 +25,27 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_INITIAL':
+      return {
+        trips: [...state.trips],
+        form: {
+          address: {
+            city: '',
+            country: '',
+            street: '',
+            street_num: '',
+            zip: '',
+          },
+          company_name: '',
+          covid: null,
+          covid_test_date: '',
+          end_date: '',
+          start_date: '',
+        },
+        countries: [...state.countries],
+        selectedCountry: '',
+      }
+      break
     case 'SET_TRIPS':
       return {
         trips: action.payload,
@@ -40,8 +61,9 @@ const reducer = (state, action) => {
         selectedCountry: state.selectedCountry,
       }
     case 'REMOVE_TRIP':
+      const filter = [...state.trips.filter(trip => trip.id !== action.payload)]
       return {
-        trips: [state.trips.filter(trip => trip.id !== action.payload)],
+        trips: filter,
         form: { ...state.form },
         countries: [...state.countries],
         selectedCountry: state.selectedCountry,

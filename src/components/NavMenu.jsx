@@ -35,27 +35,24 @@ const NavMenu = () => {
         </Logo>
 
         <MenuItems>
-          <NewTrip
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: '2px 2px 5px rgba(0,0,0,0.5)',
-            }}
-          >
-            <StyledNavLink
-              onClick={menuCtx.toggleMenu}
-              to="/new-trip"
+          <StyledNavLink onClick={menuCtx.toggleMenu} to="/new-trip">
+            <NewTrip
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '2px 2px 5px rgba(0,0,0,0.5)',
+              }}
             >
               New Trip
               {/* <PlusClass animate={animation}> */}
               <Plus width={16} height={16} />
               {/* </PlusClass> */}
-            </StyledNavLink>
-          </NewTrip>
+            </NewTrip>
+          </StyledNavLink>
 
-          <MenuItem>
+          <MenuItem animate={{ x: [-200, 10, 0], transition: { duration: 1 } }}>
             <StyledNavLink onClick={menuCtx.toggleMenu} to={`/`}>
               <IconWrap>
                 <ClockIcon width={16} height={16} />
@@ -64,7 +61,12 @@ const NavMenu = () => {
             </StyledNavLink>
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem
+            animate={{
+              x: [-200, 10, 0],
+              transition: { duration: 1, delay: 0.2 },
+            }}
+          >
             <NonClickableLink onClick={menuCtx.toggleMenu}>
               <IconWrap>
                 <EditIcon width={16} height={16} />
@@ -73,7 +75,12 @@ const NavMenu = () => {
             </NonClickableLink>
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem
+            animate={{
+              x: [-200, 10, 0],
+              transition: { duration: 1, delay: 0.3 },
+            }}
+          >
             <NonClickableLink onClick={menuCtx.toggleMenu}>
               <IconWrap>
                 <GlobeIcon width={16} height={16} />
@@ -174,8 +181,9 @@ const IconWrap = styled.div`
 `
 
 const MenuItems = styled.ul``
-const MenuItem = styled.li`
+const MenuItem = styled(motion.li)`
   margin: 20px 0;
+  cursor: pointer;
 `
 
 const StyledNavLink = styled(NavLink)`

@@ -7,7 +7,7 @@ import moment from 'moment'
 
 import Heading from 'components/Heading'
 import Sidebar from 'components/Sidebar'
-
+import { motion, useAnimation } from 'framer-motion'
 import { TripContext } from 'contexts/TripContext'
 import { api } from 'services/httpService'
 
@@ -15,10 +15,13 @@ import { device } from 'style/responsive'
 import { ReactComponent as Check } from 'assets/Check.svg'
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import Loader from 'react-loader-spinner'
+import SidebarCard from 'components/SidebarCard'
 
 const ViewTrip = () => {
   const [state, dispatch] = useContext(TripContext)
   const { id } = useParams()
+  const xValues = [5000, -40, 0]
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -47,21 +50,31 @@ const ViewTrip = () => {
           <FormContent>
             <InnerForm>
               <FormGroup>
-                <Label htmlFor="countries">Where do you want to go</Label>
-                <Dropdown
-                  required
-                  className={state.selectedCountry}
-                  id="country"
-                  name="country"
-                  options={state.countries}
-                  placeholder={state.form.address.country || 'Select country'}
-                  value={state.form.address.country}
-                  disabled
-                />
+                {/* <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1 }}
+                > */}
+                <DPDown animate={{ x: xValues }} transition={{ duration: 1 }}>
+                  <Label htmlFor="countries">Where do you want to go</Label>
+                  <Dropdown
+                    required
+                    className={state.selectedCountry}
+                    id="country"
+                    name="country"
+                    options={state.countries}
+                    placeholder={state.form.address.country || 'Select country'}
+                    value={state.form.address.country}
+                    disabled
+                  />
+                </DPDown>
+                {/* </FormInnerGroup> */}
               </FormGroup>
 
               <FormGroup>
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues, opacity: [0, 0.3, 1] }}
+                  transition={{ duration: 1, delay: 0.1 }}
+                >
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
@@ -76,13 +89,16 @@ const ViewTrip = () => {
                       selectsStart
                       value={startDate}
                       minDate={moment().toDate()}
-                      dateFormat='dd. MM. yyyy'
+                      dateFormat="dd. MM. yyyy"
                       disabled
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                >
                   <Label htmlFor="endDate">End date</Label>
                   <DatePickerWrap>
                     <DatePicker
@@ -97,7 +113,7 @@ const ViewTrip = () => {
                       id="endDate"
                       name="endDate"
                       placeholderText="dd. mm. year"
-                      dateFormat='dd. MM. yyyy'
+                      dateFormat="dd. MM. yyyy"
                       showPopperArrow={false}
                       selectsEnd
                       value={endDate}
@@ -108,7 +124,10 @@ const ViewTrip = () => {
               </FormGroup>
 
               <FormGroup>
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.3 }}
+                >
                   <Label htmlFor="company">Company name</Label>
                   <Input
                     required
@@ -120,7 +139,10 @@ const ViewTrip = () => {
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                >
                   <Label htmlFor="city">City</Label>
                   <Input
                     required
@@ -132,7 +154,10 @@ const ViewTrip = () => {
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                >
                   <Label htmlFor="street">Street</Label>
                   <Input
                     required
@@ -144,7 +169,10 @@ const ViewTrip = () => {
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.6 }}
+                >
                   <Label htmlFor="streetNumber">Street number</Label>
                   <Input
                     required
@@ -158,7 +186,10 @@ const ViewTrip = () => {
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.7 }}
+                >
                   <Label htmlFor="zipCode">Zip code</Label>
                   <Input
                     required
@@ -175,7 +206,10 @@ const ViewTrip = () => {
                 <LabelQuestion>
                   Have you been recently tested for <strong>COVID-19</strong>
                 </LabelQuestion>
-                <RadioButtonGroup>
+                <RadioButtonGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.8 }}
+                >
                   <RadioButton>
                     <input
                       required
@@ -205,38 +239,63 @@ const ViewTrip = () => {
                 </RadioButtonGroup>
               </FormGroup>
               <FormInnerGroup>
-                  <Label htmlFor="endDate">Date of receiving test results:</Label>
-                  <DatePickerWrap>
-                    <DatePicker
-                      required
-                      selected={
-                        state.form.end_date !== ''
-                          ? moment(state.form.end_date, 'YYYY-MM-DD')
-                              .add('1', 'day')
-                              .toDate()
-                          : ''
-                      }
-                      id="endDate"
-                      name="endDate"
-                      placeholderText="dd. mm. year"
-                      dateFormat='dd. MM. yyyy'
-                      showPopperArrow={false}
-                      selectsEnd
-                      value={endDate}
-                      disabled
-                    />
-                  </DatePickerWrap>
-                </FormInnerGroup>
+                <Label htmlFor="endDate">Date of receiving test results:</Label>
+                <DatePickerWrap>
+                  <DatePicker
+                    required
+                    selected={
+                      state.form.end_date !== ''
+                        ? moment(state.form.end_date, 'YYYY-MM-DD')
+                            .add('1', 'day')
+                            .toDate()
+                        : ''
+                    }
+                    id="endDate"
+                    name="endDate"
+                    placeholderText="dd. mm. year"
+                    dateFormat="dd. MM. yyyy"
+                    showPopperArrow={false}
+                    selectsEnd
+                    value={endDate}
+                    disabled
+                  />
+                </DatePickerWrap>
+              </FormInnerGroup>
             </InnerForm>
           </FormContent>
         </Form>
       </Main>
-      <Sidebar sidebarHeading="Trips"></Sidebar>
+      <Sidebar sidebarHeading="Trips">
+        {state.trips.length > 0 ? (
+          state.trips.map(trip => (
+            <SidebarCard
+              key={trip.id}
+              country={trip.address.country}
+              company={trip.company_name}
+              address={`${trip.address.street} ${trip.address.street_num} ${trip.address.zip} ${trip.address.city}`}
+              date={`${moment(trip.start_date).format('D MMM')} - ${moment(
+                trip.end_date,
+              ).format('D MMM, YYYY')}`}
+              id={trip.id}
+            />
+          ))
+        ) : (
+          <StyledLoader type="BallTriangle" color="var(--accent)" />
+        )}
+      </Sidebar>
     </Container>
   )
 }
 
 export default ViewTrip
+
+const StyledLoader = styled(Loader)`
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+`
+
+const DPDown = styled(motion.div)``
 
 const Container = styled.div`
   display: flex;
@@ -319,7 +378,7 @@ const FormGroup = styled.div`
   }
 `
 
-const FormInnerGroup = styled.div`
+const FormInnerGroup = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -335,7 +394,7 @@ const FormInnerGroup = styled.div`
   }
 `
 
-const Label = styled.label`
+const Label = styled(motion.label)`
   display: block;
   font-size: 1.4rem;
   margin-bottom: 2rem;
@@ -385,7 +444,7 @@ const Input = styled.input`
   }
 `
 
-const RadioButtonGroup = styled.div`
+const RadioButtonGroup = styled(motion.div)`
   display: flex;
   margin-top: 2rem;
 `

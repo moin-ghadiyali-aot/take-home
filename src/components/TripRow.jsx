@@ -18,12 +18,71 @@ const TripRow = ({ country, company, date, id, address }) => {
   function closeModal() {
     setIsOpen(false)
   }
-  const [dispatch] = useContext(TripContext)
+  const [state, dispatch] = useContext(TripContext)
   const hover = useAnimation()
   const animation = useAnimation()
 
+  const flagName = flag => {
+    switch (flag) {
+      case 'at':
+        return 'austria'
+      case 'cn':
+        return 'china'
+      case 'fr':
+        return 'france'
+      case 'gr':
+        return 'greece'
+      case 'it':
+        return 'italy'
+      case 'aw':
+        return 'netherlands'
+      case 'pt':
+        return 'portugal'
+      case 'sk':
+        return 'slovakia'
+      case 'es':
+        return 'spain'
+      case 'se':
+        return 'sweden'
+      case 'uk':
+        return 'united-kingdom'
+      default:
+        return null
+    }
+  }
+
+  const countryName = flag => {
+    switch (flag) {
+      case 'at':
+        return 'Austria'
+      case 'cn':
+        return 'China'
+      case 'fr':
+        return 'France'
+      case 'gr':
+        return 'Greece'
+      case 'it':
+        return 'Italy'
+      case 'aw':
+        return 'Netherlands'
+      case 'pt':
+        return 'Portugal'
+      case 'sk':
+        return 'Lovakia'
+      case 'es':
+        return 'Spain'
+      case 'se':
+        return 'Sweden'
+      case 'uk':
+        return 'United Kingdom'
+      default:
+        return null
+    }
+  }
+
   const flag = country.toLowerCase().split(' ').join('-')
-  const image = require('assets/flags/' + flag + '.svg').default
+  debugger
+  const image = require('assets/flags/' + flagName(flag) + '.svg').default
 
   const removeTrip = async id => {
     try {
@@ -68,13 +127,33 @@ const TripRow = ({ country, company, date, id, address }) => {
         style={customStyles}
         onRequestClose={closeModal}
       >
-        <Form>
+        <Form
+          initial={{ opacity: 0, scale: 0.75 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+        >
           <Label htmlFor="q">Are you sure you want to delete this trip?</Label>
           <FormButtonGroup>
-            <AcceptDeleteButton onClick={() => removeTrip(id)}>
+            <AcceptDeleteButton
+              onClick={() => removeTrip(id)}
+              whileHover={{
+                scale: 1.15,
+                translateY: -10,
+                boxShadow: '3px 3px 5px rgba(0,0,0,0.3)',
+              }}
+            >
               Delete
             </AcceptDeleteButton>
-            <AcceptCancelButton onClick={closeModal}>Cancel</AcceptCancelButton>
+            <AcceptCancelButton
+              onClick={closeModal}
+              whileHover={{
+                scale: 1.15,
+                translateY: -10,
+                boxShadow: '3px 3px 5px rgba(0,0,0,0.3)',
+              }}
+            >
+              Cancel
+            </AcceptCancelButton>
           </FormButtonGroup>
         </Form>
       </Modal>
@@ -85,6 +164,7 @@ const TripRow = ({ country, company, date, id, address }) => {
         onLoad={sequence}
         whileHover={{ boxShadow: '2px 6px 10px rgba(0,0,0,0.3)' }}
       >
+        {/* <Link to={`/view-trip/${id}`}> */}
         <FlagColumn>
           <img src={image} width={32} height={32} alt={country} />
           <MobileCountry>{country}</MobileCountry>
@@ -92,7 +172,11 @@ const TripRow = ({ country, company, date, id, address }) => {
 
         <TripColumn>
           <TripRowInline>
-            <Country style={{ color: 'black' }}>{country}</Country>
+            <Link to={`/view-trip/${id}`}>
+              <Country style={{ color: 'black' }}>
+                {countryName(country)}
+              </Country>
+            </Link>
             <Separator />
             <TripDate>
               <MobileLabel>Date</MobileLabel>
@@ -116,9 +200,9 @@ const TripRow = ({ country, company, date, id, address }) => {
           <RemoveButton
             onClick={() => openModal()}
             whileHover={{
-              scale: 1.15,
-              translateY: -10,
-              boxShadow: '3px 3px 5px rgba(0,0,0,0.3)',
+              scale: 1.05,
+              translateY: -5,
+              boxShadow: '1px 1px 3px rgba(0,0,0,0.3)',
             }}
           >
             <RemoveIcon width={11} height={16} />
@@ -126,9 +210,9 @@ const TripRow = ({ country, company, date, id, address }) => {
           <Link to={`/edit-trip/${id}`}>
             <ViewButton
               whileHover={{
-                scale: 1.15,
-                translateY: -10,
-                boxShadow: '3px 3px 5px rgba(0,0,0,0.3)',
+                scale: 1.05,
+                translateY: -5,
+                boxShadow: '1px 1px 3px rgba(0,0,0,0.3)',
               }}
             >
               <MobileLabel>View Trip</MobileLabel>
@@ -136,6 +220,7 @@ const TripRow = ({ country, company, date, id, address }) => {
             </ViewButton>
           </Link>
         </ActionButtons>
+        {/* </Link> */}
       </TripRowStyles>
       {/* </Link> */}
     </div>
@@ -152,7 +237,7 @@ const Label = styled.label`
   width: 100%;
 `
 
-const Form = styled.form`
+const Form = styled(motion.form)`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -163,7 +248,7 @@ const FormButtonGroup = styled.div`
   flex-direction: row;
 `
 
-const AcceptDeleteButton = styled.div`
+const AcceptDeleteButton = styled(motion.div)`
   background: red;
   font-size: 1.6rem;
   padding: 1.3rem 2rem;
@@ -175,13 +260,14 @@ const AcceptDeleteButton = styled.div`
   display: inline-block;
   align-items: center;
   cursor: pointer;
+  color: white;
 
   > svg {
     margin-left: auto;
   }
 `
 
-const AcceptCancelButton = styled.div`
+const AcceptCancelButton = styled(motion.div)`
   background: #cccccc;
   font-size: 1.6rem;
   padding: 1.3rem 2rem;
@@ -193,6 +279,7 @@ const AcceptCancelButton = styled.div`
   display: inline-block;
   align-items: center;
   cursor: pointer;
+  color: white;
 
   > svg {
     margin-left: auto;
@@ -290,7 +377,7 @@ const Country = styled.div`
 `
 
 const Company = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   white-space: nowrap;
 
   @media ${device.tablet} {

@@ -1,14 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'react-dropdown'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import Loader from 'react-loader-spinner'
-import { withRouter, useHistory } from 'react-router-dom'
+import { withRouter, useHistory, Link } from 'react-router-dom'
+import Modal from 'react-modal'
 import Heading from 'components/Heading'
 import SidebarCard from 'components/SidebarCard'
 import Sidebar from 'components/Sidebar'
-
+import { motion, useAnimation } from 'framer-motion'
 import { api } from 'services/httpService'
 import { TripContext } from 'contexts/TripContext'
 
@@ -20,7 +21,15 @@ import 'react-datepicker/dist/react-datepicker.css'
 const NewTrip = () => {
   const [state, dispatch] = useContext(TripContext)
   console.log('form data', state.form)
-
+  const xValues = [5000, -40, 0]
+  let history = useHistory()
+  const [modalIsOpen, setIsOpen] = React.useState(false)
+  function openModal() {
+    setIsOpen(true)
+  }
+  function closeModal() {
+    setIsOpen(false)
+  }
   const addNewTrip = async () => {
     try {
       await api.post('/trip', state.form, {
@@ -28,66 +37,118 @@ const NewTrip = () => {
           'Access-Control-Allow-Origin': '*',
         },
       })
-      // let history = new useHistory();
-      // history.push('/')
       dispatch({ type: 'ADD_TRIP', payload: state.form })
+      await openModal();
     } catch (e) {
       console.error(e)
     }
   }
 
-  const startDate =
-    state.form.start_date !== ''
-      ? moment(state.form.start_date, 'YYYY-MM-DD').format('DD. MM. YYYY')
+  const customStyles = {
+    content: {
+      top: '45%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '500px',
+    },
+  }
+
+  useEffect(() => {
+    dispatch({ type: 'SET_INITIAL', payload: '' })
+  }, [])
+
+  let startDate =
+    state.form.start_date != ''
+      ? moment(state.form.start_date, 'YYYY-MM-DD').toDate()
       : ''
 
-  const endDate =
-    state.form.end_date !== ''
-      ? moment(state.form.end_date, 'YYYY-MM-DD').format('DD. MM. YYYY')
+  let endDate =
+    state.form.end_date != ''
+      ? moment(state.form.end_date, 'YYYY-MM-DD').toDate()
       : ''
+
+  // if (startDate != '') {
+  //   startDate = ''
+  // }
+  // debugger
 
   return (
     <Container>
       {/*  */}
       <Main>
         <Heading title="New trip" />
-
+        <Modal
+          isOpen={modalIsOpen}
+          style={customStyles}
+          onRequestClose={closeModal}
+        >
+          <Form
+            initial={{ opacity: 0, scale: 0.75 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <Label htmlFor="q" style={{ textAlign: 'center' }}>Data Uploaded Successfully</Label>
+            <FormButtonGroup>
+              <Link to="/">
+                <AcceptDeleteButton
+                  whileHover={{
+                    scale: 1.15,
+                    translateY: -10,
+                    boxShadow: '3px 3px 5px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  OK
+                </AcceptDeleteButton>
+              </Link>
+            </FormButtonGroup>
+          </Form>
+        </Modal>
         <Form>
           <FormContent>
             <InnerForm>
               <FormGroup>
-                <Label htmlFor="countries">Where do you want to go</Label>
-                <Dropdown
-                  required
-                  className={state.selectedCountry}
-                  id="country"
-                  name="country"
-                  options={state.countries}
-                  placeholder="Select country"
-                  onChange={data => {
-                    dispatch({
-                      type: 'SET_FORM',
-                      payload: {
-                        address: {
-                          country: data.value,
+                {/* <FormInnerGroup animate={{ x: xValues }} transition={{ duration: 1 }}> */}
+                <DPDown animate={{ x: xValues }} transition={{ duration: 1 }}>
+                  <Label htmlFor="countries">Where do you want to go</Label>
+                  <Dropdown
+                    required
+                    className={state.selectedCountry}
+                    id="country"
+                    name="country"
+                    options={state.countries}
+                    placeholder="Select country"
+                    onChange={data => {
+                      dispatch({
+                        type: 'SET_FORM',
+                        payload: {
+                          address: {
+                            country: data.value,
+                          },
                         },
-                      },
-                    })
-                    dispatch({
-                      type: 'SET_SELECTED_COUNTRY',
-                      payload: data.value,
-                    })
-                  }}
-                />
+                      })
+                      dispatch({
+                        type: 'SET_SELECTED_COUNTRY',
+                        payload: data.value,
+                      })
+                    }}
+                  />
+                </DPDown>
+                {/* </FormInnerGroup> */}
               </FormGroup>
 
               <FormGroup>
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues, opacity: [0, 0.3, 1] }}
+                  transition={{ duration: 1, delay: 0.1 }}
+                >
                   <Label htmlFor="startDate">Start date</Label>
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      // selected={startDate}
+                      selected={startDate}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
@@ -103,21 +164,24 @@ const NewTrip = () => {
                       showPopperArrow={false}
                       selectsStart
                       showMonthYearDropdown
-                      dateFormat='dd. MM. yyyy'
+                      dateFormat="dd. MM. yyyy"
                       minDate={moment().toDate()}
                       // startDate={startDate}
                       // endDate={endDate}
-                      value={startDate}
+                      // value={startDate}
                     />
                   </DatePickerWrap>
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                >
                   <Label htmlFor="endDate">End date</Label>
                   <DatePickerWrap>
                     <DatePicker
                       required
-                      // selected={state.form.end_date}
+                      selected={endDate}
                       onChange={date => {
                         dispatch({
                           type: 'SET_FORM',
@@ -129,7 +193,7 @@ const NewTrip = () => {
                       id="endDate"
                       name="endDate"
                       placeholderText="dd. mm. year"
-                      dateFormat='dd. MM. yyyy'
+                      dateFormat="dd. MM. yyyy"
                       minDate={moment().toDate()}
                       // showMonthDropdown
                       // showYearDropdown
@@ -137,7 +201,7 @@ const NewTrip = () => {
                       showTwoColumnMonthYearPicker
                       showPopperArrow={false}
                       // selectsEnd
-                      value={endDate}
+                      // value={endDate}
                       // startDate={state.form.start_date}
                       // endDate={state.form.end_date}
                       // minDate={state.form.start_date}
@@ -147,7 +211,10 @@ const NewTrip = () => {
               </FormGroup>
 
               <FormGroup>
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.3 }}
+                >
                   <Label htmlFor="company">Company name</Label>
                   <Input
                     required
@@ -162,11 +229,14 @@ const NewTrip = () => {
                         },
                       })
                     }}
-                    value={state.form.company_name}
+                    // value={state.form.company_name}
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                >
                   <Label htmlFor="city">City</Label>
                   <Input
                     required
@@ -183,11 +253,14 @@ const NewTrip = () => {
                         },
                       })
                     }}
-                    value={state.form.address.city}
+                    // value={state.form.address.city}
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                >
                   <Label htmlFor="street">Street</Label>
                   <Input
                     required
@@ -204,11 +277,14 @@ const NewTrip = () => {
                         },
                       })
                     }}
-                    value={state.form.address.street}
+                    // value={state.form.address.street}
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.6 }}
+                >
                   <Label htmlFor="streetNumber">Street Number</Label>
                   <Input
                     required
@@ -225,11 +301,14 @@ const NewTrip = () => {
                         },
                       })
                     }}
-                    value={state.form.address.street_num}
+                    // value={state.form.address.street_num}
                   />
                 </FormInnerGroup>
 
-                <FormInnerGroup>
+                <FormInnerGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.7 }}
+                >
                   <Label htmlFor="zipCode">Zip code</Label>
                   <Input
                     required={true}
@@ -247,7 +326,7 @@ const NewTrip = () => {
                         },
                       })
                     }}
-                    value={state.form.address.zip}
+                    // value={state.form.address.zip}
                   />
                 </FormInnerGroup>
               </FormGroup>
@@ -257,7 +336,10 @@ const NewTrip = () => {
                   Have you been recently tested for <strong>COVID-19</strong>
                 </LabelQuestion>
 
-                <RadioButtonGroup>
+                <RadioButtonGroup
+                  animate={{ x: xValues }}
+                  transition={{ duration: 1, delay: 0.8 }}
+                >
                   <RadioButton>
                     <input
                       required
@@ -303,7 +385,7 @@ const NewTrip = () => {
           </FormContent>
 
           <FormFooter>
-            <Button type="button" onClick={addNewTrip}>
+            <Button type="button" onClick={() => addNewTrip()}>
               Save
               <Check width={16} height={12} />
             </Button>
@@ -333,6 +415,57 @@ const NewTrip = () => {
 }
 
 export default NewTrip
+
+const DPDown = styled(motion.div)``
+
+// const Form = styled(motion.form)`
+//   display: flex;
+//   flex-direction: column;
+//   flex: 1 1 auto;
+//   width: 100%;
+//   align-items: center;
+// `
+const FormButtonGroup = styled.div`
+  flex-direction: row;
+`
+
+const AcceptDeleteButton = styled(motion.div)`
+  background: red;
+  font-size: 1.6rem;
+  padding: 1.3rem 2rem;
+  margin: 1.2rem;
+  max-width: 200px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: left;
+  display: inline-block;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+
+  > svg {
+    margin-left: auto;
+  }
+`
+
+const AcceptCancelButton = styled(motion.div)`
+  background: #cccccc;
+  font-size: 1.6rem;
+  padding: 1.3rem 2rem;
+  max-width: 200px;
+  margin: 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: left;
+  display: inline-block;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+
+  > svg {
+    margin-left: auto;
+  }
+`
 
 const StyledLoader = styled(Loader)`
   display: flex;
@@ -421,7 +554,7 @@ const FormGroup = styled.div`
   }
 `
 
-const FormInnerGroup = styled.div`
+const FormInnerGroup = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -446,7 +579,7 @@ const Label = styled.label`
   width: 100%;
 `
 
-const LabelQuestion = styled.label`
+const LabelQuestion = styled(motion.label)`
   display: block;
   font-size: 1.4rem;
   color: black;
@@ -487,7 +620,7 @@ const Input = styled.input`
   }
 `
 
-const RadioButtonGroup = styled.div`
+const RadioButtonGroup = styled(motion.div)`
   display: flex;
   margin-top: 2rem;
 `
