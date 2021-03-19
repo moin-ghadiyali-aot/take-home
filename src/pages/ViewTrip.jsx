@@ -1,22 +1,19 @@
-import { useContext, useEffect } from 'react'
-import styled from 'styled-components'
-import Dropdown from 'react-dropdown'
-import DatePicker from 'react-datepicker'
-import { useParams } from 'react-router-dom'
-import moment from 'moment'
-
 import Heading from 'components/Heading'
 import Sidebar from 'components/Sidebar'
-import { motion, useAnimation } from 'framer-motion'
-import { TripContext } from 'contexts/TripContext'
-import { api } from 'services/httpService'
-
-import { device } from 'style/responsive'
-import { ReactComponent as Check } from 'assets/Check.svg'
-import 'react-dropdown/style.css'
-import 'react-datepicker/dist/react-datepicker.css'
-import Loader from 'react-loader-spinner'
 import SidebarCard from 'components/SidebarCard'
+import { TripContext } from 'contexts/TripContext'
+import { motion } from 'framer-motion'
+import moment from 'moment'
+import { useContext, useEffect } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
+import Loader from 'react-loader-spinner'
+import { useParams } from 'react-router-dom'
+import { api } from 'services/httpService'
+import { device } from 'style/responsive'
+import styled from 'styled-components'
 
 const ViewTrip = () => {
   const [state, dispatch] = useContext(TripContext)
@@ -24,13 +21,28 @@ const ViewTrip = () => {
   const xValues = [5000, -40, 0]
 
   useEffect(() => {
-    const fetchTrip = async () => {
-      const { data } = await api.get(`/trip/${id}`)
-      dispatch({ type: 'SET_FORM', payload: data })
-    }
     fetchTrip()
-  }, [id, dispatch])
+    fetchCountries()
+  }, [id])
 
+  const fetchCountries = async () => {
+    const { data } = await api.get('/country')
+    const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1))
+    const countriesData = []
+    sortedData.forEach(data => {
+      countriesData.push({
+        value: data.value,
+        label: data.label,
+        className: `flag-${data.value}`,
+      })
+    })
+    dispatch({ type: 'SET_COUNTRIES', payload: countriesData })
+  }
+
+  const fetchTrip = async () => {
+    const { data } = await api.get(`/trip/${id}`)
+    dispatch({ type: 'SET_FORM', payload: data })
+  }
   const startDate =
     state.form.start_date !== ''
       ? moment(state.form.start_date, 'YYYY-MM-DD').toDate()
@@ -50,10 +62,7 @@ const ViewTrip = () => {
           <FormContent>
             <InnerForm>
               <FormGroup>
-                {/* <FormInnerGroup
-                  animate={{ x: xValues }}
-                  transition={{ duration: 1 }}
-                > */}
+                {console.log(state)}
                 <DPDown animate={{ x: xValues }} transition={{ duration: 1 }}>
                   <Label htmlFor="countries">Where do you want to go</Label>
                   <Dropdown
@@ -67,7 +76,6 @@ const ViewTrip = () => {
                     disabled
                   />
                 </DPDown>
-                {/* </FormInnerGroup> */}
               </FormGroup>
 
               <FormGroup>
@@ -498,31 +506,5 @@ const RadioButton = styled.label`
   > input:checked ~ div:before {
     opacity: 1;
     visibility: visible;
-  }
-`
-
-const FormFooter = styled.div`
-  width: 100%;
-  border-top: 1px solid #f1f1f2;
-  padding: 2rem 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Button = styled.button`
-  background: var(--accent);
-  font-size: 1.6rem;
-  padding: 1.3rem 2rem;
-  flex: 1;
-  max-width: 200px;
-  border-radius: 10px;
-  font-weight: 600;
-  text-align: left;
-  display: flex;
-  align-items: center;
-
-  > svg {
-    margin-left: auto;
   }
 `

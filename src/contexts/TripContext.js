@@ -1,4 +1,4 @@
-import { useEffect, createContext, useReducer } from 'react'
+import { createContext, useEffect, useReducer } from 'react'
 import { api } from 'services/httpService'
 
 export const TripContext = createContext()
@@ -45,20 +45,19 @@ const reducer = (state, action) => {
         countries: [...state.countries],
         selectedCountry: '',
       }
-      break
     case 'SET_TRIPS':
       return {
         trips: action.payload,
         form: { ...state.form },
         countries: [...state.countries],
-        selectedCountry: state.selectedCountry,
+        selectedCountry: `flag-${state.selectedCountry}`,
       }
     case 'ADD_TRIP':
       return {
         trips: [...state.trips, action.payload],
         form: { ...state.form },
         countries: [...state.countries],
-        selectedCountry: state.selectedCountry,
+        selectedCountry: `flag-${state.selectedCountry}`,
       }
     case 'REMOVE_TRIP':
       const filter = [...state.trips.filter(trip => trip.id !== action.payload)]
@@ -66,14 +65,14 @@ const reducer = (state, action) => {
         trips: filter,
         form: { ...state.form },
         countries: [...state.countries],
-        selectedCountry: state.selectedCountry,
+        selectedCountry: `flag-${state.selectedCountry}`,
       }
     case 'SET_COUNTRIES':
       return {
         trips: [...state.trips],
         form: { ...state.form },
-        countries: action.payload,
-        selectedCountry: state.selectedCountry,
+        countries: [...action.payload],
+        selectedCountry: `flag-${state.selectedCountry}`,
       }
     case 'SET_SELECTED_COUNTRY':
       return {
@@ -83,8 +82,9 @@ const reducer = (state, action) => {
         selectedCountry: `flag-${action.payload}`,
       }
     case 'SET_FORM':
+      console.log(state, action.payload.address.country)
       return {
-        trips: [...state.trips],
+        trips: state.trips,
         form: {
           ...state.form,
           ...action.payload,
@@ -93,8 +93,8 @@ const reducer = (state, action) => {
             ...action.payload.address,
           },
         },
-        countries: [...state.countries],
-        selectedCountry: state.selectedCountry,
+        countries: state.countries,
+        selectedCountry: `flag-${action.payload.address.country}`,
       }
     default:
       throw new Error('Unhandled action')
@@ -106,19 +106,17 @@ const TripProvider = ({ children }) => {
 
   const fetchData = async () => {
     const { data } = await api.get('/trip')
-    debugger
     dispatch({ type: 'SET_TRIPS', payload: data })
   }
 
-  useEffect(() => {
-    fetchData()
-    fetchCountries()
-  }, [])
+  // useEffect(() => {
+  //   fetchData()
+  //   fetchCountries()
+  // }, [])
 
   const fetchCountries = async () => {
     const { data } = await api.get('/country')
     const sortedData = data.sort((a, b) => (a.label > b.label ? 1 : -1))
-
     const countriesData = []
     sortedData.forEach(data => {
       countriesData.push({
@@ -129,6 +127,9 @@ const TripProvider = ({ children }) => {
     })
     dispatch({ type: 'SET_COUNTRIES', payload: countriesData })
   }
+
+  fetchData()
+  fetchCountries()
 
   return (
     <TripContext.Provider value={[state, dispatch]}>
